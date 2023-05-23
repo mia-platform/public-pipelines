@@ -1,0 +1,30 @@
+{
+	"name": "Pielines",
+	"image": "mcr.microsoft.com/devcontainers/base:debian",
+	"containerUser": "root",
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"files.eol": "\n",
+				"files.insertFinalNewline": true,
+				"files.trimFinalNewlines": true,
+				"files.trimTrailingWhitespace": false,
+			},
+			"extensions": [
+				"editorconfig.editorconfig",
+				"redhat.vscode-yaml",
+				"davidanson.vscode-markdownlint",
+				"timonwong.shellcheck"
+			]
+		},
+		"codespaces": {
+			"openFiles": [
+				"README.md",
+				"CONTRIBUTING.md"
+			]
+		}
+	}
+}
