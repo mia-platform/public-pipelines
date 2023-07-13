@@ -1,0 +1,53 @@
+variables:
+  GO_MAIN_MODULE_PATH: $CI_PROJECT_DIR
+  GOPATH: $CI_PROJECT_DIR/.cache
+  GOLANG_IMAGE_TAG: latest
+
+.golang:
+  image: ${CONTAINER_PATH}/build-go:${GOLANG_IMAGE_TAG}
+
+  cache:
+  - key:
+      files:
+      - go.sum
+      prefix: ${CI_COMMIT_REF_SLUG}
+    paths:
+    - .cache
+
+.go-build:
+  extends: .golang
+
+  variables:
+    GO_CLI_OPTS: ""
+
+  script:
+  - go version
+  - go build ${GO_CLI_OPTS} "${GO_MAIN_MODULE_PATH}"
+
+.go-lint:
+  extends: .golang
+
+  variables:
+    GOLANG_LINT_CI_CONFIG: $CI_PROJECT_DIR/.golangci.yaml
+
+  script:
+  - golangci-lint --version
+  - golangci-lint run --config=${GOLANG_LINT_CI_CONFIG} --build-tags=conformance,integration
+
+  rules:
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  - if: $CI_OPEN_MERGE_REQUESTS
+    when: never
+  - if: $CI_COMMIT_BRANCH
+
+  allow_failure: true
+
+.go-test:
+  extends: .golang
+
+  variables:
+    GO_TEST_CLI_OPTS: ""
+    GO_TEST_PATH: $GO_MAIN_MODULE_PATH
+
+  script:
+  - go test -race ${GO_TEST_CLI_OPTS} "${GO_TEST_PATH}"

@@ -1,0 +1,70 @@
+variables:
+  NPM_CLI_OPTS: ""
+  NPM_CONFIG_USERCONFIG: ""
+  NPM_CONFIG_CACHE: $CI_PROJECT_DIR/.npm
+  NODE_IMAGE_TAG: latest
+
+.npm:
+  image: ${CONTAINER_PATH}/build-node:${NODE_IMAGE_TAG}
+
+  cache:
+  - key:
+      files:
+      - package-lock.json
+      prefix: ${CI_COMMIT_REF_SLUG}
+    paths:
+    - node_modules
+    policy: pull
+
+.npm-build:
+  extends: .npm
+  variables:
+    NPM_INSTALL_CLI_OPTS: ""
+    NPM_CONFIG_PREFER_OFFLINE: "true"
+
+  script:
+  - npm version
+  - npm ci ${NPM_INSTALL_CLI_OPTS}
+  - npm rebuild ${NPM_CLI_OPTS}
+
+  cache:
+  - key: "${CI_COMMIT_REF_SLUG}"
+    paths:
+    - .npm
+    when: on_success
+    policy: pull-push
+  - key:
+      files:
+      - package-lock.json
+      prefix: ${CI_COMMIT_REF_SLUG}
+    paths:
+    - node_modules
+
+.npm-lint:
+  extends: .npm
+  stage: sast
+
+  script:
+  - npm run lint --if-present ${NPM_CLI_OPTS}
+
+  rules:
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  - if: $CI_OPEN_MERGE_REQUESTS
+    when: never
+  - if: $CI_COMMIT_BRANCH
+
+  allow_failure: true
+
+.npm-test:
+  extends: .npm
+
+  script:
+  - npm run coverage ${NPM_CLI_OPTS}
+
+  artifacts:
+    paths:
+    - coverage/cobertura-coverage.xml
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml

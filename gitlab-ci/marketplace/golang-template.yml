@@ -1,0 +1,18 @@
+include:
+- template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
+- remote: https://raw.githubusercontent.com/mia-platform/public-pipelines/HEAD/gitlab-ci/base/Application.gitlab-ci.yml
+
+variables:
+  IMAGE_NAME: mia_template_image_name_placeholder
+
+build-go:
+ extends: .go-build
+ stage: build
+
+lint-go:
+ extends: .go-lint
+ stage: sast
+
+test-go:
+ extends: .go-test
+ stage: test

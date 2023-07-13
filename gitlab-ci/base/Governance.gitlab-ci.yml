@@ -1,0 +1,28 @@
+stages:
+- build
+- sast
+- test
+- container-build
+- compliance
+- deploy
+
+.sast-analyzer:
+  allow_failure: false
+
+sast:
+  stage: sast
+
+syft-dependency_scanning:
+  stage: sast
+
+secret_detection:
+  stage: sast
+
+docker-build:
+  stage: container-build
+
+docker-push-tag:
+  stage: deploy
+
+docker-push-branch:
+  stage: deploy

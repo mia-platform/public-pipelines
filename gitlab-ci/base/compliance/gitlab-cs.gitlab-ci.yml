@@ -1,0 +1,17 @@
+include:
+- template: Jobs/Container-Scanning.gitlab-ci.yml
+
+container_scanning:
+  stage: compliance
+
+  variables:
+    CS_REGISTRY_USER: "$REGISTRY_USER"
+    CS_REGISTRY_PASSWORD: "$REGISTRY_PASSWORD"
+    GIT_STRATEGY: fetch
+
+  script:
+  - !reference [.container-base, script]
+  # doing the reference here because there is no way to do it via variable
+  # https://gitlab.com/gitlab-org/gitlab/-/issues/403288
+  - if [ -z $CS_IMAGE ]; then export CS_IMAGE="$REGISTRY_IMAGE"; fi;
+  - gtcs scan

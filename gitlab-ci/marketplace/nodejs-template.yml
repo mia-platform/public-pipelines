@@ -1,0 +1,18 @@
+include:
+- template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
+- remote: https://raw.githubusercontent.com/mia-platform/public-pipelines/HEAD/gitlab-ci/base/Application.gitlab-ci.yml
+
+variables:
+  IMAGE_NAME: mia_template_image_name_placeholder
+
+build-node:
+ extends: .npm-build
+ stage: build
+
+lint-app:
+ extends: .npm-lint
+ stage: sast
+
+test-node:
+ extends: .npm-test
+ stage: test

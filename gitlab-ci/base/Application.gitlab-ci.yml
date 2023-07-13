@@ -1,0 +1,14 @@
+include:
+- local: gitlab-ci/base/jobs/npm.gitlab-ci.yml
+- local: gitlab-ci/base/jobs/golang.gitlab-ci.yml
+- local: gitlab-ci/base/jobs/docker.gitlab-ci.yml
+- local: gitlab-ci/base/SAST.gitlab-ci.yml
+- local: gitlab-ci/base/Compliance.gitlab-ci.yml
+- local: gitlab-ci/base/Governance.gitlab-ci.yml
+
+variables:
+  CONTAINER_PATH: nexus.mia-platform.eu/test-pipeline # Default container path for purpose build containers.
+  CONTAINER_SCANNING_DISABLED: "true" # Default turn off gitlab container scanning
+
+default:
+  image: ${CONTAINER_PATH}/build-base:latest # Sets default image if one is not specified
