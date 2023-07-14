@@ -17,9 +17,9 @@ jobs:
         with:
           image_path: containers/base
           DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-          GITHUB_USERNAME: ${{ secrets.BOT_USER }}
+          GH_USERNAME: ${{ secrets.BOT_USER }}
           image_name: test
           image_tag: latest
         env:
           DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}

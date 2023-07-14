@@ -7,7 +7,7 @@ on:
       DOCKER_USERNAME:
         type: string
         required: true
-      GITHUB_USERNAME:
+      GH_USERNAME:
         type: string
         required: true
       image_name:
@@ -19,7 +19,7 @@ on:
     secrets:
       DOCKER_TOKEN:
         required: true
-      GITHUB_TOKEN:
+      GH_TOKEN:
         required: true
 
 jobs:
@@ -35,7 +35,7 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: ghcr.io
-        username: ${{ input.GITHUB_USERNAME }}
+        username: ${{ input.GH_USERNAME }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Set up QEMU
       if: docker-qemu
