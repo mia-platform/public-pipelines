@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build base image
-        uses: .github/workflows/build-image.yml
+        uses: ./.github/workflows/build-image.yml
         with:
           image_path: containers/base
           DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
