@@ -55,5 +55,3 @@ RUN wget --compression=auto https://github.com/anchore/syft/releases/download/v$
 	tar -xvf /tmp/syft.tar.gz --no-same-owner -C /tmp/syft && \
 	mv /tmp/syft/syft /usr/local/bin/ && \
 	rm -fr /tmp/syft
-
-CMD /bin/bash
