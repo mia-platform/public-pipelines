@@ -6,12 +6,6 @@ on:
       image_path:
         type: string
         required: true
-      DOCKER_USERNAME:
-        type: string
-        required: true
-      GH_USERNAME:
-        type: string
-        required: true
       image_name:
         type: string
         required: true
@@ -19,7 +13,11 @@ on:
         type: string
         required: true
     secrets:
+      DOCKER_USERNAME:
+        required: true
       DOCKER_TOKEN:
+        required: true
+      GH_USERNAME:
         required: true
       GH_TOKEN:
         required: true

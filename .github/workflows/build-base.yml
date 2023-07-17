@@ -13,10 +13,10 @@ jobs:
     uses: ./.github/workflows/build-image.yml
     with:
       image_path: containers/base
-      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-      GH_USERNAME: ${{ secrets.BOT_USER }}
       image_name: test
       image_tag: latest
     secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
       GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
