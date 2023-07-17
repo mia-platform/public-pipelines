@@ -11,6 +11,8 @@ ARG SYFT_VERSION=0.85.0
 ARG SYFT_CHECKSUM=2a92c69e1017e2bf3785886a8298ad2b94dda69f9f5623560999740986dd8420
 ARG SYFT_CHECKSUM_ARM=fe96fc0c286feb554821ec1baf9367ad7122173998a8ca4ae2bcda844cd4a10a
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get upgrade --assume-yes && apt-get install --assume-yes --no-install-recommends \
 	ca-certificates \
 	bsdmainutils \

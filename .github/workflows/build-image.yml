@@ -55,7 +55,7 @@ jobs:
         file: ${{ inputs.image_path }}/Dockerfile
         tags: |
           miaplatform/${{ inputs.image_name }}:${{ inputs.image_tag }}
-          ghr.io/mia-platform/${{ inputs.image_name }}:${{ inputs.image_tag }}
+          ghcr.io/mia-platform/${{ inputs.image_name }}:${{ inputs.image_tag }}
         platforms: ${{ steps.buildx.outputs.platforms }}
         provenance: false
         push: false
