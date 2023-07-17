@@ -1,22 +1,35 @@
-name: Base Image
+name: Build Base Image
 
 on:
   push:
     branches:
-    - "**"
-  pull_request:
-    branches:
-    - "**"
+    - "main"
+    paths:
+    - "containers/base/**"
+  schedule:
+  - cron: "0 0 1,15 * *"
 
 jobs:
-  build-and-push-image:
+  build-base-image:
     uses: ./.github/workflows/build-image.yml
     with:
       image_path: containers/base
-      image_name: test
-      image_tag: latest
+      image_name: base-pipeline
+      image_tag: "1"
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
       GH_USERNAME: ${{ secrets.BOT_USER }}
       GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+  rebuild-node:
+    uses: ./.github/workflows/build-node.yml
+
+  # rebuild-docker:
+  #   uses: ./.github/workflows/build-node.yml
+
+  # rebuild-go:
+  #   uses: ./.github/workflows/build-node.yml
+
+  # rebuild-sysdig:
+  #   uses: ./.github/workflows/build-node.yml

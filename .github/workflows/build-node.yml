@@ -1,0 +1,23 @@
+name: Build Node.js Image
+
+on:
+  push:
+    branches:
+    - "main"
+    paths:
+    - "containers/node/**"
+    - "!containers/base/**"
+  workflow_dispatch:
+
+jobs:
+  build-node-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/node
+      image_name: node-pipeline
+      image_tag: "18"
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}

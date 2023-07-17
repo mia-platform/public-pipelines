@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM nexus.mia-platform.eu/test-pipeline/build-base:latest
+FROM ghr.io/mia-platform/base-pipeline:1
 
 ARG TARGETARCH
 
