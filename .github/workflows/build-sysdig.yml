@@ -5,8 +5,8 @@ on:
     branches:
     - "feat/action"
     paths:
-    - "containers/node/**"
-    - "!containers/sysdig/**"
+    - "containers/sysdig/**"
+    - "!containers/node/**"
   workflow_call:
     secrets:
       BOT_DOCKER_USERNAME:
