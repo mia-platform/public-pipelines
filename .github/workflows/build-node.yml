@@ -3,11 +3,11 @@ name: Build Node.js Image
 on:
   push:
     branches:
-    - "main"
+    - "feat/action"
     paths:
     - "containers/node/**"
     - "!containers/base/**"
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   build-node-image:

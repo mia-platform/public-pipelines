@@ -3,7 +3,7 @@ name: Build Base Image
 on:
   push:
     branches:
-    - "main"
+    - "feat/action"
     paths:
     - "containers/base/**"
   schedule:
