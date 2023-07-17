@@ -56,4 +56,4 @@ jobs:
           ghr.io/mia-platform/${{ input.image_name }}:${{ input.image_tag }}
         platforms: ${{ steps.docker-qemu.outputs.platforms }}
         provenance: false
-        push: true
+        push: false
