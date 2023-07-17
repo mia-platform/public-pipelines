@@ -10,18 +10,13 @@ on:
 
 jobs:
   build-and-push-image:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Build base image
-      uses: ./.github/workflows/build-image.yml
-      with:
-        image_path: containers/base
-        DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-        GH_USERNAME: ${{ secrets.BOT_USER }}
-        image_name: test
-        image_tag: latest
-      env:
-        DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
-        GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/base
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      image_name: test
+      image_tag: latest
+    secrets:
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
