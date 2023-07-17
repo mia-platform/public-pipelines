@@ -1,4 +1,4 @@
-# Base Docker Image
+# Base Docker Image for Pipelines
 
 This is a base Docker image that serves as the foundation for building other images in your project.
 
