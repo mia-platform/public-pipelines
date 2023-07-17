@@ -6,7 +6,7 @@ on:
     - "feat/action"
     paths:
     - "containers/sysdig/**"
-    - "!containers/node/**"
+    - "!containers/base/**"
   workflow_call:
     secrets:
       BOT_DOCKER_USERNAME:
