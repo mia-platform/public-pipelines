@@ -9,7 +9,7 @@ ARG COSIGN_CHECKSUM_ARM=563ae4c2f03dd70a9b90e4058cdf14b3e33aa77d9dc6276ecb974735
 
 ARG SYFT_VERSION=0.85.0
 ARG SYFT_CHECKSUM=2a92c69e1017e2bf3785886a8298ad2b94dda69f9f5623560999740986dd8420
-ARG SYFT_CHECKSUM_ARM=257953cc12d40412c39a8c0bf959bdf4a617c7c810484411acd4173934a2d5c7
+ARG SYFT_CHECKSUM_ARM=fe96fc0c286feb554821ec1baf9367ad7122173998a8ca4ae2bcda844cd4a10a
 
 RUN apt-get update && apt-get upgrade --assume-yes && apt-get install --assume-yes --no-install-recommends \
 	ca-certificates \
