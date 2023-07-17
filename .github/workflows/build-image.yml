@@ -51,11 +51,11 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v4
       with:
-        context: ${{ input.image_path }}
-        file: ${{ input.image_path }}/Dockerfile
+        context: ${{ inputs.image_path }}
+        file: ${{ inputs.image_path }}/Dockerfile
         tags: |
-          miaplatform/${{ input.image_name }}:${{ input.image_tag }}
-          ghr.io/mia-platform/${{ input.image_name }}:${{ input.image_tag }}
+          miaplatform/${{ inputs.image_name }}:${{ inputs.image_tag }}
+          ghr.io/mia-platform/${{ inputs.image_name }}:${{ inputs.image_tag }}
         platforms: ${{ steps.docker-qemu.outputs.platforms }}
         provenance: false
         push: false
