@@ -8,6 +8,14 @@ on:
     - "containers/node/**"
     - "!containers/base/**"
   workflow_call:
+    DOCKER_USERNAME:
+      required: true
+    DOCKER_TOKEN:
+      required: true
+    GH_USERNAME:
+      required: true
+    GH_TOKEN:
+      required: true
 
 jobs:
   build-node-image:
