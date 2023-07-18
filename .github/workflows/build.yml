@@ -67,9 +67,19 @@ jobs:
       matrix: ${{ steps.matrix.outputs.jobs_matrix }}
       base_changed: ${{ steps.matrix.outputs.base_changed }}
 
+  rebuild-base:
+    needs: generate-matrix
+    if: ${{ needs.generate-matrix.outputs.base_changed }} == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: print
+        run: |
+          echo "running base image build workflow"
+
   rebuild-images:
     needs: generate-matrix
     runs-on: ubuntu-latest
+    if: ${{ needs.generate-matrix.outputs.base_changed }} != 'true'
     steps:
     - name: print
       run: |
