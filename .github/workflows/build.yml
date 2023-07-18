@@ -28,16 +28,28 @@ jobs:
     - name: Generate Matrix
       id: matrix
       run: |
-        output_matrix="[]"
         base_changed=false
+        docker_changed=false
+        go_changed=false
+        node_changed=false
+        sysdig_changed=false
         for path in ${{steps.diff.outputs.workflows_all_changed_and_modified_files}}; do
           filename=$(basename "${path}")
           case ${filename%.*} in
             build-base)
               base_changed=true
             ;;
-            build-node|build-sysdig|build-go|build-docker)
-              output_matrix=$(echo "${output_matrix}" | jq --arg path "${path}" -c '. += [$path] | unique')
+            build-docker)
+              docker_changed=true
+            ;;
+            build-go)
+              go_changed=true
+            ;;
+            build-node)
+              node_changed=true
+            ;;
+            build-sysdig)
+              sysdig_changed=true
             ;;
           esac
         done
@@ -48,21 +60,24 @@ jobs:
               base_changed=true
             ;;
             docker)
-              output_matrix=$(echo "${output_matrix}" | jq -c '. += ["./.github/workflows/build-docker.yml"] | unique')
+              docker_changed=true
             ;;
             go)
-              output_matrix=$(echo "${output_matrix}" | jq -c '. += ["./.github/workflows/build-go.yml"] | unique')
+              go_changed=true
             ;;
             node)
-              output_matrix=$(echo "${output_matrix}" | jq -c '. += ["./.github/workflows/build-node.yml"] | unique')
+              node_changed=true
             ;;
             sysdig)
-              output_matrix=$(echo "${output_matrix}" | jq -c '. += ["./.github/workflows/build-sysdig.yml"] | unique')
+              sysdig_changed=true
             ;;
           esac
         done
-        echo "jobs_matrix=${output_matrix}" >> $GITHUB_OUTPUT
         echo "base_changed=${base_changed}" >> $GITHUB_OUTPUT
+        echo "docker_changed=${docker_changed}" >> $GITHUB_OUTPUT
+        echo "go_changed=${go_changed}" >> $GITHUB_OUTPUT
+        echo "node_changed=${node_changed}" >> $GITHUB_OUTPUT
+        echo "sysdig_changed=${sysdig_changed}" >> $GITHUB_OUTPUT
     outputs:
       matrix: ${{ steps.matrix.outputs.jobs_matrix }}
       base_changed: ${{ steps.matrix.outputs.base_changed }}
@@ -70,18 +85,49 @@ jobs:
   rebuild-base:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'true'
+    # uses: ./.github/workflows/build-base.yml
     runs-on: ubuntu-latest
     steps:
       - name: print
         run: |
-          echo "running base image build workflow"
+          echo "Run single build job"
 
-  rebuild-images:
+  rebuild-docker:
     needs: generate-matrix
+    if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.docker_changed == 'true'
+    # uses: ./.github/workflows/build-docker.yml
     runs-on: ubuntu-latest
-    if: needs.generate-matrix.outputs.base_changed == 'false'
     steps:
-    - name: print
-      run: |
-        echo ${{ needs.generate-matrix.outputs.matrix }}
-        echo ${{ needs.generate-matrix.outputs.base_changed }}
+      - name: print
+        run: |
+          echo "Run single build job"
+
+  rebuild-go:
+    needs: generate-matrix
+    if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.go_changed == 'true'
+    # uses: ./.github/workflows/build-go.yml
+    runs-on: ubuntu-latest
+    steps:
+      - name: print
+        run: |
+          echo "Run single build job"
+
+  rebuild-node:
+    needs: generate-matrix
+    if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.node_changed == 'true'
+    # uses: ./.github/workflows/build-node.yml
+    runs-on: ubuntu-latest
+    steps:
+      - name: print
+        run: |
+          echo "Run single build job"
+
+  rebuild-sysdig:
+    needs: generate-matrix
+    if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.sysdig_changed == 'true'
+    # uses: ./.github/workflows/build-sysdig.yml
+    runs-on: ubuntu-latest
+    steps:
+      - name: print
+        run: |
+          echo "Run single build job"

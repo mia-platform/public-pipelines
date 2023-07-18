@@ -1,3 +1,4 @@
+# add comment for triggering pipeline
 name: Build Golang Image
 
 on:
