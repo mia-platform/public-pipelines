@@ -26,4 +26,4 @@ jobs:
       id: matrix
       run: |
         echo "Changed files:"
-        echo ${{ output.diff.outputs.all_changed_files }}
+        echo ${{ steps.diff.outputs.all_changed_files }}
