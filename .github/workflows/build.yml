@@ -69,7 +69,7 @@ jobs:
 
   rebuild-base:
     needs: generate-matrix
-    if: needs.generate-matrix.outputs.base_changed == true
+    if: needs.generate-matrix.outputs.base_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: print
@@ -79,7 +79,7 @@ jobs:
   rebuild-images:
     needs: generate-matrix
     runs-on: ubuntu-latest
-    if: needs.generate-matrix.outputs.base_changed == false
+    if: needs.generate-matrix.outputs.base_changed == 'false'
     steps:
     - name: print
       run: |
