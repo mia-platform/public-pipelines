@@ -54,6 +54,7 @@ sysdig-container_scanning:
 
   script:
   - !reference [.sysdig-scan, script]
+  - sysdig-cli-scanner --version
   - sysdig-cli-scanner --console-log --apiurl "${SYSDIG_SECURE_BACKEND_ENDPOINT}" "${REGISTRY_IMAGE}" --json-scan-result="${CI_PROJECT_DIR}/container-scanning-report.json"
   - rm registry_image.txt
 
@@ -68,14 +69,19 @@ sysdig-container_scanning:
 sysdig-legacy-container_scanning:
   extends: sysdig
 
+  variables:
+    SYSDIG_INLINE_IMAGE: "quay.io/sysdig/secure-inline-scan:2"
+
   services:
   - name: docker:24-dind
 
   script:
   - !reference [.sysdig-scan, script]
+  - docker pull ${SYSDIG_INLINE_IMAGE}
+  - docker inspect ${SYSDIG_INLINE_IMAGE}
   - |
     docker run --rm -v ${CI_PROJECT_DIR}:/scan \
-    quay.io/sysdig/secure-inline-scan:2 \
+    ${SYSDIG_INLINE_IMAGE} \
     "${REGISTRY_IMAGE}" \
     --sysdig-url "${SYSDIG_SECURE_BACKEND_ENDPOINT}" \
     --sysdig-token "${SYSDIG_SECURE_TOKEN}" \
