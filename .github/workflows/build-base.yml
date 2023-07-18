@@ -63,6 +63,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: List Changed Files
         uses: tj-actions/changed-files@v37
@@ -71,4 +73,10 @@ jobs:
       - name: Print Changed Files
         run: |
           echo "Changed files:"
-          echo "${{ steps.changed_files.outputs.files }}"
+          echo "${{ steps.changed_files.outputs.all_changed_files }}"
+
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
