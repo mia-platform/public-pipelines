@@ -53,5 +53,5 @@ jobs:
     steps:
     - name: print
       run: |
-        echo ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
-        echo ${{ fromJson(needs.generate-matrix.outputs.base_changed) }}
+        echo ${{ needs.generate-matrix.outputs.matrix }}
+        echo ${{ needs.generate-matrix.outputs.base_changed }}
