@@ -20,10 +20,25 @@ jobs:
       id: diff
       uses: tj-actions/changed-files@v37
       with:
-        json: true
-        json_raw_format: true
-    - name: Generate Matrix
+        files_yaml: |
+          containers:
+          - containers/**
+          workflows:
+          - ./.github/workflows/**
+    - name: Generate Container Matrix
+      if: steps.diff.outputs.containers_any_changed == 'true'
       id: matrix
       run: |
         echo "Changed files:"
-        echo ${{ steps.diff.outputs.all_changed_files }}
+        for $path in ${{steps.diff.outputs.containers_any_changed}}; do
+          echo $path
+        done
+
+    - name: Generate Workflow Matrix
+      if: steps.diff.outputs.workflows_any_changed == 'true'
+      id: matrix_workflows
+      run: |
+        echo "Changed files:"
+        for $path in ${{steps.diff.outputs.workflows_any_changed}}; do
+          echo $path
+        done
