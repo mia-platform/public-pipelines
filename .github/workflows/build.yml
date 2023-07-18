@@ -79,8 +79,11 @@ jobs:
         echo "node_changed=${node_changed}" >> $GITHUB_OUTPUT
         echo "sysdig_changed=${sysdig_changed}" >> $GITHUB_OUTPUT
     outputs:
-      matrix: ${{ steps.matrix.outputs.jobs_matrix }}
       base_changed: ${{ steps.matrix.outputs.base_changed }}
+      docker_changed: ${{ steps.matrix.outputs.docker_changed }}
+      go_changed: ${{ steps.matrix.outputs.go_changed }}
+      node_changed: ${{ steps.matrix.outputs.node_changed }}
+      sysdig_changed: ${{ steps.matrix.outputs.sysdig_changed }}
 
   rebuild-base:
     needs: generate-matrix

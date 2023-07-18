@@ -1,4 +1,3 @@
-# add comment for triggering pipeline
 name: Build Docker Image
 
 on:
