@@ -25,20 +25,34 @@ jobs:
           - containers/**
           workflows:
           - ./.github/workflows/**
-    - name: Generate Container Matrix
-      if: steps.diff.outputs.containers_any_changed == 'true'
+    - name: Generate Matrix
+      if: steps.diff.outputs.all_changed_and_modified_files_count > 0
       id: matrix
       run: |
-        echo "Changed files:"
-        for path in ${{steps.diff.outputs.containers_all_changed_and_modified_files}}; do
-          echo $path
-        done
-
-    - name: Generate Workflow Matrix
-      if: steps.diff.outputs.workflows_any_changed == 'true'
-      id: matrix_workflows
-      run: |
-        echo "Changed files:"
+        output_matrix="[]"
+        base_changed="false"
         for path in ${{steps.diff.outputs.workflows_all_changed_and_modified_files}}; do
-          echo $path
+          filename=$(basename $path)
+          case ${filename%.*};
+            build-base)
+              base_changed="true"
+            ;;
+            build-node|build-sysdig|build-go|build-docker)
+              output_matrix=$(echo $output_matrix | jq --arg path "${path}" -c '. += [$path] | unique')
+            ;;
+          esac
         done
+        echo "jobs_matrix=${output_matrix}" >> $GITHUB_OUTPUT
+        echo "base_changed=${base_changed}" >> $GITHUB_OUTPUT
+    outputs:
+      matrix: ${{ steps.matrix.outputs.jobs_matrix }}
+      base_changed: ${{ steps.matrix.outputs.base_changed }}
+
+  rebuild-images:
+    needs: generate-matrix
+    runs-on: ubuntu-latest
+    steps:
+    - name: print
+      run: |
+        echo ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+        echo ${{ fromJson(needs.generate-matrix.outputs.base_changed) }}
