@@ -41,6 +41,26 @@ jobs:
             ;;
           esac
         done
+        for path in ${{steps.diff.outputs.containers_all_changed_and_modified_files}}; do
+          foldername=$(echo $path | cut -d / -f 2)
+          case ${foldername%.*} in
+            base)
+              base_changed="true"
+            ;;
+            docker)
+              output_matrix=$(echo "${output_matrix}" | jq -c '. += ["./.github/workflows/build-docker.yml"] | unique')
+            ;;
+            go)
+              output_matrix=$(echo "${output_matrix}" | jq -c '. += ["./.github/workflows/build-go.yml"] | unique')
+            ;;
+            node)
+              output_matrix=$(echo "${output_matrix}" | jq -c '. += ["./.github/workflows/build-node.yml"] | unique')
+            ;;
+            sysdig)
+              output_matrix=$(echo "${output_matrix}" | jq -c '. += ["./.github/workflows/build-sysdig.yml"] | unique')
+            ;;
+          esac
+        done
         echo "jobs_matrix=${output_matrix}" >> $GITHUB_OUTPUT
         echo "base_changed=${base_changed}" >> $GITHUB_OUTPUT
     outputs:

@@ -18,6 +18,24 @@ jobs:
       GH_USERNAME: ${{ secrets.BOT_USER }}
       GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
+  rebuild-docker:
+    uses: ./.github/workflows/build-docker.yml
+    needs: build-base-image
+    secrets:
+      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      BOT_USER: ${{ secrets.BOT_USER }}
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+  rebuild-go:
+    uses: ./.github/workflows/build-go.yml
+    needs: build-base-image
+    secrets:
+      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      BOT_USER: ${{ secrets.BOT_USER }}
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
   rebuild-node:
     uses: ./.github/workflows/build-node.yml
     needs: build-base-image
@@ -27,29 +45,11 @@ jobs:
       BOT_USER: ${{ secrets.BOT_USER }}
       BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
-  # rebuild-docker:
-  #   uses: ./.github/workflows/build-docker.yml
-  #   needs: build-base-image
-  #   secrets:
-  #     BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-  #     BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
-  #     BOT_USER: ${{ secrets.BOT_USER }}
-  #     BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-
-  # rebuild-go:
-  #   uses: ./.github/workflows/build-go.yml
-  #   needs: build-base-image
-  #   secrets:
-  #     BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-  #     BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
-  #     BOT_USER: ${{ secrets.BOT_USER }}
-  #     BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-
-  # rebuild-sysdig:
-  #   uses: ./.github/workflows/build-sysdig.yml
-  #   needs: build-base-image
-  #   secrets:
-  #     BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-  #     BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
-  #     BOT_USER: ${{ secrets.BOT_USER }}
-  #     BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+  rebuild-sysdig:
+    uses: ./.github/workflows/build-sysdig.yml
+    needs: build-base-image
+    secrets:
+      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      BOT_USER: ${{ secrets.BOT_USER }}
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
