@@ -31,13 +31,13 @@ jobs:
         output_matrix="[]"
         base_changed="false"
         for path in ${{steps.diff.outputs.workflows_all_changed_and_modified_files}}; do
-          filename=$(basename $path)
-          case ${filename%.*};
+          filename=$(basename "${path}")
+          case ${filename%.*} in
             build-base)
               base_changed="true"
             ;;
             build-node|build-sysdig|build-go|build-docker)
-              output_matrix=$(echo $output_matrix | jq --arg path "${path}" -c '. += [$path] | unique')
+              output_matrix=$(echo "${output_matrix}" | jq --arg path "${path}" -c '. += [$path] | unique')
             ;;
           esac
         done
