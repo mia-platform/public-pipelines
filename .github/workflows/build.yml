@@ -30,7 +30,7 @@ jobs:
       id: matrix
       run: |
         echo "Changed files:"
-        for path in ${{steps.diff.outputs.containers_changed_and_modified_files}}; do
+        for path in ${{steps.diff.outputs.containers_all_changed_and_modified_files}}; do
           echo $path
         done
 
@@ -39,6 +39,6 @@ jobs:
       id: matrix_workflows
       run: |
         echo "Changed files:"
-        for path in ${{steps.diff.outputs.workflows_changed_and_modified_files}}; do
+        for path in ${{steps.diff.outputs.workflows_all_changed_and_modified_files}}; do
           echo $path
         done
