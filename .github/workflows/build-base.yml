@@ -57,3 +57,18 @@ jobs:
       BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
       BOT_USER: ${{ secrets.BOT_USER }}
       BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+  list-changed-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: List Changed Files
+        uses: tj-actions/changed-files@v2
+        id: changed_files
+
+      - name: Print Changed Files
+        run: |
+          echo "Changed files:"
+          echo "${{ steps.changed_files.outputs.files }}"
