@@ -26,7 +26,6 @@ jobs:
           workflows:
           - ./.github/workflows/**
     - name: Generate Matrix
-      if: steps.diff.outputs.all_changed_and_modified_files_count > 0
       id: matrix
       run: |
         output_matrix="[]"
