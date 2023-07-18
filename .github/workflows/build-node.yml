@@ -1,12 +1,6 @@
 name: Build Node.js Image
 
 on:
-  push:
-    branches:
-    - "feat/action"
-    paths:
-    - "containers/node/**"
-    - "!containers/base/**"
   workflow_call:
     secrets:
       BOT_DOCKER_USERNAME:

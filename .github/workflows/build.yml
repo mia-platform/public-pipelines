@@ -1,0 +1,28 @@
+# name: Image Building
+
+# on:
+#   push:
+#     branches:
+#     - "main"
+#     - "feat/action"
+#     paths:
+#     - "containers/**"
+#     - ".github/workflows/**"
+
+# jobs:
+#   generate-matrix:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v3
+#     - name: Calculate file differences
+#       id: diff
+#       uses: tj-actions/changed-files@v37
+#       with:
+#         json: true
+#         json_raw_format: true
+#     - name: Generate Matrix
+#       id: matrix
+#       run: |
+#         echo ${{ output.diff.any_changed_files }}
