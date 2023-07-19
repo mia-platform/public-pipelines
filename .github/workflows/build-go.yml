@@ -13,10 +13,10 @@ on:
         required: true
 
 jobs:
-  build-sysdig-image:
+  build-go-image:
     uses: ./.github/workflows/build-image.yml
     with:
-      image_path: containers/sysdig
+      image_path: containers/go
       image_name: golang-pipeline
       image_tag: "1.20"
     secrets:
