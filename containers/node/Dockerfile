@@ -1,4 +1,3 @@
-# test
 # syntax=docker/dockerfile:1
 FROM ghcr.io/mia-platform/base-pipeline:1
 

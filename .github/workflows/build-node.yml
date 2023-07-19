@@ -32,7 +32,7 @@ jobs:
       image_name: node-pipeline
       image_tag: "20"
       build_args: |
-        NODE_VERSION=20.4.0
+        NODE_VERSION=v20.4.0
         NODE_CHECKSUM=6b49a007f409fb7620350285cfc909fbc909604fd0ff5a87a1730365514b3712
         NODE_CHECKSUM_ARM=757f9c541f3e5da6e5ce06813d0ba206d4d013c008d7c59a7411512c1abfd0be
     secrets:
