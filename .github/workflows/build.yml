@@ -88,49 +88,24 @@ jobs:
   rebuild-base:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'true'
-    # uses: ./.github/workflows/build-base.yml
-    runs-on: ubuntu-latest
-    steps:
-      - name: print
-        run: |
-          echo "Run single build job"
+    uses: ./.github/workflows/build-base.yml
 
   rebuild-docker:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.docker_changed == 'true'
-    # uses: ./.github/workflows/build-docker.yml
-    runs-on: ubuntu-latest
-    steps:
-      - name: print
-        run: |
-          echo "Run single build job"
+    uses: ./.github/workflows/build-docker.yml
 
   rebuild-go:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.go_changed == 'true'
-    # uses: ./.github/workflows/build-go.yml
-    runs-on: ubuntu-latest
-    steps:
-      - name: print
-        run: |
-          echo "Run single build job"
+    uses: ./.github/workflows/build-go.yml
 
   rebuild-node:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.node_changed == 'true'
-    # uses: ./.github/workflows/build-node.yml
-    runs-on: ubuntu-latest
-    steps:
-      - name: print
-        run: |
-          echo "Run single build job"
+    uses: ./.github/workflows/build-node.yml
 
   rebuild-sysdig:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.sysdig_changed == 'true'
-    # uses: ./.github/workflows/build-sysdig.yml
-    runs-on: ubuntu-latest
-    steps:
-      - name: print
-        run: |
-          echo "Run single build job"
+    uses: ./.github/workflows/build-sysdig.yml
