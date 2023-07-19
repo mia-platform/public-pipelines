@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 docker_buildx_ctx_name='pipelines'
 docker_builder_name='pipelines'
 
