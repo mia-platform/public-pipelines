@@ -1,4 +1,3 @@
-#test
 name: Build Base Image
 
 on:
