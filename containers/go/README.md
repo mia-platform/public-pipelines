@@ -15,3 +15,4 @@ This image is based on the build-base image and add this components:
 - golangci-lint v1.53.3
 - goreleaser
 - make
+- test
