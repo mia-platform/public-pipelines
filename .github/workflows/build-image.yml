@@ -15,6 +15,7 @@ on:
       build_args:
         type: string
         required: false
+        default: ""
     secrets:
       DOCKER_USERNAME:
         required: true
@@ -60,6 +61,7 @@ jobs:
           miaplatform/${{ inputs.image_name }}:${{ inputs.image_tag }}
           ghcr.io/mia-platform/${{ inputs.image_name }}:${{ inputs.image_tag }}
         platforms: ${{ steps.buildx.outputs.platforms }}
-        build-args: ${{ inputs.build_args }}
+        build-args: |
+          ${{ inputs.build_args }}
         provenance: false
         push: false
