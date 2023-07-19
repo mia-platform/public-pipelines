@@ -19,4 +19,4 @@ This image is based on the build-base image and add this components:
 - pnpx
 
 The image will track the latest `nodejs` LTS version and will use the `npm` version packaged with it.  
-`yarn` and `pnpm` are installed via `corepack` using the stable version for `yarn` and latest for `pnpm`.
+`yarn` and `pnpm` are installed via `corepack` using the stable version for `yarn` and latest for `pnpm`. Test
