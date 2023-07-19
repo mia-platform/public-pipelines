@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1
-# test
 FROM ghcr.io/mia-platform/base-pipeline:1
 
 ARG TARGETARCH
