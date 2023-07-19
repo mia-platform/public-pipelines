@@ -1,0 +1,42 @@
+name: Build Golang Image
+
+on:
+  workflow_call:
+    secrets:
+      BOT_DOCKER_USERNAME:
+        required: true
+      BOT_DOCKER_TOKEN:
+        required: true
+      BOT_USER:
+        required: true
+      BOT_GITHUB_TOKEN:
+        required: true
+
+jobs:
+  build-go-1-20-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/go
+      image_name: golang-pipeline
+      image_tag: "1.20"
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+  build-go-1-19-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/go
+      image_name: golang-pipeline
+      image_tag: "1.19"
+      build_args: |
+        GO_VERSION=1.19.11
+        GO_CHECKSUM=ee18f98a03386e2bf48ff75737ea17c953b1572f9b1114352f104ac5eef04bb4
+        GO_CHECKSUM_ARM=ae22c047e0e63d2d28205b529baaf9d9ca0c93e890c309af62cd116b9efebcbd
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}

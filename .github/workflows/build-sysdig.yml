@@ -1,0 +1,26 @@
+name: Build Sysdig Image
+
+on:
+  workflow_call:
+    secrets:
+      BOT_DOCKER_USERNAME:
+        required: true
+      BOT_DOCKER_TOKEN:
+        required: true
+      BOT_USER:
+        required: true
+      BOT_GITHUB_TOKEN:
+        required: true
+
+jobs:
+  build-sysdig-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/sysdig
+      image_name: sysdig-pipeline
+      image_tag: "1"
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}

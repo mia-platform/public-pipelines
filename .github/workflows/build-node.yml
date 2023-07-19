@@ -1,0 +1,58 @@
+name: Build Node.js Image
+
+on:
+  workflow_call:
+    secrets:
+      BOT_DOCKER_USERNAME:
+        required: true
+      BOT_DOCKER_TOKEN:
+        required: true
+      BOT_USER:
+        required: true
+      BOT_GITHUB_TOKEN:
+        required: true
+
+jobs:
+  build-node-16-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/node
+      image_name: node-pipeline
+      image_tag: "16"
+      build_args: |
+        NODE_VERSION=v16.20.1
+        NODE_CHECKSUM=b6c60e1e106ad7d8881e83945a5208c1b1d1b63e6901c04b9dafa607aff3a154
+        NODE_CHECKSUM_ARM=7fce19f3d1c2952599a0b47f9f5d8f497265ad577f37f256a8c6a03be6353234
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+  build-node-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/node
+      image_name: node-pipeline
+      image_tag: "18"
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+  build-node-20-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/node
+      image_name: node-pipeline
+      image_tag: "20"
+      build_args: |
+        NODE_VERSION=v20.4.0
+        NODE_CHECKSUM=6b49a007f409fb7620350285cfc909fbc909604fd0ff5a87a1730365514b3712
+        NODE_CHECKSUM_ARM=757f9c541f3e5da6e5ce06813d0ba206d4d013c008d7c59a7411512c1abfd0be
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}

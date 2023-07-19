@@ -7,9 +7,11 @@ ARG COSIGN_VERSION=v2.1.1
 ARG COSIGN_CHECKSUM=84a859fb654e2c2c0cbc6433a8195fef60bccd16b4cf412f486c2c67d4b91241
 ARG COSIGN_CHECKSUM_ARM=563ae4c2f03dd70a9b90e4058cdf14b3e33aa77d9dc6276ecb97473513c238f8
 
-ARG SYFT_VERSION=0.84.1
-ARG SYFT_CHECKSUM=05ebad9167254f03447103efea175d636c3cd27d0da7f79972ca78adc7c442f9
-ARG SYFT_CHECKSUM_ARM=8b68b2cf046f8c3729753f7a414eb6546ac7b43bee3afd56f413601200cac3c2
+ARG SYFT_VERSION=0.85.0
+ARG SYFT_CHECKSUM=2a92c69e1017e2bf3785886a8298ad2b94dda69f9f5623560999740986dd8420
+ARG SYFT_CHECKSUM_ARM=fe96fc0c286feb554821ec1baf9367ad7122173998a8ca4ae2bcda844cd4a10a
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get upgrade --assume-yes && apt-get install --assume-yes --no-install-recommends \
 	ca-certificates \
@@ -55,5 +57,3 @@ RUN wget --compression=auto https://github.com/anchore/syft/releases/download/v$
 	tar -xvf /tmp/syft.tar.gz --no-same-owner -C /tmp/syft && \
 	mv /tmp/syft/syft /usr/local/bin/ && \
 	rm -fr /tmp/syft
-
-CMD /bin/bash

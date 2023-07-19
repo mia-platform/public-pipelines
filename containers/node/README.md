@@ -1,4 +1,4 @@
-# Node Docker Image
+# Node Docker Image for Pipelines
 
 This is Docker image is used for the `nodejs` pipelines.
 

@@ -1,4 +1,4 @@
-# Base Docker Image
+# Base Docker Image for Pipelines
 
 This is a base Docker image that serves as the foundation for building other images in your project.
 
@@ -9,12 +9,12 @@ By using this base image, you can create more specialized and application-specif
 
 ## Contents
 
-This image is based on Linux Alpine OS and include the following pacages:
+This image is based on Debian OS and include the following packages:
 
-- bash
 - cosign
 - git
 - git-lfs
+- gnupg
 - jq
 - syft
 - wget

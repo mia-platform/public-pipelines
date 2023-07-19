@@ -1,7 +1,9 @@
 # syntax=docker/dockerfile:1
-FROM nexus.mia-platform.eu/test-pipeline/build-base:latest
+FROM ghcr.io/mia-platform/base-pipeline:1
 
 ARG TARGETARCH
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 ARG GO_VERSION=1.20.5
 ARG GO_CHECKSUM=d7ec48cde0d3d2be2c69203bc3e0a44de8660b9c09a6e85c4732a3f7dc442612
