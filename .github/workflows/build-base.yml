@@ -2,7 +2,7 @@
 name: Build Base Image
 
 on:
-  workflow_call: # who you gonna workflow call
+  workflow_call:
   schedule:
   - cron: "0 0 1,15 * *"
 
