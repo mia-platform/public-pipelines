@@ -15,7 +15,7 @@ RUN arch="$(uname -m)"; \
 	tar -xvf /tmp/docker.tgz --no-same-owner -C /tmp/ && \
 	mv -v /tmp/docker/docker /usr/local/bin/
 
-# install sysdig-cli-scanner https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-vulnerability-cli-scanner/ -
+# install sysdig-cli-scanner https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-vulnerability-cli-scanner/
 RUN wget --compression=auto https://download.sysdig.com/scanning/bin/sysdig-cli-scanner/${SYSDIG_SCANNER_VERSION}/linux/${TARGETARCH}/sysdig-cli-scanner -O /tmp/sysdig-cli-scanner && \
 	case "${TARGETARCH}" in \
 		'amd64') \
