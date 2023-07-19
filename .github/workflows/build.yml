@@ -89,23 +89,44 @@ jobs:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'true'
     uses: ./.github/workflows/build-base.yml
+    secrets: inherit
 
   rebuild-docker:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.docker_changed == 'true'
     uses: ./.github/workflows/build-docker.yml
+    secrets:
+      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      BOT_USER: ${{ secrets.BOT_USER }}
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
   rebuild-go:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.go_changed == 'true'
     uses: ./.github/workflows/build-go.yml
+    secrets:
+      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      BOT_USER: ${{ secrets.BOT_USER }}
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
   rebuild-node:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.node_changed == 'true'
     uses: ./.github/workflows/build-node.yml
+    secrets:
+      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      BOT_USER: ${{ secrets.BOT_USER }}
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
   rebuild-sysdig:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.sysdig_changed == 'true'
     uses: ./.github/workflows/build-sysdig.yml
+    secrets:
+      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      BOT_USER: ${{ secrets.BOT_USER }}
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
