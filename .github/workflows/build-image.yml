@@ -64,4 +64,4 @@ jobs:
         build-args: |
           ${{ inputs.build_args }}
         provenance: false
-        push: false
+        push: true
