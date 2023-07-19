@@ -5,7 +5,7 @@ sysdig:
   stage: compliance
 
   image:
-    name: ${CONTAINER_PATH}/build-sysdig:${SYSDIG_IMAGE_TAG}
+    name: ${CONTAINER_PATH}/sysdig-pipeline:${SYSDIG_IMAGE_TAG}
 
   variables:
     SYSDIG_SECURE_TOKEN: "" # the sysdig secure token of your instance

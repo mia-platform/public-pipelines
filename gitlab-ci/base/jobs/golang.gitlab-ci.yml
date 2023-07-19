@@ -4,7 +4,7 @@ variables:
   GOLANG_IMAGE_TAG: latest
 
 .golang:
-  image: ${CONTAINER_PATH}/build-go:${GOLANG_IMAGE_TAG}
+  image: ${CONTAINER_PATH}/go-pipeline:${GOLANG_IMAGE_TAG}
 
   cache:
   - key:

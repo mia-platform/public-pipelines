@@ -2,7 +2,7 @@ variables:
   SYFT_IMAGE_TAG: latest
 
 syft-dependency_scanning:
-  image: ${CONTAINER_PATH}/build-base:${SYFT_IMAGE_TAG}
+  image: ${CONTAINER_PATH}/base-pipeline:${SYFT_IMAGE_TAG}
 
   variables:
     LICENSES_BLOCKLIST: ""
