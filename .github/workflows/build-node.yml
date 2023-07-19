@@ -13,6 +13,22 @@ on:
         required: true
 
 jobs:
+  build-node-16-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/node
+      image_name: node-pipeline
+      image_tag: "16"
+      build_args: |
+        NODE_VERSION=v16.20.1
+        NODE_CHECKSUM=b6c60e1e106ad7d8881e83945a5208c1b1d1b63e6901c04b9dafa607aff3a154
+        NODE_CHECKSUM_ARM=7fce19f3d1c2952599a0b47f9f5d8f497265ad577f37f256a8c6a03be6353234
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
   build-node-image:
     uses: ./.github/workflows/build-image.yml
     with:
