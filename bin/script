@@ -103,6 +103,7 @@ readonly gitlab_url
 group_id=$(jq -c -r .group_id <<<"${config}")
 visibility=$(jq -c -r .default_visibility <<<"${config}")
 
+# create a default group where to save the pipeline project if is not given by the user
 if [[ -z ${group_id} ]]; then
 	echo "Creating default base group: ${DEFAULT_GROUP_NAME}"
 	data="{\"path\":\"mia-platform\",\"name\":\"Mia-Platform\",\"visibility\": \"${visibility}\"}"
@@ -110,4 +111,10 @@ if [[ -z ${group_id} ]]; then
 	group_id=$(jq -c -r .id <<<"${group_response}")
 fi
 
-echo "${group_id}"
+# create the project where to save the pipeline files
+echo "Creating project..."
+data="{\"path\":\"pipeline-templates\",\"name\":\"Pipeline Templates\",\"visibility\": \"${visibility}\",\"namespace_id\":${group_id}}"
+project_response=$(curl -q -H "PRIVATE-TOKEN: ${TOKEN}" -H "Content-type: application/json" --data "${data}" "${gitlab_url}/projects")
+
+project_http_url=$(jq -c -r .http_url_to_repo <<<"${project_response}")
+echo "${project_http_url}"
