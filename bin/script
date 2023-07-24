@@ -1,0 +1,29 @@
+#! /usr/bin/env bash
+
+set -o pipefail
+set -o nounset
+
+## This script will setup a repository in your chosen GitLab group or in a predefined root groups.
+## Then all the public pipelines yaml files will be commited in the newly created project and a pipeline
+## will be set to automatically open merge requests with eventual updates.
+
+## The needed values from your self-maanged instance or GitLab SaaS are the following:
+## - a valid token that has the 'api' and 'write_repository' scopes on the target GitLab instance
+
+# parameters read from the user
+TOKEN=""
+
+# original values that the final user can change
+readonly ORIGINAL_CONTAINER_PATH=ghcr.io/mia-platform
+
+### Check for variables and provide usage if nothing is present
+if [[ $# -eq 0 ]]; then
+	echo "Missing flags. Please see usage below."
+	cat <<EOF
+Usage: $0 -t token
+
+Options:
+	-t, --token: the access token for the user that has api and write_repository scopes
+EOF
+	exit 1
+fi
