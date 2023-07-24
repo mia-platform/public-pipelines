@@ -1,6 +1,7 @@
 #! /usr/bin/env bash
 
 set -o pipefail
+set -o errexit
 
 ## This script will setup a repository in your chosen GitLab group or in a predefined root groups.
 ## Then all the public pipelines yaml files will be commited in the newly created project and a pipeline
@@ -9,18 +10,29 @@ set -o pipefail
 ## The needed values from your self-maanged instance or GitLab SaaS are the following:
 ## - a valid token that has the 'api' and 'write_repository' scopes on the target GitLab instance
 
+# local configuration
+readonly temp_project_folder_path=/tmp/temp-pipelines
+basedir=$(dirname "$0")
+
+readonly basedir
+
 # parameters read from the user
 TOKEN=""
+USERNAME=""
+CONFIG_PATH="${basedir}/config.json"
 
 # original values that the final user can change
-readonly ORIGINAL_CONTAINER_PATH=ghcr.io/mia-platform
+readonly ORIGINAL_CONTAINER_PATH="ghrc.io/mia-platform"
+readonly DEFAULT_GROUP_NAME=""
 
 function print_usage() {
 	cat <<EOF
 Usage: $0 --token token
 
 Options:
-	-t, --token: the access token for the user that has api and write_repository scopes
+	-u, --username: the username of the user associated with the access token
+	-t, --token:    the access token for the user that has api and write_repository scopes
+	-c, --config:   the path for the configuration file, default to directory of the script file
 EOF
 }
 
@@ -33,9 +45,17 @@ fi
 
 while [[ -n "$1" ]]; do
 	case $1 in
+	-u | --username)
+		shift
+		readonly USERNAME=$1
+	;;
 	-t | --token)
 		shift
 		readonly TOKEN=$1
+	;;
+	-c | --config)
+		shift
+		readonly CONFIG_PATH=$1
 	;;
 	-h | --help)
 		print_usage
@@ -53,4 +73,41 @@ if [[ -z "${TOKEN}" ]]; then
 	echo "You must provide a token."
 	echo "Try '$0 --help' for more information."
 	exit 1
+elif [[ -z "${USERNAME}" ]]; then
+	echo "You must provide a username."
+	echo "Try '$0 --help' for more information."
+	exit 1
 fi
+
+config=$(cat "${CONFIG_PATH}")
+
+echo "Creating temp project locally..."
+
+# ensure thath the folder will be empty
+rm -fr "${temp_project_folder_path}"
+mkdir -p "${temp_project_folder_path}"
+
+cp -r "${basedir}/../gitlab-ci/base/" "${temp_project_folder_path}/"
+cp -r "${basedir}/../gitlab-ci/marketplace" "${temp_project_folder_path}/gitlab-ci"
+
+# Change pipeline images base name if necessary
+pipeline_image_name=$(jq -c -r .pipeline_images_base_name <<<"${config}")
+if [[ "${pipeline_image_name}" != "${ORIGINAL_CONTAINER_PATH}" ]]; then
+	echo "Changing pipeline CONTAINER_PATH variable content to: ${pipeline_image_name}"
+	perl -i -pe "s|${ORIGINAL_CONTAINER_PATH}|${pipeline_image_name}|g" "${temp_project_folder_path}/Application.gitlab-ci.yml"
+fi
+
+gitlab_url="$(jq -c -r .instance_url <<<"${config}")/api/v4"
+readonly gitlab_url
+
+group_id=$(jq -c -r .group_id <<<"${config}")
+visibility=$(jq -c -r .default_visibility <<<"${config}")
+
+if [[ -z ${group_id} ]]; then
+	echo "Creating default base group: ${DEFAULT_GROUP_NAME}"
+	data="{\"path\":\"mia-platform\",\"name\":\"Mia-Platform\",\"visibility\": \"${visibility}\"}"
+	group_response=$(curl -q -H "PRIVATE-TOKEN: ${TOKEN}" -H "Content-type: application/json" --data "${data}" "${gitlab_url}/groups")
+	group_id=$(jq -c -r .id <<<"${group_response}")
+fi
+
+echo "${group_id}"

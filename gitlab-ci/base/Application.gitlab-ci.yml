@@ -1,10 +1,10 @@
 include:
-- local: gitlab-ci/base/jobs/npm.gitlab-ci.yml
-- local: gitlab-ci/base/jobs/golang.gitlab-ci.yml
-- local: gitlab-ci/base/jobs/docker.gitlab-ci.yml
-- local: gitlab-ci/base/SAST.gitlab-ci.yml
-- local: gitlab-ci/base/Compliance.gitlab-ci.yml
-- local: gitlab-ci/base/Governance.gitlab-ci.yml
+- local: jobs/npm.gitlab-ci.yml
+- local: jobs/golang.gitlab-ci.yml
+- local: jobs/docker.gitlab-ci.yml
+- local: SAST.gitlab-ci.yml
+- local: Compliance.gitlab-ci.yml
+- local: Governance.gitlab-ci.yml
 
 variables:
   CONTAINER_PATH: ghrc.io/mia-platform # Default container path for purpose build containers.

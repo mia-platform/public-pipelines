@@ -1,5 +1,7 @@
 include:
-- remote: https://raw.githubusercontent.com/mia-platform/public-pipelines/development/gitlab-ci/base/Application.gitlab-ci.yml
+- project: mia-platform/pipeline-templates
+  file: Application.gitlab-ci.yml
+  ref: HEAD
 - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
 
 variables:
