@@ -1,7 +1,6 @@
 #! /usr/bin/env bash
 
 set -o pipefail
-set -o nounset
 
 ## This script will setup a repository in your chosen GitLab group or in a predefined root groups.
 ## Then all the public pipelines yaml files will be commited in the newly created project and a pipeline
@@ -16,14 +15,42 @@ TOKEN=""
 # original values that the final user can change
 readonly ORIGINAL_CONTAINER_PATH=ghcr.io/mia-platform
 
-### Check for variables and provide usage if nothing is present
-if [[ $# -eq 0 ]]; then
-	echo "Missing flags. Please see usage below."
+function print_usage() {
 	cat <<EOF
-Usage: $0 -t token
+Usage: $0 --token token
 
 Options:
 	-t, --token: the access token for the user that has api and write_repository scopes
 EOF
+}
+
+### Check for variables and provide usage if nothing is present
+if [[ $# -eq 0 ]]; then
+	echo "Missing flags. Please see usage below."
+	print_usage
+	exit 1
+fi
+
+while [[ -n "$1" ]]; do
+	case $1 in
+	-t | --token)
+		shift
+		readonly TOKEN=$1
+	;;
+	-h | --help)
+		print_usage
+		exit 0
+	;;
+	*)
+		print_usage
+		exit 1
+	;;
+	esac
+	shift
+done
+
+if [[ -z "${TOKEN}" ]]; then
+	echo "You must provide a token."
+	echo "Try '$0 --help' for more information."
 	exit 1
 fi
