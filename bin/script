@@ -9,9 +9,11 @@ set -o errexit
 
 ## The needed values from your self-maanged instance or GitLab SaaS are the following:
 ## - a valid token that has the 'api' and 'write_repository' scopes on the target GitLab instance
+## - the username of the user that has created the token
+## - a different path where to find the configuration file for the script
 
 # local configuration
-readonly temp_project_folder_path=/tmp/temp-pipelines
+readonly temp_project_folder_path=/tmp/tmp-pipelines
 basedir=$(dirname "$0")
 
 readonly basedir
@@ -23,6 +25,7 @@ CONFIG_PATH="${basedir}/config.json"
 
 # original values that the final user can change
 readonly ORIGINAL_CONTAINER_PATH="ghrc.io/mia-platform"
+readonly ORIGINAL_INCLUDE_PATH="mia-platform/pipeline-templates"
 readonly DEFAULT_GROUP_NAME=""
 
 function print_usage() {
@@ -69,6 +72,7 @@ while [[ -n "$1" ]]; do
 	shift
 done
 
+# validate user inpunts
 if [[ -z "${TOKEN}" ]]; then
 	echo "You must provide a token."
 	echo "Try '$0 --help' for more information."
@@ -78,25 +82,17 @@ elif [[ -z "${USERNAME}" ]]; then
 	echo "Try '$0 --help' for more information."
 	exit 1
 fi
-
 config=$(cat "${CONFIG_PATH}")
 
+# create a temporary folder, ensure that it will be empty, and copy all the needed files into it
 echo "Creating temp project locally..."
-
-# ensure thath the folder will be empty
 rm -fr "${temp_project_folder_path}"
 mkdir -p "${temp_project_folder_path}"
 
 cp -r "${basedir}/../gitlab-ci/base/" "${temp_project_folder_path}/"
 cp -r "${basedir}/../gitlab-ci/marketplace" "${temp_project_folder_path}/gitlab-ci"
 
-# Change pipeline images base name if necessary
-pipeline_image_name=$(jq -c -r .pipeline_images_base_name <<<"${config}")
-if [[ "${pipeline_image_name}" != "${ORIGINAL_CONTAINER_PATH}" ]]; then
-	echo "Changing pipeline CONTAINER_PATH variable content to: ${pipeline_image_name}"
-	perl -i -pe "s|${ORIGINAL_CONTAINER_PATH}|${pipeline_image_name}|g" "${temp_project_folder_path}/Application.gitlab-ci.yml"
-fi
-
+############################### Start to make API calls ###############################
 gitlab_url="$(jq -c -r .instance_url <<<"${config}")/api/v4"
 readonly gitlab_url
 
@@ -116,5 +112,31 @@ echo "Creating project..."
 data="{\"path\":\"pipeline-templates\",\"name\":\"Pipeline Templates\",\"visibility\": \"${visibility}\",\"namespace_id\":${group_id}}"
 project_response=$(curl -q -H "PRIVATE-TOKEN: ${TOKEN}" -H "Content-type: application/json" --data "${data}" "${gitlab_url}/projects")
 
+############################### End to make API calls ###############################
+
+############################### Start to update pipelines data ###############################
+
+# change pipeline images base name if necessary
+project_path=$(jq -c -r .path_with_namespace <<<"${project_response}")
+pipeline_image_name=$(jq -c -r .pipeline_images_base_name <<<"${config}")
+if [[ "${pipeline_image_name}" != "${ORIGINAL_CONTAINER_PATH}" ]]; then
+	echo "Changing pipeline CONTAINER_PATH variable content to: ${pipeline_image_name}"
+	perl -i -pe "s|${ORIGINAL_CONTAINER_PATH}|${pipeline_image_name}|g" "${temp_project_folder_path}/Application.gitlab-ci.yml"
+fi
+
+# change include path for the pipeline templates
+
+if [[ "${project_path}" != "${ORIGINAL_INCLUDE_PATH}" ]]; then
+	echo "Changing templates include path to: ${project_path}"
+	find "${temp_project_folder_path}" -type f -name "*.gitlab-ci.yml" -exec perl -i -pe "s|project: ${ORIGINAL_INCLUDE_PATH}|project: ${project_path}|g" {} \;
+fi
+
+############################### End to update pipelines data ###############################
+
+############################### Push Repository ###############################
+
 project_http_url=$(jq -c -r .http_url_to_repo <<<"${project_response}")
-echo "${project_http_url}"
+
+############################### Cleanup ###############################
+
+rm -fr "${temp_project_folder_path}"
