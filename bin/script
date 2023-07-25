@@ -136,7 +136,16 @@ fi
 ############################### Push Repository ###############################
 
 project_http_url=$(jq -c -r .http_url_to_repo <<<"${project_response}")
+echo "Push repository to ${project_http_url} using provided username and token..."
+http_sep="://"
+project_with_auht="${project_http_url%%"${http_sep}"*}${http_sep}${USERNAME}:${TOKEN}@${project_http_url##*"${http_sep}"}"
+git init -q -b main "${temp_project_folder_path}"
+git -C "${temp_project_folder_path}" add .
+git -C "${temp_project_folder_path}" commit --quiet --message "Initial commit"
+git -C "${temp_project_folder_path}" push --quiet --set-upstream "${project_with_auht}" main
+echo "Push completed"
 
 ############################### Cleanup ###############################
 
+echp "Remove temporary files..."
 rm -fr "${temp_project_folder_path}"
