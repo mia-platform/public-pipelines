@@ -147,5 +147,5 @@ echo "Push completed"
 
 ############################### Cleanup ###############################
 
-echp "Remove temporary files..."
+echo "Remove temporary files..."
 rm -fr "${temp_project_folder_path}"

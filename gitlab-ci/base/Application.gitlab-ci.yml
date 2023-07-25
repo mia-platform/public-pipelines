@@ -2,9 +2,9 @@ include:
 - local: jobs/npm.gitlab-ci.yml
 - local: jobs/golang.gitlab-ci.yml
 - local: jobs/docker.gitlab-ci.yml
-- local: SAST.gitlab-ci.yml
-- local: Compliance.gitlab-ci.yml
 - local: Governance.gitlab-ci.yml
+  rules:
+  - if: $GITLAB_FEATURES !~ /\compliance_pipeline_configuration\b/
 
 variables:
   CONTAINER_PATH: ghrc.io/mia-platform # Default container path for purpose build containers.

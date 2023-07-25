@@ -1,3 +1,12 @@
+include:
+- local: SAST.gitlab-ci.yml
+- local: Compliance.gitlab-ci.yml
+- project: $CI_PROJECT_PATH
+  file: $CI_CONFIG_PATH
+  ref: $CI_COMMIT_REF_NAME
+  rules:
+  - if: $GITLAB_FEATURES =~ /\compliance_pipeline_configuration\b/
+
 stages:
 - build
 - sast
