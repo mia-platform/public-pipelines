@@ -9,7 +9,7 @@ The goals is to provide to Mia-Platform user reusable pipelines for different la
 to use in their projects and follow the best practicies for setting up comprehensive pipelines for building a project,
 assessing its security, and keep track of its dependencies.
 
-## Supported Tecnologies:
+## Supported Tecnologies
 
 | Language  | [GitLab CI/CD] | [GitHub Actions] | [Azure Pipelines] |
 | --- | --- | --- | --- |
