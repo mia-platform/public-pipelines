@@ -1,3 +1,0 @@
-include:
-- local: jobs/gitlab-cs.gitlab-ci.yml
-- local: jobs/sysdig.gitlab-ci.yml
