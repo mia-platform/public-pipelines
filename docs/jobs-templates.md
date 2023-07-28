@@ -5,6 +5,60 @@ you can customize them.
 
 ## Docker
 
+In the docker file you can find the jobs that support the build and upload of docker images to a remote registry.
+
+This file will import the following env variables in the global space.
+
+| Key | Default Value | Description  |
+| --- | --- | --- |
+| REGISTRY | $CI_REGISTRY | the remote registry where to evenutally upload the image |
+| IMAGE_NAME | "" | the image name to use if the remote registry is not the GitLab one |
+| IMAGE_PLATFORMS | linux/amd64,linux/arm64 | defualt platforms to build the image |
+| REGISTRY_USER | $CI_REGISTRY_USER | username of the user that will upload the image to the registry |
+| REGISTRY_PASSWORD | $CI_REGISTRY_PASSWORD | password of the user that will upload the image to the registry |
+| DOCKER_IMAGE_TAG | "1" | the golang version of the image where to run the scripts, we will always use the latest docker version available |
+
+### docker-build
+
+This job wil run the `docker buildx build` command for building a docker image. The jon will run automatically
+if a `Dockerfile` is found inside the repository.
+
+#### Usage
+
+The job is added automatically to the pipelines.
+
+#### Jobs variables
+
+| Key | Default Value | Description  |
+| --- | --- | --- |
+| DOCKERBUILD_DIR | $CI_PROJECT_DIR | the path to pass as a context to the build command |
+| DOCKERFILE_PATH | $CI_PROJECT_DIR/Dockerfile | the path of the dockerfile to use |
+
+#### Image
+
+The job will use the `${CONTAINER_PATH}/docker-pipeline:${DOCKER_IMAGE_TAG}` image to run its scripts.
+
+### docker-push-*
+
+These jobs will retag the image pushed during the build with a fixed tag, based on if it will run on tags or branches.
+Additionally it will upload a SBOM layer for the image and it will sign image and SBOM with `cosign` when a tag is
+pushed.
+
+#### Usage
+
+The job is added automatically to the pipelines.
+
+#### Jobs variables
+
+| Key | Default Value | Description  |
+| --- | --- | --- |
+| COSIGN_PRIVATE_KEY | "" | path to a private key for usign with cosing |
+| SIGSTORE_ID_TOKEN | "" | if you are on GitLab SaaS environment, you can follow the [official guide] to setup keyless signing |
+
+#### Image
+
+The job will use the `${CONTAINER_PATH}/docker-pipeline:${DOCKER_IMAGE_TAG}` image to run its scripts.
+
 ## Golang
 
 In the golang file you can find the jobs for working on a Golang project. The jobs are all hidden jobs
@@ -21,7 +75,8 @@ This file will import the following env variables in the global space.
 ### .go-build
 
 This job wil run the `go build` command for building the bin of the project. You can use the `artifacts` function for
-saving the generated artifacts for using them on other jobs if you need them.
+saving the generated artifacts for using them on other jobs if you need them. You can also add multiple jobs for
+running different class of tests on different path if you need to.
 
 #### Usage
 
@@ -42,8 +97,7 @@ build-app:
 
 #### Image
 
-The job will use the `${CONTAINER_PATH}/go-pipeline:${GOLANG_IMAGE_TAG}` image to run its scripts. You can also add
-multiple jobs for running different class of tests on different path if you need to.
+The job will use the `${CONTAINER_PATH}/go-pipeline:${GOLANG_IMAGE_TAG}` image to run its scripts.
 
 ### .go-test
 
@@ -263,6 +317,7 @@ you have set the `SYSDIG_SECURE_TOKEN` variable and `SYSDIG_LEGACY_SCAN` is set 
 
 The job will use the `${CONTAINER_PATH}/sysdig-pipeline:${SYSDIG_IMAGE_TAG}` image to run its scripts
 
+[official guide]: https://docs.gitlab.com/ee/ci/yaml/signing_examples.html (GitLab documentation on keyless signing)
 [go.dev site]: https://go.dev/dl/ (Golang supported versions)
 [link]: https://github.com/nodejs/release#release-schedule (Node.js LTS release schedule)
 [Sydig]: https://sysdig.com (Security Tools for Containers, Kubernetes, and Cloud)
