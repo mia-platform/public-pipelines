@@ -1,5 +1,5 @@
 variables:
-  SYFT_IMAGE_TAG: latest
+  SYFT_IMAGE_TAG: 1
 
 syft-dependency_scanning:
   image: ${CONTAINER_PATH}/base-pipeline:${SYFT_IMAGE_TAG}

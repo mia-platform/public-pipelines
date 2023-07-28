@@ -4,7 +4,7 @@ variables:
   IMAGE_PLATFORMS: linux/amd64,linux/arm64
   REGISTRY_USER: $CI_REGISTRY_USER
   REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
-  DOCKER_IMAGE_TAG: latest
+  DOCKER_IMAGE_TAG: 1
 
 .container-base:
   script:

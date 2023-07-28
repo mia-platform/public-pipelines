@@ -1,5 +1,5 @@
 variables:
-  SYSDIG_IMAGE_TAG: latest
+  SYSDIG_IMAGE_TAG: 1
 
 sysdig:
   stage: compliance

@@ -2,7 +2,7 @@ variables:
   NPM_CLI_OPTS: ""
   NPM_CONFIG_USERCONFIG: ""
   NPM_CONFIG_CACHE: $CI_PROJECT_DIR/.npm
-  NODE_IMAGE_TAG: latest
+  NODE_IMAGE_TAG: "18"
 
 .npm:
   image: ${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}
