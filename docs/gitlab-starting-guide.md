@@ -1,6 +1,6 @@
 # How to Use the GitLab CI/CD in your Organization
 
-To use effectevly the GitLab CI/CD pipelines templates in your organizations you have to save them in your
+To use effectively the GitLab CI/CD pipelines templates in your organizations you have to save them in your
 GitLab instance if you use is as self-service or inside the group of your organization inside GitLab SaaS.
 
 To do so we provide a [script](../bin/gitlab-install) that you can run that will copy all the required files in a dedicated
@@ -44,7 +44,7 @@ For an explanation of the various keys and possible values reference the followi
 	git clone https://github.com/mia-platform/public-pipelines.git
 	```
 
-1. edit the default values of the confiugration file with your favorite editor
+1. edit the default values of the configuration file with your favorite editor
 
 	```sh
 	${EDITOR} ./public-pipelines/bin/config.json
