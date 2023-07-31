@@ -12,10 +12,10 @@ This file will import the following env variables in the global space.
 | Key | Default Value | Description  |
 | --- | --- | --- |
 | REGISTRY | $CI_REGISTRY | the remote registry where to evenutally upload the image |
-| IMAGE_NAME | "" | the image name to use if the remote registry is not the GitLab one |
-| IMAGE_PLATFORMS | linux/amd64,linux/arm64 | defualt platforms to build the image |
 | REGISTRY_USER | $CI_REGISTRY_USER | username of the user that will upload the image to the registry |
 | REGISTRY_PASSWORD | $CI_REGISTRY_PASSWORD | password of the user that will upload the image to the registry |
+| IMAGE_NAME | "" | the image name to use if the remote registry is not the GitLab one |
+| IMAGE_PLATFORMS | linux/amd64,linux/arm64 | defualt platforms to build the image |
 | DOCKER_IMAGE_TAG | "1" | the golang version of the image where to run the scripts, we will always use the latest docker version available |
 
 ### docker-build
