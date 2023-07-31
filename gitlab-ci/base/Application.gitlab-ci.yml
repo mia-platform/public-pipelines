@@ -6,7 +6,7 @@ include:
   rules:
   - if: $GITLAB_FEATURES !~ /\bcompliance_pipeline_configuration\b/
 variables:
-  CONTAINER_PATH: ghrc.io/mia-platform # Default container path for purpose build containers.
+  CONTAINER_PATH: ghcr.io/mia-platform # Default container path for purpose build containers.
 
 default:
   image: ${CONTAINER_PATH}/base-pipeline:1 # Sets default image if one is not specified

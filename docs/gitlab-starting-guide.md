@@ -22,7 +22,7 @@ repository under [`bin` > `config.json`](../bin/config.json) and below you can f
 {
 	"instance_url": "https://gitlab.com",
 	"group_id": "",
-	"pipeline_images_base_name": "ghrc.io/mia-platform",
+	"pipeline_images_base_name": "ghcr.io/mia-platform",
 	"default_visibility": "internal"
 }
 ```

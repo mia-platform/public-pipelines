@@ -24,7 +24,7 @@ USERNAME=""
 CONFIG_PATH="${basedir}/config.json"
 
 # original values that the final user can change
-readonly ORIGINAL_CONTAINER_PATH="ghrc.io/mia-platform"
+readonly ORIGINAL_CONTAINER_PATH="ghcr.io/mia-platform"
 readonly ORIGINAL_INCLUDE_PATH="mia-platform/pipeline-templates"
 readonly DEFAULT_GROUP_NAME=""
 
@@ -89,7 +89,7 @@ echo "Creating temp project locally..."
 rm -fr "${temp_project_folder_path}"
 mkdir -p "${temp_project_folder_path}"
 
-cp -r "${basedir}/../gitlab-ci/base/" "${temp_project_folder_path}/"
+cp -rT "${basedir}/../gitlab-ci/base/" "${temp_project_folder_path}/"
 cp -r "${basedir}/../gitlab-ci/marketplace" "${temp_project_folder_path}/gitlab-ci"
 
 ############################### Start to make API calls ###############################
