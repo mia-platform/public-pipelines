@@ -20,7 +20,7 @@ This file will import the following env variables in the global space.
 
 ### docker-build
 
-This job wil run the `docker buildx build` command for building a docker image. The jon will run automatically
+This job wil run the `docker buildx build` command for building a docker image. The job will run automatically
 if a `Dockerfile` is found inside the repository.
 
 #### Usage
@@ -48,7 +48,7 @@ pushed.
 
 The job is added automatically to the pipelines.
 
-#### Jobs variables
+#### Job variables
 
 | Key | Default Value | Description  |
 | --- | --- | --- |
@@ -120,7 +120,7 @@ test-app:
 
 #### Image
 
-The job will use the `${CONTAINER_PATH}/go-pipeline:${GOLANG_IMAGE_TAG}` image to run its scripts
+The job will use the `${CONTAINER_PATH}/go-pipeline:${GOLANG_IMAGE_TAG}` image to run its scripts.
 
 ### .go-lint
 
@@ -144,19 +144,18 @@ lint-app:
 
 #### Image
 
-The job will use the `${CONTAINER_PATH}/go-pipeline:${GOLANG_IMAGE_TAG}` image to run its scripts
+The job will use the `${CONTAINER_PATH}/go-pipeline:${GOLANG_IMAGE_TAG}` image to run its scripts.
 
 ## Lincenses
 
 ### syft-dependency-scanning
 
-This job will add a new dependency scanning job, as the other jobs available with the SAST template, this job will
+This job will add a new dependency scanning job. As the other jobs available with the SAST template, this job will
 abide to the `DEPENDENCY_SCANNING_DISABLED` and `DS_EXCLUDED_ANALYZERS` env variables for allowing it in the pipeline.
 The job will use syft to run a dependency scan and create a report.
 
 If you use the ultimate subcription you can then setup the control for blocking licences that you cannot use, or
-optionally you can set the `LICENSES_BLOCKLIST` env variable for failing
-the job if the licenses are found.
+optionally you can set the `LICENSES_BLOCKLIST` env variable for failing the job if such licenses are found.
 
 #### Usage
 
@@ -172,12 +171,12 @@ You don't have to do anything for setting up the job in your pipeline, if you wa
 
 #### Image
 
-The job will use the `${CONTAINER_PATH}/base-pipeline:${SYFT_IMAGE_TAG}` image to run its scripts
+The job will use the `${CONTAINER_PATH}/base-pipeline:${SYFT_IMAGE_TAG}` image to run its scripts.
 
 ## npm
 
-In the npm file you can find the jobs for working on a Node.js project managed by npm. The jobs are all hidden jobs
-availabe/extendible via the import of the Application template.
+In the npm file you can find the jobs for working on a Node.js project managed by npm.
+The jobs are all hidden jobs availabe/extendible via the import of the Application template.
 
 This file will import the following env variables in the global space.
 
@@ -219,7 +218,7 @@ The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image t
 ### .npm-test
 
 This job will run the `coverage` script with `npm run coverage`, our marketplace items all implement this script that
-will set the test harness to save and print coverage results.  
+will set the test framework to save and print coverage results.  
 It will also set the `coverage/cobertura-coverage.xml` path as coverage report of the job, we strongly suggest to
 set this script and run tests without coverage locally to save on time.
 
@@ -231,7 +230,7 @@ test-app:
   extends: .npm-test
 ```
 
-#### Jobs variables
+#### Job variables
 
 | Key | Default Value | Description  |
 | --- | --- | --- |
@@ -239,11 +238,11 @@ test-app:
 
 #### Image
 
-The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image to run its scripts
+The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image to run its scripts.
 
 ### .npm-lint
 
-This job will run the `lint` script if is available with `npm run lint --if-present`, the job is allowed to fail
+This job will run the `lint` script if available with `npm run lint --if-present`, the job is allowed to fail
 to avoid blocking merges for formatting error, every developer is responsible to check if this job will report errors
 and to fix them appropriately.
 
@@ -255,7 +254,7 @@ lint-app:
   extends: .npm-lint
 ```
 
-#### Jobs variables
+#### Job variables
 
 | Key | Default Value | Description  |
 | --- | --- | --- |
@@ -263,7 +262,7 @@ lint-app:
 
 #### Image
 
-The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image to run its scripts
+The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image to run its scripts.
 
 ## sysdig
 
@@ -277,7 +276,7 @@ This file will import the following env variables in the global space.
 
 ### sysdig-container_scanning
 
-This job will use the new container scannin cli from sysdig for creating a report of the docker image that you are
+This job will use the new container scanning cli from sysdig for creating a report of the docker image that you are
 building. You will need a valid subscription with sysdig for using the container scanning functionality.
 
 #### Usage
@@ -285,7 +284,7 @@ building. You will need a valid subscription with sysdig for using the container
 The job is automatically added to your pipline if `CONTAINER_SCANNING_DISABLED` is not set to `1` or `true`
 and you have set the `SYSDIG_SECURE_TOKEN` variable.
 
-#### Jobs variables
+#### Job variables
 
 | Key | Default Value | Description  |
 | --- | --- | --- |
@@ -294,19 +293,19 @@ and you have set the `SYSDIG_SECURE_TOKEN` variable.
 
 #### Image
 
-The job will use the `${CONTAINER_PATH}/sysdig-pipeline:${SYSDIG_IMAGE_TAG}` image to run its scripts
+The job will use the `${CONTAINER_PATH}/sysdig-pipeline:${SYSDIG_IMAGE_TAG}` image to run its scripts.
 
 ### sysdig-legacy-container_scanning
 
 This job will use the legacy inline scanner of sysdig, but the rest configurations are the same of the previous jobs.
-For selecting this job insted of the previous one set the `SYSDIG_LEGACY_SCAN` variable to `true`.
+This job may be selected instead of the previous one by setting the `SYSDIG_LEGACY_SCAN` variable to `true`.
 
 #### Usage
 
 The job is automatically added to your pipline if `CONTAINER_SCANNING_DISABLED` is not set to `1` or `true`,
 you have set the `SYSDIG_SECURE_TOKEN` variable and `SYSDIG_LEGACY_SCAN` is set to `true`
 
-#### Jobs variables
+#### Job variables
 
 | Key | Default Value | Description  |
 | --- | --- | --- |
@@ -315,9 +314,9 @@ you have set the `SYSDIG_SECURE_TOKEN` variable and `SYSDIG_LEGACY_SCAN` is set 
 
 #### Image
 
-The job will use the `${CONTAINER_PATH}/sysdig-pipeline:${SYSDIG_IMAGE_TAG}` image to run its scripts
+The job will use the `${CONTAINER_PATH}/sysdig-pipeline:${SYSDIG_IMAGE_TAG}` image to run its scripts.
 
 [official guide]: https://docs.gitlab.com/ee/ci/yaml/signing_examples.html (GitLab documentation on keyless signing)
 [go.dev site]: https://go.dev/dl/ (Golang supported versions)
 [link]: https://github.com/nodejs/release#release-schedule (Node.js LTS release schedule)
-[Sydig]: https://sysdig.com (Security Tools for Containers, Kubernetes, and Cloud)
+[Sysdig]: https://sysdig.com (Security Tools for Containers, Kubernetes, and Cloud)

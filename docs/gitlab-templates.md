@@ -5,7 +5,7 @@ The GitLab CI/CD templates are composed by multiple files and here we will descr
 ## Application.gitlab-ci.yml
 
 The [`Application.gitlab-ci.yml`](../gitlab-ci/base/Application.gitlab-ci.yml) file is the file that will import
-every other files. It will not declare any jobs, but will contains import of all the other files and the GitLab
+every other files. It will not declare any jobs, but will contain imports of all the other files and the GitLab
 templates that will form the base for your pipelines. This will allow you to only import this file in your
 `.gitlab-ci.yaml` file inside your repository.
 
@@ -22,11 +22,11 @@ pipelines feature is turned off, so you don't have to add the file to your `.git
 ## SAST.gitlab-ci.yml
 
 In the [`SAST.gitlab-ci.yml`](../gitlab-ci/base/SAST.gitlab-ci.yml`) file there are all the import for the static
-security control of the pipelines. Is separated only for easier mantenability.
+security control of the pipelines. It is separated only for easier maintainability.
 
 ## Jobs
 
-The main part of the pipelines tempaltes are implemented inside the jobs folder, inside that folder you can find
+The main part of the pipeline templates are implemented inside the jobs folder, inside that folder you can find
 various files that create the jobs you can use to compose your pipelines.
 
 - [docker](./jobs-templates.md#docker)

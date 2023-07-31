@@ -22,7 +22,7 @@ repository under [`bin` > `config.json`](../bin/config.json) and below you can f
 {
 	"instance_url": "https://gitlab.com",
 	"group_id": "",
-	"pipeline_images_base_name": "ghcr.io/mia-platform",
+	"pipeline_images_base_name": "ghrc.io/mia-platform",
 	"default_visibility": "internal"
 }
 ```
@@ -44,7 +44,7 @@ For an explanation of the various keys and possible values reference the followi
 	git clone https://github.com/mia-platform/public-pipelines.git
 	```
 
-1. edit the default values of the configuration file with your favorite editor
+1. edit the default values of the confiugration file with your favorite editor
 
 	```sh
 	${EDITOR} ./public-pipelines/bin/config.json
