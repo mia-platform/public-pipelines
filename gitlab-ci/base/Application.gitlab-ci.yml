@@ -1,3 +1,4 @@
+# This file is used as meta include, and will only contains includes and user overridable variables
 include:
 - local: jobs/npm.gitlab-ci.yml
 - local: jobs/golang.gitlab-ci.yml
@@ -5,6 +6,7 @@ include:
 - local: Governance.gitlab-ci.yml
   rules:
   - if: $GITLAB_FEATURES !~ /\bcompliance_pipeline_configuration\b/
+
 variables:
   CONTAINER_PATH: ghcr.io/mia-platform # Default container path for purpose build containers.
 

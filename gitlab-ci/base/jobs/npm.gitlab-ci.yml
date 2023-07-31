@@ -42,7 +42,6 @@ variables:
 
 .npm-lint:
   extends: .npm
-  stage: sast
 
   script:
   - npm run lint --if-present ${NPM_CLI_OPTS}

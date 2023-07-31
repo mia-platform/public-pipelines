@@ -19,6 +19,18 @@ GitLab environment groups.
 The pipeline is conditionally included inside the `Application.gitlab-ci.yml` file if we detect that the Compliance
 pipelines feature is turned off, so you don't have to add the file to your `.gitlab-ci.yml` file.
 
+## GovernanceOverrides.gitlab-ci.yml
+
+In the [`GovernanceOverrides.gitlab-ci.yml`](../gitlab-ci/base/GovernanceOverrides.gitlab-ci.yml`) file there will be
+added overrides for the security steps included inside the Governance file.
+
+## ApplicationOverrides.gitlab-ci.yml
+
+In the [`ApplicationOverrides.gitlab-ci.yml`](../gitlab-ci/base/ApplicationOverrides.gitlab-ci.yml`) file the end user
+can add all the overrides needed by them to conform the pipeline templates to their GitLab environment.  
+This file will be left empty and is the only file that it can be modified without causing issues during the update
+flow.
+
 ## SAST.gitlab-ci.yml
 
 In the [`SAST.gitlab-ci.yml`](../gitlab-ci/base/SAST.gitlab-ci.yml`) file there are all the import for the static

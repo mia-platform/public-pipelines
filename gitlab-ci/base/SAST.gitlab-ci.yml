@@ -1,3 +1,4 @@
+# this file include static analisys steps for the pipelines
 include:
 - local: jobs/licenses.gitlab-ci.yml
 - template: Jobs/SAST.latest.gitlab-ci.yml

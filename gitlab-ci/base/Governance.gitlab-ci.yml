@@ -1,7 +1,10 @@
+# This file includes compliance steps for the pipelines and can be set as a Compliance Framework pipelines file
 include:
 - local: SAST.gitlab-ci.yml
 - local: jobs/gitlab-cs.gitlab-ci.yml
 - local: jobs/sysdig.gitlab-ci.yml
+- local: GovernanceOverrides.gitlab-ci.yml
+- local: ApplicationOverrides.gitlab-ci.yml
 - project: $CI_PROJECT_PATH
   file: $CI_CONFIG_PATH
   ref: $CI_COMMIT_REF_NAME
@@ -15,24 +18,3 @@ stages:
 - container-build
 - compliance
 - deploy
-
-.sast-analyzer:
-  allow_failure: false
-
-sast:
-  stage: sast
-
-syft-dependency_scanning:
-  stage: sast
-
-secret_detection:
-  stage: sast
-
-docker-build:
-  stage: container-build
-
-docker-push-tag:
-  stage: deploy
-
-docker-push-branch:
-  stage: deploy

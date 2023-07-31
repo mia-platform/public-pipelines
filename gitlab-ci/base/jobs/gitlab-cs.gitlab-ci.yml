@@ -2,7 +2,6 @@ include:
 - template: Jobs/Container-Scanning.gitlab-ci.yml
 
 container_scanning:
-  stage: compliance
 
   variables:
     CS_REGISTRY_USER: "$REGISTRY_USER"

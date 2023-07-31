@@ -2,7 +2,6 @@ variables:
   SYSDIG_IMAGE_TAG: 1
 
 sysdig:
-  stage: compliance
 
   image:
     name: ${CONTAINER_PATH}/sysdig-pipeline:${SYSDIG_IMAGE_TAG}

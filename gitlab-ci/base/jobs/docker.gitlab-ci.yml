@@ -51,13 +51,15 @@ docker-build:
     exists:
     - "**/Dockerfile*"
 
-docker-push-branch:
+.docker-push:
   extends: .docker-base
-  stage: deploy
+
+docker-push-branch:
+  extends: .docker-push
 
   script:
   - !reference [.container-base, script]
-  - echo "${REGISTRY_PASSWORD}" | oras login --username "${REGISTRY_USER}" --password-stdin "${REGISTRY}"
+  - echo "${REGIRY_PASSWORD}" | oras login --username "${REGISTRY_USER}" --password-stdin "${REGISTRY}"
   - |
     if [[ "${CI_COMMIT_BRANCH}" == "${CI_DEFAULT_BRANCH}" ]]; then
       tag="latest"
@@ -83,7 +85,7 @@ docker-push-branch:
     - "**/Dockerfile*"
 
 docker-push-tag:
-  extends: docker-push-branch
+  extends: .docker-push
 
   script:
   - !reference [docker-push-branch, script]

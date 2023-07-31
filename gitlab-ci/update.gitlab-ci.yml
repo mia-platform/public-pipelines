@@ -1,6 +1,5 @@
 update-pipeline:
-  image: ${CONTAINER_PATH}/base-pipeline:1
-  stage: deploy
+  image: ghcr.io/mia-platform/base-pipeline:1
 
   script:
   - git clone --depth 1 --no-checkout --no-tags --depth=1 --filter=tree:0 https://github.com/mia-platform/public-pipelines /tmp/clone
