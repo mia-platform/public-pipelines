@@ -63,7 +63,7 @@ docker-push-branch:
 
   script:
   - !reference [.container-base, script]
-  - echo "${REGIRY_PASSWORD}" | oras login --username "${REGISTRY_USER}" --password-stdin "${REGISTRY}"
+  - echo "${REGISTRY_PASSWORD}" | oras login --username "${REGISTRY_USER}" --password-stdin "${REGISTRY}"
   - |
     if [[ "${CI_COMMIT_BRANCH}" == "${CI_DEFAULT_BRANCH}" ]]; then
       tag="latest"
