@@ -4,6 +4,7 @@ variables:
   IMAGE_PLATFORMS: linux/amd64,linux/arm64
   REGISTRY_USER: $CI_REGISTRY_USER
   REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+  ENABLE_DOCKER_BUILD_IN_MR: "true"
   DOCKER_IMAGE_TAG: 1
 
 .container-base:
@@ -49,10 +50,10 @@ docker-build:
       DOCKER_PUSH: "--push"
     exists:
     - "**/Dockerfile*"
-  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $ENABLE_DOCKER_BUILD_IN_MR == "true"
     exists:
     - "**/Dockerfile*"
-  - if: $CI_OPEN_MERGE_REQUESTS
+  - if: $CI_OPEN_MERGE_REQUESTS && ENABLE_DOCKER_BUILD_IN_MR == "true"
     when: never
 
 .docker-push:

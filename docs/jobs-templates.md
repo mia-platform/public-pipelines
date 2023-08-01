@@ -17,6 +17,7 @@ This file will import the following env variables in the global space.
 | IMAGE_NAME | "" | the image name to use if the remote registry is not the GitLab one |
 | IMAGE_PLATFORMS | linux/amd64,linux/arm64 | defualt platforms to build the image |
 | DOCKER_IMAGE_TAG | "1" | the golang version of the image where to run the scripts, we will always use the latest docker version available |
+| ENABLE_DOCKER_BUILD_IN_MR | "true" | if left to true during MR pipelines we try to build the docker containers withotu pushing it to the remote repository |
 
 ### docker-build
 
