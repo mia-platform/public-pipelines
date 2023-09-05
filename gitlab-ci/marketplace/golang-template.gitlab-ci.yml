@@ -9,13 +9,13 @@ variables:
   IMAGE_NAME: mia_template_image_name_placeholder
 
 build-go:
- extends: .go-build
- stage: build
+  extends: .go-build
+  stage: build
 
 lint-go:
- extends: .go-lint
- stage: sast
+  extends: .go-lint
+  stage: sast
 
 test-go:
- extends: .go-test
- stage: test
+  extends: .go-test
+  stage: test
