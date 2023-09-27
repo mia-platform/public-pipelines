@@ -33,9 +33,9 @@ jobs:
       image_name: golang-pipeline
       image_tag: "1.20"
       build_args: |
-        GO_VERSION=1.20.7
-        GO_CHECKSUM=f0a87f1bcae91c4b69f8dc2bc6d7e6bfcd7524fceec130af525058c0c17b1b44
-        GO_CHECKSUM_ARM=44781ae3b153c3b07651d93b6bc554e835a36e2d72a696281c1e4dad9efffe43
+        GO_VERSION=1.20.8
+        GO_CHECKSUM=cc97c28d9c252fbf28f91950d830201aa403836cbed702a05932e63f7f0c7bc4
+        GO_CHECKSUM_ARM=15ab379c6a2b0d086fe3e74be4599420e66549edf7426a300ee0f3809500f89e
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
@@ -49,9 +49,9 @@ jobs:
       image_name: golang-pipeline
       image_tag: "1.19"
       build_args: |
-        GO_VERSION=1.19.12
-        GO_CHECKSUM=48e4fcfb6abfdaa01aaf1429e43bdd49cea5e4687bd5f5b96df1e193fcfd3e7e
-        GO_CHECKSUM_ARM=18da7cf1ae5341e6ee120948221aff96df9145ce70f429276514ca7c67c929b1
+        GO_VERSION=1.19.13
+        GO_CHECKSUM=4643d4c29c55f53fa0349367d7f1bb5ca554ea6ef528c146825b0f8464e2e668
+        GO_CHECKSUM_ARM=1142ada7bba786d299812b23edd446761a54efbbcde346c2f0bc69ca6a007b58
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
