@@ -10,6 +10,10 @@ docker_login() {
 	echo "${password}" | docker login --username "${username}" --password-stdin "${server}"
 }
 
+docker_clean_tag() {
+	echo "${1}" | perl -pe 's/^v(?P<semver>(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?:[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$/$+{semver}/'
+}
+
 setup_docker_context() {
 	# to avoid weird situation where the context or builder are not
 	# properly deleted between runs we ensure to clean them up
