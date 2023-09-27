@@ -7,18 +7,16 @@ variables:
   image: ${CONTAINER_PATH}/golang-pipeline:${GOLANG_IMAGE_TAG}
 
   cache:
-  - key:
+    key:
       files:
       - go.sum
       prefix: ${CI_COMMIT_REF_SLUG}
     paths:
     - .cache
+    unprotect: true
 
 .go-build:
   extends: .golang
-
-  variables:
-    GO_CLI_OPTS: ""
 
   script:
   - go version
@@ -50,4 +48,5 @@ variables:
     GO_TEST_PATH: $GO_MAIN_MODULE_PATH
 
   script:
-  - go test -race ${GO_TEST_CLI_OPTS} "${GO_TEST_PATH}"
+  - go test -race -coverprofile=coverage.out -covermode=atomic ${GO_TEST_CLI_OPTS} "${GO_TEST_PATH}"
+  - go tool cover -func=coverage.out

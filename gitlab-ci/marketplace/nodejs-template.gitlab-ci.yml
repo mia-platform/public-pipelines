@@ -8,14 +8,14 @@ variables:
   ENABLE_DOCKER_BUILD_IN_MR: "true"
   IMAGE_NAME: mia_template_image_name_placeholder
 
-build-node:
+build:
   extends: .npm-build
   stage: build
 
-lint-app:
+lint:
   extends: .npm-lint
   stage: sast
 
-test-node:
+test:
   extends: .npm-test
   stage: test

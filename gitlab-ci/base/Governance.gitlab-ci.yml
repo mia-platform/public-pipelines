@@ -4,7 +4,6 @@ include:
 - local: jobs/gitlab-cs.gitlab-ci.yml
 - local: jobs/sysdig.gitlab-ci.yml
 - local: GovernanceOverrides.gitlab-ci.yml
-- local: ApplicationOverrides.gitlab-ci.yml
 - project: $CI_PROJECT_PATH
   file: $CI_CONFIG_PATH
   ref: $CI_COMMIT_REF_NAME

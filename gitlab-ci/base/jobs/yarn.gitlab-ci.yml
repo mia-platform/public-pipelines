@@ -1,49 +1,46 @@
 variables:
   NPM_CONFIG_USERCONFIG: ""
-  NPM_CONFIG_CACHE: $CI_PROJECT_DIR/.npm
+  YARN_CACHE_FOLDER: $CI_PROJECT_DIR/.yarn/cache
   NODE_IMAGE_TAG: "18"
 
-.npm:
+.yarn:
   image: ${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}
 
   cache:
     key:
       files:
-      - package-lock.json
+      - yarn.lock
       prefix: ${CI_COMMIT_REF_SLUG}
     paths:
     - "**/node_modules"
     policy: pull
 
-.npm-build:
-  extends: .npm
-  variables:
-    NPM_CONFIG_PREFER_OFFLINE: "true"
+.yarn-build:
+  extends: .yarn
 
   script:
-  - npm version
-  - npm ci ${NPM_INSTALL_CLI_OPTS}
-  - npm rebuild ${NPM_CLI_OPTS}
-  - npm run build --if-present ${NPM_CLI_OPTS}
+  - yarn --version
+  - yarn install --immutable ${YARNPKG_INSTALL_CLI_OPTS}
+  - yarn run build ${YARNPKG_CLI_OPTS}
 
   cache:
   - key: "${CI_COMMIT_REF_SLUG}"
     paths:
-    - .npm
+    - .yarn/cache
     policy: pull-push
     unprotect: true
   - key:
       files:
-      - package-lock.json
+      - yarn.lock
       prefix: ${CI_COMMIT_REF_SLUG}
-    paths: !reference [.npm, cache, paths]
+    paths: !reference [.yarn, cache, paths]
     policy: pull-push
 
-.npm-lint:
+.yarn-lint:
+  extends: .yarn
 
-  extends: .npm
   script:
-  - npm run lint --if-present ${NPM_CLI_OPTS}
+  - yarn run lint ${YARNPKG_CLI_OPTS}
 
   rules:
   - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -53,11 +50,11 @@ variables:
 
   allow_failure: true
 
-.npm-test:
-  extends: .npm
+.yarn-test:
+  extends: .yarn
 
   script:
-  - npm run coverage ${NPM_CLI_OPTS}
+  - yarn run coverage ${YARNPKG_CLI_OPTS}
 
   artifacts:
     paths:

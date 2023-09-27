@@ -8,14 +8,14 @@ variables:
   ENABLE_DOCKER_BUILD_IN_MR: "true"
   IMAGE_NAME: mia_template_image_name_placeholder
 
-build-go:
+build:
   extends: .go-build
   stage: build
 
-lint-go:
+lint:
   extends: .go-lint
   stage: sast
 
-test-go:
+test:
   extends: .go-test
   stage: test

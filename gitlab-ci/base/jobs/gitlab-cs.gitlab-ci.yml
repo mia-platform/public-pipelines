@@ -2,7 +2,6 @@ include:
 - template: Jobs/Container-Scanning.gitlab-ci.yml
 
 container_scanning:
-
   variables:
     CS_REGISTRY_USER: "$REGISTRY_USER"
     CS_REGISTRY_PASSWORD: "$REGISTRY_PASSWORD"
