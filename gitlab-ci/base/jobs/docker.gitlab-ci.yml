@@ -41,7 +41,7 @@ docker-build:
   - source /usr/local/lib/docker_helpers.sh
   - docker_login "${REGISTRY_USER}" "${REGISTRY_PASSWORD}" "${REGISTRY}"
   - setup_docker_context
-  - docker buildx build "${DOCKERBUILD_DIR}" --file "${DOCKERFILE_PATH}" ${DOCKER_PUSH} --platform="${IMAGE_PLATFORMS}" --tag "${REGISTRY_IMAGE}" --provenance=false
+  - docker buildx build "${DOCKERBUILD_DIR}" --file "${DOCKERFILE_PATH}" ${DOCKER_PUSH} --platform="${IMAGE_PLATFORMS}" --tag "${REGISTRY_IMAGE}" --provenance=false ${DOCKERBUILD_ADDITIONAL_FLAGS}
   - cleanup_docker_context
 
   rules:
