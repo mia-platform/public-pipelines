@@ -9,13 +9,31 @@ variables:
 
 .container-base:
   script:
+  - export image_tag="${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}"
+  - |
+    if [[ "${ENABLE_SEMVER_TAG_WITHOUT_VERSION_PREFIX}" == "true" || "${ENABLE_SEMVER_TAG_WITHOUT_VERSION_PREFIX}" == "1" ]]; then
+      image_tag="$(echo "${image_tag}" | perl -pe 's/^v(?P<semver>(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?:[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$/$+{semver}/')"
+    fi
   - |
     if [[ "${REGISTRY}" != "${CI_REGISTRY}" ]]; then
-      temp_registry_image="${REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}"
+      temp_registry_image="${REGISTRY}/${IMAGE_NAME}:${image_tag}"
     else
-      temp_registry_image="${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}"
+      temp_registry_image="${CI_REGISTRY_IMAGE}:${image_tag}"
     fi
   - export REGISTRY_IMAGE="${temp_registry_image}"
+  - |
+    if [[ "${CI_COMMIT_TAG}" ]]; then
+      echo "Running on tag '$CI_COMMIT_TAG': tag = ${image_tag}"
+    elif [[ "${OVERRIDE_BRANCH_IMAGE_TAG}" ]]; then
+      image_tag="${OVERRIDE_IMAGE_TAG}"
+      echo "Running on branch '$CI_COMMIT_BRANCH': tag = ${image_tag}"
+    if [[ "${CI_COMMIT_BRANCH}" == "${CI_DEFAULT_BRANCH}" ]]; then
+      image_tag="latest"
+      echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
+    else
+      image_tag="${CI_COMMIT_REF_SLUG}"
+      echo "Running on branch '$CI_COMMIT_BRANCH': tag = ${image_tag}"
+    fi
 
 .docker-base:
   image:
@@ -41,7 +59,16 @@ docker-build:
   - source /usr/local/lib/docker_helpers.sh
   - docker_login "${REGISTRY_USER}" "${REGISTRY_PASSWORD}" "${REGISTRY}"
   - setup_docker_context
-  - docker buildx build "${DOCKERBUILD_DIR}" --file "${DOCKERFILE_PATH}" ${DOCKER_PUSH} --platform="${IMAGE_PLATFORMS}" --tag "${REGISTRY_IMAGE}" --provenance=false ${DOCKERBUILD_ADDITIONAL_FLAGS}
+  - |
+    docker buildx build "${DOCKERBUILD_DIR}" \
+      --file "${DOCKERFILE_PATH}" ${DOCKER_PUSH} \
+      --platform="${IMAGE_PLATFORMS}" \
+      --tag "${REGISTRY_IMAGE}" \
+      --build-arg COMMIT_SHA=${$CI_COMMIT_SHA} \
+      --build-arg VERSION=${image_tag} \
+      --build-arg DESCRIPTION="${IMAGE_DESCRIPTION}" \
+      ${DOCKERBUILD_ADDITIONAL_FLAGS} \
+      --provenance=false
   - cleanup_docker_context
 
   rules:
@@ -62,17 +89,6 @@ docker-build:
   script:
   - !reference [.container-base, script]
   - echo "${REGISTRY_PASSWORD}" | oras login --username "${REGISTRY_USER}" --password-stdin "${REGISTRY}"
-  - |
-    if [[ "${CI_COMMIT_BRANCH}" == "${CI_DEFAULT_BRANCH}" ]]; then
-      tag="latest"
-      echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
-    elif [[ "${CI_COMMIT_TAG}" ]]; then
-      tag="${CI_COMMIT_TAG}"
-      echo "Running on tag '$CI_COMMIT_TAG': tag = ${tag}"
-    else
-      tag="${CI_COMMIT_REF_SLUG}"
-      echo "Running on branch '$CI_COMMIT_BRANCH': tag = ${tag}"
-    fi
 
 docker-push-branch:
   extends: .docker-push
@@ -83,9 +99,9 @@ docker-push-branch:
   - oras manifest delete --force "${REGISTRY_IMAGE}"
   - |
     if [[ "${REGISTRY}" != "${CI_REGISTRY}" ]]; then
-      REGISTRY_IMAGE="${REGISTRY}/${IMAGE_NAME}:${tag}"
+      REGISTRY_IMAGE="${REGISTRY}/${IMAGE_NAME}:${image_tag}"
     else
-      REGISTRY_IMAGE="${CI_REGISTRY_IMAGE}:${tag}"
+      REGISTRY_IMAGE="${CI_REGISTRY_IMAGE}:${image_tag}"
     fi
   - oras manifest push --verbose "${REGISTRY_IMAGE}" manifest.json
 
