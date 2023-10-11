@@ -33,25 +33,9 @@ jobs:
       image_name: golang-pipeline
       image_tag: "1.20"
       build_args: |
-        GO_VERSION=1.20.8
-        GO_CHECKSUM=cc97c28d9c252fbf28f91950d830201aa403836cbed702a05932e63f7f0c7bc4
-        GO_CHECKSUM_ARM=15ab379c6a2b0d086fe3e74be4599420e66549edf7426a300ee0f3809500f89e
-    secrets:
-      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
-      GH_USERNAME: ${{ secrets.BOT_USER }}
-      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-
-  build-go-1-19-image:
-    uses: ./.github/workflows/build-image.yml
-    with:
-      image_path: containers/go
-      image_name: golang-pipeline
-      image_tag: "1.19"
-      build_args: |
-        GO_VERSION=1.19.13
-        GO_CHECKSUM=4643d4c29c55f53fa0349367d7f1bb5ca554ea6ef528c146825b0f8464e2e668
-        GO_CHECKSUM_ARM=1142ada7bba786d299812b23edd446761a54efbbcde346c2f0bc69ca6a007b58
+        GO_VERSION=1.20.10
+        GO_CHECKSUM=80d34f1fd74e382d86c2d6102e0e60d4318461a7c2f457ec1efc4042752d4248
+        GO_CHECKSUM_ARM=fb3c7e15fc4413c5b81eb9f26dbd7cd4faedd5c720b30fa8e2ff77457f74cab6
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
