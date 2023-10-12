@@ -1,8 +1,17 @@
 # This file is used as meta include, and will only contains includes and user overridable variables
 include:
 - local: jobs/npm.gitlab-ci.yml
+  rules:
+  - exists:
+    - "**/package.json"
 - local: jobs/yarn.gitlab-ci.yml
+  rules:
+  - exists:
+    - "**/package.json"
 - local: jobs/golang.gitlab-ci.yml
+  rules:
+  - exists:
+    - "**/go.mod"
 - local: jobs/docker.gitlab-ci.yml
 - local: ApplicationOverrides.gitlab-ci.yml
 - local: Governance.gitlab-ci.yml

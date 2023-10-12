@@ -40,8 +40,8 @@ variables:
     policy: pull-push
 
 .npm-lint:
-
   extends: .npm
+
   script:
   - npm run lint --if-present ${NPM_CLI_OPTS}
 
@@ -61,8 +61,11 @@ variables:
 
   artifacts:
     paths:
-    - coverage/cobertura-coverage.xml
+    - "**/cobertura-coverage.xml"
+    - "**/junit.xml"
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: coverage/cobertura-coverage.xml
+        path: "**/cobertura-coverage.xml"
+      junit:
+      - "**/junit.xml"
