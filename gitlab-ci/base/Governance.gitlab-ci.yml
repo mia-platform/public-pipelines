@@ -3,8 +3,6 @@ include:
 - local: SAST.gitlab-ci.yml
 - local: jobs/sysdig.gitlab-ci.yml
 - local: jobs/gitlab-cs.gitlab-ci.yml
-  rules:
-  - if: $SYSDIG_SECURE_TOKEN == ""
 - local: GovernanceOverrides.gitlab-ci.yml
 - project: $CI_PROJECT_PATH
   file: $CI_CONFIG_PATH

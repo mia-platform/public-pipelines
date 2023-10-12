@@ -18,8 +18,8 @@ container_scanning:
 sysdig:
   stage: compliance
 
-.docker-base:
+.docker-build:
   stage: container-build
 
-.docker-push:
+.docker-deploy:
   stage: deploy

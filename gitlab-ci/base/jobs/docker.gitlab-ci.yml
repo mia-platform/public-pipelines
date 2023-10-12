@@ -65,7 +65,7 @@ variables:
       --output=${DOCKERBUILD_OUTPUT} \
       --platform="${IMAGE_PLATFORMS}" \
       --tag="${REGISTRY_IMAGE}" \
-      --build-arg="COMMIT_SHA=${$CI_COMMIT_SHA}" \
+      --build-arg="COMMIT_SHA=${CI_COMMIT_SHA}" \
       --build-arg="VERSION=${image_tag}" \
       ${DOCKERBUILD_ADDITIONAL_FLAGS} \
       --provenance=false
