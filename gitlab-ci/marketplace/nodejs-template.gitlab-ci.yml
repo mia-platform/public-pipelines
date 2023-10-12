@@ -5,6 +5,7 @@ include:
 - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
 
 variables:
+  NODE_IMAGE_TAG: "18"
   ENABLE_DOCKER_BUILD_IN_MR: "true"
   IMAGE_NAME: mia_template_image_name_placeholder
 
