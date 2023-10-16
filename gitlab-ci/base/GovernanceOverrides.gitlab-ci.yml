@@ -1,25 +1,16 @@
 # This files is used to overrides configurations included inside security templates and pipelines
 
 .sast-analyzer:
-  allow_failure: false
-
-sast:
   stage: sast
 
-syft-dependency_scanning:
+.secret-analyzer:
   stage: sast
 
-secret_detection:
+.ds-analyzer:
   stage: sast
 
 container_scanning:
   stage: compliance
 
-sysdig:
+.sysdig-scan:
   stage: compliance
-
-.docker-build:
-  stage: container-build
-
-.docker-deploy:
-  stage: deploy

@@ -5,7 +5,6 @@ container_scanning:
   variables:
     CS_REGISTRY_USER: "$REGISTRY_USER"
     CS_REGISTRY_PASSWORD: "$REGISTRY_PASSWORD"
-    GIT_STRATEGY: fetch
 
   script:
   - !reference [.container-base, script]

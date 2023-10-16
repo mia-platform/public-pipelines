@@ -69,3 +69,11 @@ variables:
         path: "**/cobertura-coverage.xml"
       junit:
       - "**/junit.xml"
+
+.npm-publish:
+  extends: .npm
+
+  artifacts: []
+
+  script:
+  - npm publish ${NPM_CLI_OPTS}

@@ -19,3 +19,11 @@ lint:
 test:
   extends: .npm-test
   stage: test
+
+docker:build:
+  extends: .docker-build
+  stage: container-build
+
+docker:deploy:
+  extends: .docker-deploy
+  stage: deploy

@@ -2,6 +2,7 @@ variables:
   SYFT_IMAGE_TAG: 1
 
 syft-dependency_scanning:
+  extends: .ds-analyzer
   image: ${CONTAINER_PATH}/base-pipeline:${SYFT_IMAGE_TAG}
 
   variables:
@@ -9,11 +10,11 @@ syft-dependency_scanning:
 
   script:
   - syft version
-  - syft "${CI_PROJECT_DIR}" -o spdx-json=sbom.spdx.json -o cyclonedx-json=gl-sbom-licenses.cdx.json
+  - syft "${CI_PROJECT_DIR}" -o spdx-json=gl-sbom-syft.spdx.json -o cyclonedx-json=gl-sbom-syft.cdx.json
   - if [ -z "${LICENSES_BLOCKLIST}" ]; then exit 0; fi;
   - 'echo -e "Blocked Licenses: ${LICENSES_BLOCKLIST}"'
   - licenses_json=$(echo "${LICENSES_BLOCKLIST}" | sed 's/,/","/g' | awk '{print "[\"" $0 "\"]"}')
-  - blocked_licenses=$(jq -r --argjson licenses "${licenses_json}" '.packages[] | select(.licenseDeclared as $ld | any($licenses[]; . == $ld)) | [.name, .licenseDeclared] | join(" ")' sbom.spdx.json | column --table)
+  - blocked_licenses=$(jq -r --argjson licenses "${licenses_json}" '.packages[] | select(.licenseDeclared as $ld | any($licenses[]; . == $ld)) | [.name, .licenseDeclared] | join(" ")' gl-sbom-syft.spdx.json | column --table)
   - if [ -z "${blocked_licenses}" ]; then exit 0; fi;
   - echo "${blocked_licenses}"
   - exit 1
@@ -28,11 +29,10 @@ syft-dependency_scanning:
     when: never
   - if: $CI_COMMIT_BRANCH
 
-  dependencies: []
-
   artifacts:
     paths:
-    - "**/sbom.spdx.json"
+    - "**/gl-sbom-*.spdx.json"
     - "**/gl-sbom-*.cdx.json"
     reports:
       cyclonedx: "**/gl-sbom-*.cdx.json"
+      dependency_scanning: ""

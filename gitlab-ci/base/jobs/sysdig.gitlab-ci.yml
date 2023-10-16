@@ -2,9 +2,11 @@ variables:
   SYSDIG_IMAGE_TAG: 1
 
 sysdig:
-
+  stage: test
   image:
     name: ${CONTAINER_PATH}/sysdig-pipeline:${SYSDIG_IMAGE_TAG}
+
+  dependencies: []
 
   variables:
     SYSDIG_SECURE_TOKEN: "" # the sysdig secure token of your instance
@@ -17,8 +19,6 @@ sysdig:
 
   rules:
   - when: never
-
-  dependencies: []
 
   artifacts:
     paths:
@@ -66,7 +66,7 @@ sysdig-container_scanning:
         $SYSDIG_SECURE_TOKEN
 
 sysdig-legacy-container_scanning:
-  extends: sysdig
+  extends: .sysdig-scan
 
   variables:
     SYSDIG_INLINE_IMAGE: "quay.io/sysdig/secure-inline-scan:2"

@@ -63,3 +63,11 @@ variables:
       coverage_report:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
+
+.yarn-publish:
+  extends: .yarn
+
+  artifacts: []
+
+  script:
+  - yarn npm publish ${YARNPKG_CLI_OPTS}
