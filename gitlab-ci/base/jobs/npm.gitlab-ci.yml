@@ -43,7 +43,7 @@ variables:
   extends: .npm
 
   script:
-  - npm run lint --if-present ${NPM_CLI_OPTS}
+  - npm run lint ${NPM_CLI_OPTS}
 
   rules:
   - if: $CI_PIPELINE_SOURCE == "merge_request_event"

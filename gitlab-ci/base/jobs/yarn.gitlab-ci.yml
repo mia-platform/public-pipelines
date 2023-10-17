@@ -21,7 +21,10 @@ variables:
   script:
   - yarn --version
   - yarn install --immutable ${YARNPKG_INSTALL_CLI_OPTS}
-  - yarn run build ${YARNPKG_CLI_OPTS}
+  - |
+    if [[ "$(jq '.scripts | has("build")' "${CI_PROJECT_DIR}/package.json")" = "true" ]]; then
+      yarn run build ${YARNPKG_CLI_OPTS}
+    fi
 
   cache:
   - key: "${CI_COMMIT_REF_SLUG}"
