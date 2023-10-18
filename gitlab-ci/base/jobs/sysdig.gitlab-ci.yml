@@ -31,12 +31,12 @@ sysdig:
   script:
   - !reference [.container-base, script]
   - if [ -z "${SYSDIG_SECURE_BACKEND_ENDPOINT}" ]; then echo "SYSDIG_SECURE_BACKEND_ENDPOINT is not set."; exit 1; fi;
-  - echo "$REGISTRY_IMAGE" > registry_image.txt
+  - echo "${CI_APPLICATION_REPOSITORY}:${push_tag}" > registry_image.txt
 
   after_script:
   - if [ ! -f "registry_image.txt" ]; then exit 0; fi;
   - registry_image=$(cat registry_image.txt)
-  - echo "${REGISTRY_PASSWORD}" | oras login --username "${REGISTRY_USER}" --password-stdin "${REGISTRY}"
+  - echo "${CI_APPLICATION_REPOSITORY_PASSWORD}" | oras login --username "${CI_APPLICATION_REPOSITORY_USER}" --password-stdin "${CI_APPLICATION_REPOSITORY_REGISTRY}"
   - |
       oras manifest fetch ${registry_image} | jq -n -r -c '.manifests[].digest' | \
       while read digest; do
@@ -54,7 +54,7 @@ sysdig-container_scanning:
   script:
   - !reference [.sysdig-scan, script]
   - sysdig-cli-scanner --version
-  - sysdig-cli-scanner --console-log --apiurl "${SYSDIG_SECURE_BACKEND_ENDPOINT}" "${REGISTRY_IMAGE}" --json-scan-result="${CI_PROJECT_DIR}/container-scanning-report.json"
+  - REGISTRY_USER="${CI_APPLICATION_REPOSITORY_USER}" REGISTRY_PASSWORD="${CI_APPLICATION_REPOSITORY_PASSWORD}" sysdig-cli-scanner --console-log --apiurl "${SYSDIG_SECURE_BACKEND_ENDPOINT}" "${CI_APPLICATION_REPOSITORY}:${push_tag}" --json-scan-result="${CI_PROJECT_DIR}/container-scanning-report.json"
   - rm registry_image.txt
 
   rules:
@@ -81,15 +81,17 @@ sysdig-legacy-container_scanning:
   - |
     docker run --rm -v ${CI_PROJECT_DIR}:/scan \
     ${SYSDIG_INLINE_IMAGE} \
-    "${REGISTRY_IMAGE}" \
+    "${CI_APPLICATION_REPOSITORY}:${push_tag}" \
     --sysdig-url "${SYSDIG_SECURE_BACKEND_ENDPOINT}" \
     --sysdig-token "${SYSDIG_SECURE_TOKEN}" \
-    --registry-auth-basic "${REGISTRY_USER}:${REGISTRY_PASSWORD}" \
+    --registry-auth-basic "${CI_APPLICATION_REPOSITORY_USER}:${CI_APPLICATION_REPOSITORY_PASSWORD}" \
     --write-json "/scan/container-scanning-report.json"
   - rm registry_image.txt
 
   rules:
   - if: $CONTAINER_SCANNING_DISABLED == 'true' || $CONTAINER_SCANNING_DISABLED == '1'
+    when: never
+  - if: $SYSDIG_LEGACY_SCAN == 'false' || $SYSDIG_LEGACY_SCAN == '0'
     when: never
   # Enable job if we want the legacy scanner, the token is set and the pipeline is for a branch or tag
   - if: $CI_COMMIT_BRANCH &&

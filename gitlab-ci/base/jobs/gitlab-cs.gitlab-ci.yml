@@ -2,13 +2,9 @@ include:
 - template: Jobs/Container-Scanning.gitlab-ci.yml
 
 container_scanning:
-  variables:
-    CS_REGISTRY_USER: "$REGISTRY_USER"
-    CS_REGISTRY_PASSWORD: "$REGISTRY_PASSWORD"
-
   script:
   - !reference [.container-base, script]
-  # doing the reference here because there is no way to do it via variable
-  # https://gitlab.com/gitlab-org/gitlab/-/issues/403288
-  - if [ -z $CS_IMAGE ]; then export CS_IMAGE="$REGISTRY_IMAGE"; fi;
+  - export CS_REGISTRY_USER=${CS_REGISTRY_USER:-$CI_APPLICATION_REPOSITORY_USER}
+  - export CS_REGISTRY_PASSWORD=${CS_REGISTRY_PASSWORD:-$CI_APPLICATION_REPOSITORY_PASSWORD}
+  - export CS_IMAGE=${CS_IMAGE:-$CI_APPLICATION_REPOSITORY:$push_tag}
   - gtcs scan
