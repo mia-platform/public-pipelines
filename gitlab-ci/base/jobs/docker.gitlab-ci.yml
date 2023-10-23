@@ -63,13 +63,12 @@ variables:
   - |
     docker buildx build "${DOCKERBUILD_DIR}" \
       --file="${DOCKERFILE_PATH}" \
-      --output=${DOCKERBUILD_OUTPUT} \
+      --output="${DOCKERBUILD_OUTPUT}" \
       --platform="${IMAGE_PLATFORMS}" \
       --tag="${CI_APPLICATION_REPOSITORY}:${push_tag}" \
       --build-arg="COMMIT_SHA=${CI_COMMIT_SHA}" \
       --build-arg="VERSION=${CI_APPLICATION_TAG}" \
-      ${DOCKERBUILD_ADDITIONAL_FLAGS} \
-      --provenance=false
+      --provenance="false" ${DOCKERBUILD_ADDITIONAL_FLAGS}
   - cleanup_docker_context
 
 .docker-deploy:

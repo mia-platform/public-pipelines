@@ -72,8 +72,7 @@ variables:
 
 .npm-publish:
   extends: .npm
-
-  artifacts: []
+  dependencies: []
 
   script:
   - npm publish ${NPM_CLI_OPTS}

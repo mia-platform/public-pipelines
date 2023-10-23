@@ -69,8 +69,7 @@ variables:
 
 .yarn-publish:
   extends: .yarn
-
-  artifacts: []
+  dependencies: []
 
   script:
   - yarn npm publish ${YARNPKG_CLI_OPTS}
