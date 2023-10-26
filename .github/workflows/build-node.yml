@@ -13,28 +13,28 @@ on:
         required: true
 
 jobs:
-  build-node-image:
+  build-node-18-image:
     uses: ./.github/workflows/build-image.yml
     with:
       image_path: containers/node
       image_name: node-pipeline
       image_tag: "18"
+      build_args: |
+        NODE_VERSION=v18.18.2
+        NODE_CHECKSUM=75aba25ae76999309fc6c598efe56ce53fbfc221381a44a840864276264ab8ac
+        NODE_CHECKSUM_ARM=2e630e18548627f61eaf573233da7949dc0a1df5eef3f486fa9820c5f6c121aa
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
       GH_USERNAME: ${{ secrets.BOT_USER }}
       GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
-  build-node-20-image:
+  build-node-image:
     uses: ./.github/workflows/build-image.yml
     with:
       image_path: containers/node
       image_name: node-pipeline
       image_tag: "20"
-      build_args: |
-        NODE_VERSION=v20.8.0
-        NODE_CHECKSUM=66056a2acc368db142b8a9258d0539e18538ae832b3ccb316671b0d35cb7c72c
-        NODE_CHECKSUM_ARM=ec2d98894d58d07260e61e6a70b88cabea98292f0b2801cbeebd864d242e1087
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}

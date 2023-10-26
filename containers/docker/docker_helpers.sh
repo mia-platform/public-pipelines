@@ -10,6 +10,22 @@ docker_login() {
 	echo "${password}" | docker login --username "${username}" --password-stdin "${server}"
 }
 
+docker_build() {
+	local CONTEXT_PATH="${1}"
+	local FILE_PATH="${2}"
+	local OUTPUT="${3}"
+	local PLATFORMS="${4}"
+	local IMAGE_TAG="${5}"
+	local COMMIT_SHA="${6}"
+	local VERSION="${7}"
+	local ADDITIONAL_FLAGS="${8}"
+
+	IFS=$'\n'
+	docker buildx build "${CONTEXT_PATH}" --file="${FILE_PATH}" --output="${OUTPUT}" --platform="${PLATFORMS}" \
+		--tag="${IMAGE_TAG}" --build-arg="COMMIT_SHA=${COMMIT_SHA}" --build-arg="VERSION=${VERSION}" \
+		--provenance="false" ${ADDITIONAL_FLAGS}
+}
+
 docker_retag_image() {
 	local image_to_retag="${1}"
 	local retagged_image="${2}"
@@ -35,10 +51,6 @@ docker_create_sbom_and_sign_image() {
 	else
 		echo "no key found: skipping image signing"
 	fi
-}
-
-docker_clean_tag() {
-	echo "${1}" | perl -pe 's/^v(?P<semver>(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?:[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$/$+{semver}/'
 }
 
 setup_docker_context() {
