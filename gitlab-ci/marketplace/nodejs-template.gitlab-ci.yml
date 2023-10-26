@@ -37,4 +37,5 @@ docker:deploy:
   stage: deploy
 
   rules:
+  - if: $CI_COMMIT_BRANCH
   - if: $CI_COMMIT_TAG
