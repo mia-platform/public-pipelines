@@ -39,6 +39,16 @@ variables:
   image:
     name: ${CONTAINER_PATH}/docker-pipeline:${DOCKER_IMAGE_TAG}
 
+  variables:
+    # These are usually specified by the entrypoint, however the
+    # Kubernetes executor doesn't run entrypoints
+    # https://gitlab.com/gitlab-org/gitlab-runner/-/issues/4125
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+    DOCKER_DRIVER: overlay2
+
   services:
   - name: docker:24-dind
 
@@ -59,17 +69,9 @@ variables:
   - oras version
   - source /usr/local/lib/docker_helpers.sh
   - docker_login "${CI_APPLICATION_REPOSITORY_USER}" "${CI_APPLICATION_REPOSITORY_PASSWORD}" "${CI_APPLICATION_REPOSITORY_REGISTRY}"
-  - setup_docker_context
-  - |
-    docker buildx build "${DOCKERBUILD_DIR}" \
-      --file="${DOCKERFILE_PATH}" \
-      --output="${DOCKERBUILD_OUTPUT}" \
-      --platform="${IMAGE_PLATFORMS}" \
-      --tag="${CI_APPLICATION_REPOSITORY}:${push_tag}" \
-      --build-arg="COMMIT_SHA=${CI_COMMIT_SHA}" \
-      --build-arg="VERSION=${CI_APPLICATION_TAG}" \
-      --provenance="false" ${DOCKERBUILD_ADDITIONAL_FLAGS}
-  - cleanup_docker_context
+  - setup_docker_context "${CI_PROJECT_ID}"
+  - docker_build "${DOCKERBUILD_DIR}" "${DOCKERFILE_PATH}" "${DOCKERBUILD_OUTPUT}" "${IMAGE_PLATFORMS}" "${CI_APPLICATION_REPOSITORY}:${push_tag}" "${CI_COMMIT_SHA}" "${CI_APPLICATION_TAG}" "${DOCKERBUILD_ADDITIONAL_FLAGS}"
+  - cleanup_docker_context "${CI_PROJECT_ID}"
 
 .docker-deploy:
   extends: .docker-base
