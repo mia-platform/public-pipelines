@@ -51,10 +51,10 @@ docker_create_sbom_and_sign_image() {
 }
 
 setup_docker_context() {
-	local prefix=${1:-pipeline}
+	local postfix=${1:-pipeline}
 	# to avoid weird situation where the context or builder are not
 	# properly deleted between runs we ensure to clean them up
-	cleanup_docker_context "${1}" || true
+	cleanup_docker_context "${postfix}" || true
 
 	# In order for `docker buildx create` to work, we need to replace DOCKER_HOST with a Docker context.
 	# Otherwise, we get the following error:
@@ -63,18 +63,18 @@ setup_docker_context() {
 	if [ -n "${DOCKER_CERT_PATH}" ]; then
 		docker="host=${DOCKER_HOST},ca=${DOCKER_CERT_PATH}/ca.pem,cert=${DOCKER_CERT_PATH}/cert.pem,key=${DOCKER_CERT_PATH}/key.pem"
 	fi
-	docker context create "${prefix}-context" \
+	docker context create "context-${postfix}" \
 		--description "Pipelines buildx Docker context" \
 		--docker "${docker}"
 
-	docker buildx create --bootstrap --use --name "${prefix}-builder" "${prefix}-context"
+	docker buildx create --bootstrap --use --name "builder-${postfix}" "context-${postfix}"
 }
 
 cleanup_docker_context() {
-	local prefix=${1:-pipeline}
+	local postfix=${1:-pipeline}
 
 	set +e
-	docker buildx rm -f "${prefix}-builder" >/dev/null 2>&1
-	docker context rm -f "${prefix}-context" >/dev/null 2>&1
+	docker buildx rm -f "builder-${postfix}" >/dev/null 2>&1
+	docker context rm -f "context-${postfix}" >/dev/null 2>&1
 	set -e
 }
