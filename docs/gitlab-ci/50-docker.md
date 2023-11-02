@@ -60,3 +60,5 @@ The job is added automatically to the pipelines.
 #### Image
 
 The job will use the `${CONTAINER_PATH}/docker-pipeline:${DOCKER_IMAGE_TAG}` image to run its scripts.
+
+[official guide]: https://docs.gitlab.com/ee/ci/yaml/signing_examples.html (GitLab documentation on keyless signing)
