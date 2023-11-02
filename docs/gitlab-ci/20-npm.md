@@ -63,9 +63,20 @@ The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image t
 
 ## .npm-lint
 
-This job will run the `lint` script if available with `npm run lint --if-present`, the job is allowed to fail
-to avoid blocking merges for formatting error, every developer is responsible to check if this job will report errors
-and to fix them appropriately.
+The `.npm-lint` hidden job can be used to add a lint check of the code pushed on the repository for enforcing
+company mandated style, running linter to catch common programming mistakes that render the code problematic, etc.
+
+To do so we will search for a script called `lint`, in this script you can run your preferred tool like `ESLint`,
+`JSHint`, `Prettier` and/or any other program you want to use.
+
+As this can be seen as a SAST job we are configuring it as allowed to fail to avoid to block the pipeline if the
+command is missing, missconfigured or if found issues that can be resolved in subsequent commits. For this reason we
+also set the default rule of the job to run only on branches and on merge request pipelines and avoid to run it on
+tags.
+
+The `before_script` is left empty to allow you to set env variables, or setup access to private repositories, even if
+if possible we reccomend to configure npm via its env variables that use the `NPM_CONFIG_` prefix or `NPM_CLI_OPTS` for
+setting up additional flags.
 
 ### Usage
 
@@ -79,19 +90,23 @@ lint-app:
 
 | Key | Default Value | Description  |
 | --- | --- | --- |
-| NPM_CLI_OPTS | "" | the `run` command will use this variable for additional options |
+| NPM_CLI_OPTS | "" | the `run lint` command will use this variable for additional options |
 
 ### Image
 
 The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image to run its scripts.
 
-
 ## .npm-test
 
-This job will run the `coverage` script with `npm run coverage`, our marketplace items all implement this script that
-will set the test framework to save and print coverage results.  
-It will also set the `coverage/cobertura-coverage.xml` path as coverage report of the job, we strongly suggest to
-set this script and run tests without coverage locally to save on time.
+In `.npm-test` we try to run the `coverage` script of your `package.json`. In this script we expect that you will run
+your test framework with a coverage package enabled for creating a report in the cobertura standard and if possibile
+a junit report. This files will be picked up via the relative reporters for GitLab to process and we will try to find
+possible coverage file names `cobertura-coverage.xml` and junit report called `junit.xml` in every subfolders of the
+project.
+
+The `before_script` is left empty to allow you to set env variables, or setup access to private repositories, even if
+if possible we reccomend to configure npm via its env variables that use the `NPM_CONFIG_` prefix or `NPM_CLI_OPTS` for
+setting up additional flags.
 
 ### Usage
 
@@ -105,7 +120,7 @@ test-app:
 
 | Key | Default Value | Description  |
 | --- | --- | --- |
-| NPM_CLI_OPTS | "" | the `run` command will use this variable for additional options |
+| NPM_CLI_OPTS | "" | the `run coverage` command will use this variable for additional options |
 
 ### Image
 
