@@ -1,7 +1,7 @@
 variables:
   NPM_CONFIG_USERCONFIG: ""
   NPM_CONFIG_CACHE: $CI_PROJECT_DIR/.npm
-  NODE_IMAGE_TAG: "18"
+  NODE_IMAGE_TAG: "20"
 
 .npm:
   image: ${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}
@@ -27,7 +27,7 @@ variables:
   - npm run build --if-present ${NPM_CLI_OPTS}
 
   cache:
-  - key: "${CI_COMMIT_REF_SLUG}"
+  - key: $CI_COMMIT_REF_SLUG
     paths:
     - .npm
     policy: pull-push
@@ -41,6 +41,8 @@ variables:
 
 .npm-lint:
   extends: .npm
+  dependencies: []
+  allow_failure: true
 
   script:
   - npm run lint ${NPM_CLI_OPTS}
@@ -51,8 +53,6 @@ variables:
     when: never
   - if: $CI_COMMIT_BRANCH
 
-  allow_failure: true
-
 .npm-test:
   extends: .npm
 
@@ -60,6 +60,7 @@ variables:
   - npm run coverage ${NPM_CLI_OPTS}
 
   artifacts:
+    name: $CI_JOB_NAME_SLUG
     paths:
     - "**/cobertura-coverage.xml"
     - "**/junit.xml"
