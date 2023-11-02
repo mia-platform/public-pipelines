@@ -1,10 +1,10 @@
 variables:
   REGISTRY: $CI_REGISTRY
   IMAGE_NAME: ""
-  IMAGE_PLATFORMS: linux/amd64,linux/arm64
   REGISTRY_USER: $CI_REGISTRY_USER
   REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
   DOCKER_IMAGE_TAG: 1
+  IMAGE_PLATFORMS: linux/amd64,linux/arm64
 
 .container-base:
   script:

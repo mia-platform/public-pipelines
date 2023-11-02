@@ -12,5 +12,13 @@
 container_scanning:
   stage: compliance
 
+  script:
+  - !reference [.container-base, script]
+  - export CS_REGISTRY_USER=${CS_REGISTRY_USER:-$CI_APPLICATION_REPOSITORY_USER}
+  - export CS_REGISTRY_PASSWORD=${CS_REGISTRY_PASSWORD:-$CI_APPLICATION_REPOSITORY_PASSWORD}
+  - export CS_IMAGE=${CS_IMAGE:-$CI_APPLICATION_REPOSITORY:$push_tag}
+  - gtcs scan
+
+
 .sysdig-scan:
   stage: compliance

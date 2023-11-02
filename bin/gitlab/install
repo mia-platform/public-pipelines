@@ -89,8 +89,8 @@ echo "Creating temp project locally..."
 rm -fr "${temp_project_folder_path}"
 mkdir -p "${temp_project_folder_path}"
 
-cp -rT "${basedir}/../gitlab-ci/base/" "${temp_project_folder_path}/"
-cp -r "${basedir}/../gitlab-ci/marketplace" "${temp_project_folder_path}/gitlab-ci"
+cp -rT "${basedir}/../../gitlab-ci/base/" "${temp_project_folder_path}/"
+cp -r "${basedir}/../../gitlab-ci/marketplace" "${temp_project_folder_path}/gitlab-ci"
 
 ############################### Start to make API calls ###############################
 gitlab_url="$(jq -c -r .instance_url <<<"${config}")/api/v4"

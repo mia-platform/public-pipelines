@@ -9,15 +9,15 @@ variables:
   IMAGE_NAME: mia_template_image_name_placeholder
 
 build:
-  extends: .npm-build
+  extends: .yarn-build
   stage: build
 
 lint:
-  extends: .npm-lint
+  extends: .yarn-lint
   stage: sast
 
 test:
-  extends: .npm-test
+  extends: .yarn-test
   stage: test
 
 docker:build:
@@ -26,7 +26,7 @@ docker:build:
 
   rules:
   - if: $CI_COMMIT_BRANCH
-  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  - if: $CI_MERGE_REQUEST_IID
     variables:
       DOCKERBUILD_OUTPUT: "type=image,push=false"
   - if: $CI_OPEN_MERGE_REQUESTS

@@ -1,10 +1,10 @@
 # How to Use the GitLab CI/CD in your Organization
 
 To use effectively the GitLab CI/CD pipelines templates in your organizations you have to save them in your
-GitLab instance if you use is as self-service or inside the group of your organization inside GitLab SaaS.
+GitLab instance if you use self-service or inside the group of your organization inside GitLab SaaS.
 
-To do so we provide a [script](../bin/gitlab-install) that you can run that will copy all the required files in a dedicated
-project.
+To do so we provide a [script](../bin/gitlab/install) you can run that will copy all the required files
+in a dedicated project.
 
 ## Requirements
 
@@ -16,7 +16,7 @@ project.
 ## Configuration File
 
 To run correctly you will need to setup the configuration file with the appropriate values. You can find it in this
-repository under [`bin` > `config.json`](../bin/config.json) and below you can find the default content:
+repository under [`bin` > `gitlab > config.json`](../bin/gitlab/config.json) and below you can find the default content:
 
 ```json
 {
@@ -47,7 +47,7 @@ For an explanation of the various keys and possible values reference the followi
 1. edit the default values of the confiugration file with your favorite editor
 
 	```sh
-	${EDITOR} ./public-pipelines/bin/config.json
+	${EDITOR} ./public-pipelines/bin/gitlab/config.json
 	```
 
 1. set the GitLab username and token as env variables
@@ -60,9 +60,9 @@ For an explanation of the various keys and possible values reference the followi
 1. run the script
 
 	```sh
-	./public-pipelines/bin/gitlab-install -u "${GITLAB_USERNAME}" \
+	./public-pipelines/bin/gitlab/install -u "${GITLAB_USERNAME}" \
 		-t "${GITLAB_TOKEN}" -c \
-		"./public-pipelines/bin/config.json"
+		"./public-pipelines/bin/gitlab/config.json"
 	```
 
 1. after the run is complete you can delete the cloned repository if you want

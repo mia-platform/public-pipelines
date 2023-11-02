@@ -5,19 +5,19 @@ include:
 - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
 
 variables:
-  GOLANG_IMAGE_TAG: "1.21"
+  NODE_IMAGE_TAG: "18"
   IMAGE_NAME: mia_template_image_name_placeholder
 
 build:
-  extends: .go-build
+  extends: .npm-build
   stage: build
 
 lint:
-  extends: .go-lint
+  extends: .npm-lint
   stage: sast
 
 test:
-  extends: .go-test
+  extends: .npm-test
   stage: test
 
 docker:build:
