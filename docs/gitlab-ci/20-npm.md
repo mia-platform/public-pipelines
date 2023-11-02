@@ -126,4 +126,36 @@ test-app:
 
 The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image to run its scripts.
 
+## .npm-publish
+
+The last job we provide is `.npm-publish` and as its name suggest, is a job you can use for publishing your
+package to a remote index, like npm.js or an internal one used by your organization like JFrog Artifactory.
+
+The command that is invokes is `npm publish` and you can personalized it using the `NPM_CLI_OPTS` or via configuring
+npm via the `NPM_CONFIG_` variables.
+
+Remember to setup a rules that is conformant with your organization policies for uploading the package, like running
+the job on tags and/or via manual approval.
+
+### Usage
+
+```yaml
+publish-package:
+  stage: deploy
+  extends: .npm-publish
+
+  rules:
+  - if: $CI_COMMIT_TAG
+```
+
+### Job variables
+
+| Key | Default Value | Description  |
+| --- | --- | --- |
+| NPM_CLI_OPTS | "" | the `publish` command will use this variable for additional options |
+
+### Image
+
+The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image to run its scripts.
+
 [link]: https://github.com/nodejs/release#release-schedule (Node.js LTS release schedule)
