@@ -16,7 +16,7 @@ This file will set the following env variables in the global space.
 | Key | Default Value | Description  |
 | --- | --- | --- |
 | NPM_CONFIG_USERCONFIG | "" | custom path to the npm user configuration, if left empty is $HOME/.npm |
-| NPM_CONFIG_CACHE | $CI_PROJECT_DIR/.npm | custom path for the npm cache, if you change it you must override the `.npm-buil` job cache configurations to point to the new path, we higly discourage that |
+| NPM_CONFIG_CACHE | $CI_PROJECT_DIR/.npm | custom path for the npm cache, if you change it you must override the `.npm-build` job cache configurations to point to the new path, we higly discourage that |
 | NODE_IMAGE_TAG | "20" | the node major version to use in the pipeline, our image will support the tls version that you can find at this [link] |
 
 ## .npm-build
@@ -66,7 +66,7 @@ The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image t
 The `.npm-lint` hidden job can be used to add a lint check of the code pushed on the repository for enforcing
 company mandated style, running linter to catch common programming mistakes that render the code problematic, etc.
 
-To do so we will search for a script called `lint`, in this script you can run your preferred tool like `ESLint`,
+To do so we try to run a script called `lint`, in this script you can run your preferred tool like `ESLint`,
 `JSHint`, `Prettier` and/or any other program you want to use.
 
 As this can be seen as a SAST job we are configuring it as allowed to fail to avoid to block the pipeline if the
@@ -131,7 +131,7 @@ The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image t
 The last job we provide is `.npm-publish` and as its name suggest, is a job you can use for publishing your
 package to a remote index, like npm.js or an internal one used by your organization like JFrog Artifactory.
 
-The command that is invokes is `npm publish` and you can personalized it using the `NPM_CLI_OPTS` or via configuring
+The command that is invoked is `npm publish` and you can personalized it using the `NPM_CLI_OPTS` or via configuring
 npm via the `NPM_CONFIG_` variables.
 
 Remember to setup a rules that is conformant with your organization policies for uploading the package, like running
