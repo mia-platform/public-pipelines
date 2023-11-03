@@ -1,7 +1,7 @@
 variables:
   NPM_CONFIG_USERCONFIG: ""
   YARN_CACHE_FOLDER: $CI_PROJECT_DIR/.yarn/cache
-  NODE_IMAGE_TAG: "18"
+  NODE_IMAGE_TAG: "20"
 
 .yarn:
   image: ${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}
@@ -60,12 +60,16 @@ variables:
   - yarn run coverage ${YARNPKG_CLI_OPTS}
 
   artifacts:
+    name: $CI_JOB_NAME_SLUG
     paths:
-    - coverage/cobertura-coverage.xml
+    - "**/cobertura-coverage.xml"
+    - "**/junit.xml"
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: coverage/cobertura-coverage.xml
+        path: "**/cobertura-coverage.xml"
+      junit:
+      - "**/junit.xml"
 
 .yarn-publish:
   extends: .yarn
@@ -73,3 +77,10 @@ variables:
 
   script:
   - yarn npm publish ${YARNPKG_CLI_OPTS}
+
+.yarn-classic-publish:
+  extends: .yarn
+  dependencies: []
+
+  script:
+  - yarn publish ${YARNPKG_CLI_OPTS}
