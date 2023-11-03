@@ -5,7 +5,7 @@ include:
 - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
 
 variables:
-  NODE_IMAGE_TAG: "18"
+  NODE_IMAGE_TAG: "20"
   IMAGE_NAME: mia_template_image_name_placeholder
 
 build:
