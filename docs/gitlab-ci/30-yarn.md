@@ -1,8 +1,8 @@
 # Yarn
 
-The `yarn` file will provide you with basic blocks for managing a **Node.js** project managed by `Yarn`.
-The file will add a series of hidden jobs that you can then be extended inside the `.gitlab-ci.yml` file in the
-relative project on GitLab.
+The `yarn` file will provide the basic blocks for managing a **Node.js** project managed by `Yarn`.
+The file will add a series of hidden jobs that can be extended inside the `.gitlab-ci.yml` file in the relative
+project on GitLab.
 
 Inside the provided image, the latest version of Yarn is installed but we reccomend to use the preferred workflow of
 Yarn and set the version you want to use with `yarn set version <yarn-version>`. This command will set the appropriate

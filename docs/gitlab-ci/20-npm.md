@@ -1,8 +1,8 @@
 # npm
 
-The `npm` file will provide you with basic blocks for managing a **Node.js** project managed by `npm`.
-The file will add a series of hidden jobs that you can then be extended inside the `.gitlab-ci.yml` file in the
-relative project on GitLab.
+The `npm` file will provide the basic blocks for managing a **Node.js** project managed by `npm`.
+The file will add a series of hidden jobs that can be extended inside the `.gitlab-ci.yml` file in the relative
+project on GitLab.
 
 The templates will also try to setup useful default for the project caches and reports that can be visualized inside
 GitLab. The cache is composed by two different blocks; the first one that is used only on the `.npm-build` job is aimed

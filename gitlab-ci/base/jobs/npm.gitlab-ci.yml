@@ -14,6 +14,7 @@ variables:
     paths:
     - "**/node_modules"
     policy: pull
+    unprotect: true
 
 .npm-build:
   extends: .npm
@@ -38,6 +39,7 @@ variables:
       prefix: ${CI_COMMIT_REF_SLUG}
     paths: !reference [.npm, cache, paths]
     policy: pull-push
+    unprotect: true
 
 .npm-lint:
   extends: .npm
