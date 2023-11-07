@@ -1,6 +1,12 @@
-# sysdig
+# Sysdig
 
-In the sysdig file you can find jobs that will enable you to setup container scanning via the secure service of [Sysdig].
+The `sysdig` file will add the capability to use the secure service of [Sysdig] for scan the docker images built for
+vulnerabilities. The file is supporting both scanning engine, the legacy one and the new one via two different
+jobs, by default the new engine is used via the new `sysdig-cli-scanner` cli but you can opt in to use the legacy one
+setting the `SYSDIG_LEGACY_SCAN` to **1** or **true**.
+
+As with the default GitLab container scanner the jobs can be turned off setting the variable `CONTAINER_SCANNING_DISABLED`
+to **1** or **true**.
 
 This file will import the following env variables in the global space.
 
