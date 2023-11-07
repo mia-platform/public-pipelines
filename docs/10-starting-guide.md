@@ -1,6 +1,6 @@
 # Mia-Platform Pipelines
 
-In case you donn‘t have a unified pipeline strategy for building libraries and Docker images, you can start with
+In case you don‘t have a unified pipeline strategy for building libraries and Docker images, you can start with
 our pipelines. They are a starting step for quickly setting them up following best practictes and trying to
 add useful steps that can match regulatory compliance for your company.
 
