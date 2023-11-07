@@ -74,7 +74,7 @@ For an explanation of the various keys and possible values reference the followi
 ## Setting Pipeline Templates
 
 If you are a Premium subscriber you can use the newly created project as an instance or group template repository.
-All pipelines used for the public marketplace can also be used as templates for your projects that not use the console.
+All pipelines used for the public marketplace can also be used as templates for your projects that do not use the console.
 
 [git]: https://git-scm.com (Git is a free and open source distributed version control system )
 [jq]: https://jqlang.github.io/jq/ (jq is a lightweight and flexible command-line JSON processor)
