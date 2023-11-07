@@ -19,6 +19,5 @@ container_scanning:
   - export CS_IMAGE=${CS_IMAGE:-$CI_APPLICATION_REPOSITORY:$push_tag}
   - gtcs scan
 
-
 .sysdig-scan:
   stage: compliance
