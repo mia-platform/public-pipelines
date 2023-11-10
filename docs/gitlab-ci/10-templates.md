@@ -54,12 +54,12 @@ first installation.
 The main part of the pipeline templates are implemented inside the `jobs` folder, inside that folder you can find
 various files that create the jobs you can use to compose your pipelines.
 
-- [npm](./20-npm)
-- [yarn](./30-yarn)
-- [golang](./40-golang)
-- [docker](./50-docker)
-- [licenses](./60-licenses)
-- [sysdig](./70-sysdig)
+- [npm](./20-npm.md)
+- [yarn](./30-yarn.md)
+- [golang](./40-golang.md)
+- [docker](./50-docker.md)
+- [licenses](./60-licenses.md)
+- [sysdig](./70-sysdig.md)
 
 [Compliance pipelines]: https://docs.gitlab.com/ee/user/group/compliance_frameworks.html#compliance-pipelines
 	(GitLab compliance pipelines documentation site)
