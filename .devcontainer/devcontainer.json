@@ -1,15 +1,13 @@
 {
-	"name": "Pielines",
+	"name": "Pipelines",
 	"image": "mcr.microsoft.com/devcontainers/base:debian",
-	"containerUser": "root",
 	"features": {
-		"ghcr.io/devcontainers/features/common-utils:1": {}
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
 	"customizations": {
 		"vscode": {
 			"settings": {
-				"files.eol": "\n",
-				"files.insertFinalNewline": true,
+				"files.insertFinalNewline": false,
 				"files.trimFinalNewlines": true,
 				"files.trimTrailingWhitespace": false
 			},
