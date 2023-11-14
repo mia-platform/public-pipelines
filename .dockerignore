@@ -1,0 +1,12 @@
+.devcontainer
+.git
+.github
+.dockerignore
+.editorconfig
+.gitignore
+.shellcheck
+Dockerfile
+LICENSE
+*.yaml
+**.yml
+**.md
