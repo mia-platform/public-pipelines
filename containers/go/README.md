@@ -1,17 +1,18 @@
-# Go Docker Image
+# Go Docker Image for Pipelines
 
-This is Docker image is used for the `go` pipelines.
+This is a Docker image that will be used on `go` pipelines job that pertain to building, testing and linting a golang
+project.
 
 ## Description
 
-This Docker image is designed for use it inside the `go` steps of the pipelines, and it install `go` and
-its major used package managers.
+This Docker image is designed for use it inside the `go` steps of the pipelines, and it install `go` and other major
+tools for go projects.
 
 ## Contents
 
-This image is based on the build-base image and add this components:
+This image is based on the base-pipeline image and add this components:
 
-- go 1.20.5
-- golangci-lint v1.53.3
+- go
+- golangci-lint
 - goreleaser
 - make

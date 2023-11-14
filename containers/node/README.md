@@ -1,17 +1,18 @@
 # Node Docker Image for Pipelines
 
-This is Docker image is used for the `nodejs` pipelines.
+This is a Docker image that will be used on `npm` and `yarn` pipelines jobs that pertain to building, testing and
+linting a nodejs project with its main package managers.
 
 ## Description
 
-This Docker image is designed for use it inside the `nodejs` steps of the pipelines, and it install `nodejs` and
-its major used package managers.
+This Docker image is designed for use it inside the `npm` and `yarn` steps of the pipelines, and it install `nodejs`
+and its major package managers.
 
 ## Contents
 
-This image is based on the build-base image and add this components:
+This image is based on the base-pipeline image and add this components:
 
-- nodejs 18
+- nodejs
 - npx
 - npm
 - yarn
