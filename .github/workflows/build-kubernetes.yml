@@ -1,0 +1,59 @@
+name: Build Kubernetes Image
+
+on:
+  workflow_call:
+    secrets:
+      BOT_DOCKER_USERNAME:
+        required: true
+      BOT_DOCKER_TOKEN:
+        required: true
+      BOT_USER:
+        required: true
+      BOT_GITHUB_TOKEN:
+        required: true
+
+jobs:
+  build-kubernetes-1-26-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/kubernetes
+      image_name: kubernetes-pipeline
+      image_tag: "1.26"
+      build_args: |
+        KUBECTL_VERSION=v1.26.10
+        KUBECTL_CHECKSUM=93ad44b4072669237247bfbc171be816f08e7e9e4260418d2cfdd0da1704ae86
+        KUBECTL_CHECKSUM_ARM=5752e3908fa1d338eb1fa99a6f39c6a4c27b065cb459da84e35c4ec718879f14
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+  build-kubernetes-1-27-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/kubernetes
+      image_name: kubernetes-pipeline
+      image_tag: "1.27"
+      build_args: |
+        KUBECTL_VERSION=v1.27.7
+        KUBECTL_CHECKSUM=e5fe510ba6f421958358d3d43b3f0b04c2957d4bc3bb24cf541719af61a06d79
+        KUBECTL_CHECKSUM_ARM=61fc334f2c0290270e43fb8a1d4ff07e8cec5642d5a123eb7ab66a134b04ae83
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+
+  build-kubernetes-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_path: containers/kubernetes
+      image_name: kubernetes-pipeline
+      image_tag: "1.28"
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      GH_USERNAME: ${{ secrets.BOT_USER }}
+      GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
