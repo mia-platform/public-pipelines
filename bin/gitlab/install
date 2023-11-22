@@ -1,0 +1,151 @@
+#! /usr/bin/env bash
+
+set -o pipefail
+set -o errexit
+
+## This script will setup a repository in your chosen GitLab group or in a predefined root groups.
+## Then all the public pipelines yaml files will be commited in the newly created project and a pipeline
+## will be set to automatically open merge requests with eventual updates.
+
+## The needed values from your self-maanged instance or GitLab SaaS are the following:
+## - a valid token that has the 'api' and 'write_repository' scopes on the target GitLab instance
+## - the username of the user that has created the token
+## - a different path where to find the configuration file for the script
+
+# local configuration
+readonly temp_project_folder_path=/tmp/tmp-pipelines
+basedir=$(dirname "$0")
+
+readonly basedir
+
+# parameters read from the user
+TOKEN=""
+USERNAME=""
+CONFIG_PATH="${basedir}/config.json"
+
+# original values that the final user can change
+readonly ORIGINAL_CONTAINER_PATH="ghcr.io/mia-platform"
+readonly ORIGINAL_INCLUDE_PATH="mia-platform/pipeline-templates"
+readonly DEFAULT_GROUP_NAME=""
+
+function print_usage() {
+	cat <<EOF
+Usage: $0 --token token
+
+Options:
+	-u, --username: the username of the user associated with the access token
+	-t, --token:    the access token for the user that has api and write_repository scopes
+	-c, --config:   the path for the configuration file, default to directory of the script file
+EOF
+}
+
+### Check for variables and provide usage if nothing is present
+if [[ $# -eq 0 ]]; then
+	echo "Missing flags. Please see usage below."
+	print_usage
+	exit 1
+fi
+
+while [[ -n "$1" ]]; do
+	case $1 in
+	-u | --username)
+		shift
+		readonly USERNAME=$1
+	;;
+	-t | --token)
+		shift
+		readonly TOKEN=$1
+	;;
+	-c | --config)
+		shift
+		readonly CONFIG_PATH=$1
+	;;
+	-h | --help)
+		print_usage
+		exit 0
+	;;
+	*)
+		print_usage
+		exit 1
+	;;
+	esac
+	shift
+done
+
+# validate user inpunts
+if [[ -z "${TOKEN}" ]]; then
+	echo "You must provide a token."
+	echo "Try '$0 --help' for more information."
+	exit 1
+elif [[ -z "${USERNAME}" ]]; then
+	echo "You must provide a username."
+	echo "Try '$0 --help' for more information."
+	exit 1
+fi
+config=$(cat "${CONFIG_PATH}")
+
+# create a temporary folder, ensure that it will be empty, and copy all the needed files into it
+echo "Creating temp project locally..."
+rm -fr "${temp_project_folder_path}"
+mkdir -p "${temp_project_folder_path}"
+
+cp -rT "${basedir}/../../gitlab-ci/base/" "${temp_project_folder_path}/"
+cp -r "${basedir}/../../gitlab-ci/marketplace" "${temp_project_folder_path}/gitlab-ci"
+
+############################### Start to make API calls ###############################
+gitlab_url="$(jq -c -r .instance_url <<<"${config}")/api/v4"
+readonly gitlab_url
+
+group_id=$(jq -c -r .group_id <<<"${config}")
+visibility=$(jq -c -r .default_visibility <<<"${config}")
+
+# create a default group where to save the pipeline project if is not given by the user
+if [[ -z ${group_id} ]]; then
+	echo "Creating default base group: ${DEFAULT_GROUP_NAME}"
+	data="{\"path\":\"mia-platform\",\"name\":\"Mia-Platform\",\"visibility\": \"${visibility}\"}"
+	group_response=$(curl -q -H "PRIVATE-TOKEN: ${TOKEN}" -H "Content-type: application/json" --data "${data}" "${gitlab_url}/groups")
+	group_id=$(jq -c -r .id <<<"${group_response}")
+fi
+
+# create the project where to save the pipeline files
+echo "Creating project..."
+data="{\"path\":\"pipeline-templates\",\"name\":\"Pipeline Templates\",\"visibility\": \"${visibility}\",\"namespace_id\":${group_id}}"
+project_response=$(curl -q -H "PRIVATE-TOKEN: ${TOKEN}" -H "Content-type: application/json" --data "${data}" "${gitlab_url}/projects")
+
+############################### End to make API calls ###############################
+
+############################### Start to update pipelines data ###############################
+
+# change pipeline images base name if necessary
+project_path=$(jq -c -r .path_with_namespace <<<"${project_response}")
+pipeline_image_name=$(jq -c -r .pipeline_images_base_name <<<"${config}")
+if [[ "${pipeline_image_name}" != "${ORIGINAL_CONTAINER_PATH}" ]]; then
+	echo "Changing pipeline CONTAINER_PATH variable content to: ${pipeline_image_name}"
+	perl -i -pe "s|${ORIGINAL_CONTAINER_PATH}|${pipeline_image_name}|g" "${temp_project_folder_path}/Application.gitlab-ci.yml"
+fi
+
+# change include path for the pipeline templates
+
+if [[ "${project_path}" != "${ORIGINAL_INCLUDE_PATH}" ]]; then
+	echo "Changing templates include path to: ${project_path}"
+	find "${temp_project_folder_path}" -type f -name "*.gitlab-ci.yml" -exec perl -i -pe "s|project: ${ORIGINAL_INCLUDE_PATH}|project: ${project_path}|g" {} \;
+fi
+
+############################### End to update pipelines data ###############################
+
+############################### Push Repository ###############################
+
+project_http_url=$(jq -c -r .http_url_to_repo <<<"${project_response}")
+echo "Push repository to ${project_http_url} using provided username and token..."
+http_sep="://"
+project_with_auht="${project_http_url%%"${http_sep}"*}${http_sep}${USERNAME}:${TOKEN}@${project_http_url##*"${http_sep}"}"
+git init -q -b main "${temp_project_folder_path}"
+git -C "${temp_project_folder_path}" add .
+git -C "${temp_project_folder_path}" commit --quiet --message "Initial commit"
+git -C "${temp_project_folder_path}" push --quiet --set-upstream "${project_with_auht}" main
+echo "Push completed"
+
+############################### Cleanup ###############################
+
+echo "Remove temporary files..."
+rm -fr "${temp_project_folder_path}"

@@ -1,0 +1,61 @@
+variables:
+  GO_MAIN_MODULE_PATH: $CI_PROJECT_DIR
+  GOPATH: $CI_PROJECT_DIR/.cache
+  GOLANG_IMAGE_TAG: "1.20"
+
+.golang:
+  image: ${CONTAINER_PATH}/golang-pipeline:${GOLANG_IMAGE_TAG}
+
+  cache:
+    key:
+      files:
+      - go.sum
+      prefix: ${CI_COMMIT_REF_SLUG}
+    paths:
+    - .cache
+    policy: pull
+    unprotect: true
+
+.go-build:
+  extends: .golang
+
+  script:
+  - go version
+  - go get ${GO_CLI_OPTS} -t ./...
+  - go build ${GO_CLI_OPTS} "${GO_MAIN_MODULE_PATH}"
+
+  cache:
+    policy: pull-push
+
+.go-lint:
+  extends: .golang
+
+  variables:
+    GOLANG_LINT_CI_CONFIG: $CI_PROJECT_DIR/.golangci.yaml
+
+  script:
+  - golangci-lint --version
+  - golangci-lint run --config="${GOLANG_LINT_CI_CONFIG}"
+
+  rules:
+  - if: $CI_MERGE_REQUEST_IID
+  - if: $CI_OPEN_MERGE_REQUESTS
+    when: never
+  - if: $CI_COMMIT_BRANCH
+
+  allow_failure: true
+
+.go-test:
+  extends: .golang
+
+  variables:
+    GO_TEST_PATH: $GO_MAIN_MODULE_PATH
+
+  script:
+  - go test -race -coverprofile=coverage.out -covermode=atomic ${GO_CLI_OPTS} "${GO_TEST_PATH}"
+  - go tool cover -func=coverage.out
+
+  artifacts:
+    name: $CI_JOB_NAME_SLUG
+    paths:
+    - "coverage.out"

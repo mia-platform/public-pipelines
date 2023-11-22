@@ -1,0 +1,81 @@
+variables:
+  NPM_CONFIG_USERCONFIG: ""
+  NPM_CONFIG_CACHE: $CI_PROJECT_DIR/.npm
+  NODE_IMAGE_TAG: "20"
+
+.npm:
+  image: ${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}
+
+  cache:
+    key:
+      files:
+      - package-lock.json
+      prefix: ${CI_COMMIT_REF_SLUG}
+    paths:
+    - "**/node_modules"
+    policy: pull
+    unprotect: true
+
+.npm-build:
+  extends: .npm
+  variables:
+    NPM_CONFIG_PREFER_OFFLINE: "true"
+
+  script:
+  - npm version
+  - npm ci ${NPM_INSTALL_CLI_OPTS}
+  - npm rebuild ${NPM_CLI_OPTS}
+  - npm run build --if-present ${NPM_CLI_OPTS}
+
+  cache:
+  - key: $CI_COMMIT_REF_SLUG
+    paths:
+    - .npm
+    policy: pull-push
+    unprotect: true
+  - key:
+      files:
+      - package-lock.json
+      prefix: ${CI_COMMIT_REF_SLUG}
+    paths: !reference [.npm, cache, paths]
+    policy: pull-push
+    unprotect: true
+
+.npm-lint:
+  extends: .npm
+  dependencies: []
+  allow_failure: true
+
+  script:
+  - npm run lint ${NPM_CLI_OPTS}
+
+  rules:
+  - if: $CI_MERGE_REQUEST_IID
+  - if: $CI_OPEN_MERGE_REQUESTS
+    when: never
+  - if: $CI_COMMIT_BRANCH
+
+.npm-test:
+  extends: .npm
+
+  script:
+  - npm run coverage ${NPM_CLI_OPTS}
+
+  artifacts:
+    name: $CI_JOB_NAME_SLUG
+    paths:
+    - "**/cobertura-coverage.xml"
+    - "**/junit.xml"
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: "**/cobertura-coverage.xml"
+      junit:
+      - "**/junit.xml"
+
+.npm-publish:
+  extends: .npm
+  dependencies: []
+
+  script:
+  - npm publish ${NPM_CLI_OPTS}

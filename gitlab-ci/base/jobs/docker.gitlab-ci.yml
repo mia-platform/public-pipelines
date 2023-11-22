@@ -1,0 +1,94 @@
+variables:
+  REGISTRY: $CI_REGISTRY
+  IMAGE_NAME: ""
+  REGISTRY_USER: $CI_REGISTRY_USER
+  REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+  DOCKER_IMAGE_TAG: 1
+  IMAGE_PLATFORMS: linux/amd64,linux/arm64
+
+.container-base:
+  script:
+  - |
+    # override CI_APPLICATION_REPOSITORY if needed based on REGISTRY value
+    if [[ "${REGISTRY}" != "${CI_REGISTRY}" ]]; then
+      export CI_APPLICATION_REPOSITORY=${CI_APPLICATION_REPOSITORY:-$REGISTRY/$IMAGE_NAME}
+    else
+      export CI_APPLICATION_REPOSITORY=${CI_APPLICATION_REPOSITORY:-$CI_REGISTRY_IMAGE}
+    fi
+  - export CI_APPLICATION_REPOSITORY_REGISTRY=${CI_APPLICATION_REPOSITORY_REGISTRY:-$REGISTRY}
+  - export CI_APPLICATION_REPOSITORY_USER=${CI_APPLICATION_REPOSITORY_USER:-$REGISTRY_USER}
+  - export CI_APPLICATION_REPOSITORY_PASSWORD=${CI_APPLICATION_REPOSITORY_PASSWORD:-$REGISTRY_PASSWORD}
+  - |
+    # override CI_APPLICATION_TAG if needed based on CI_COMMIT_TAG and CI_COMMIT_REF_NAME value
+    if [[ "${CI_COMMIT_TAG}" ]]; then
+      export CI_APPLICATION_TAG=${CI_APPLICATION_TAG:-$CI_COMMIT_TAG}
+    elif [[ "${CI_COMMIT_REF_NAME}" == "${CI_DEFAULT_BRANCH}" ]]; then
+      export CI_APPLICATION_TAG=${CI_APPLICATION_TAG:-latest}
+    else
+      export CI_APPLICATION_TAG=${CI_APPLICATION_TAG:-$CI_COMMIT_REF_SLUG}
+    fi
+  - push_tag=${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}
+  - |
+    if [[ "${ENABLE_SEMVER_TAG_WITHOUT_VERSION_PREFIX}" == "true" || "${ENABLE_SEMVER_TAG_WITHOUT_VERSION_PREFIX}" == "1" ]]; then
+      CI_APPLICATION_TAG="$(echo "${CI_APPLICATION_TAG}" | perl -pe 's/^v(?P<semver>(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?:[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$/$+{semver}/')"
+      push_tag="$(echo "${push_tag}" | perl -pe 's/^v(?P<semver>(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?:[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$/$+{semver}/')"
+    fi
+  - "echo Running on ref ${CI_COMMIT_REF_NAME}: tag = ${CI_APPLICATION_TAG}"
+
+.docker-base:
+  image:
+    name: ${CONTAINER_PATH}/docker-pipeline:${DOCKER_IMAGE_TAG}
+
+  variables:
+    # These are usually specified by the entrypoint, however the
+    # Kubernetes executor doesn't run entrypoints
+    # https://gitlab.com/gitlab-org/gitlab-runner/-/issues/4125
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+    DOCKER_DRIVER: overlay2
+
+  services:
+  - name: docker:24-dind
+
+  dependencies: []
+
+.docker-build:
+  extends: .docker-base
+
+  variables:
+    DOCKERBUILD_DIR: $CI_PROJECT_DIR
+    DOCKERFILE_PATH: $CI_PROJECT_DIR/Dockerfile
+    DOCKERBUILD_OUTPUT: "type=image,push=true"
+
+  script:
+  - !reference [.container-base, script]
+  - docker info
+  - docker buildx version
+  - oras version
+  - source /usr/local/lib/docker_helpers.sh
+  - docker_login "${CI_APPLICATION_REPOSITORY_USER}" "${CI_APPLICATION_REPOSITORY_PASSWORD}" "${CI_APPLICATION_REPOSITORY_REGISTRY}"
+  - setup_docker_context "${CI_PROJECT_ID}"
+  - docker_build "${DOCKERBUILD_DIR}" "${DOCKERFILE_PATH}" "${DOCKERBUILD_OUTPUT}" "${IMAGE_PLATFORMS}" "${CI_APPLICATION_REPOSITORY}:${push_tag}" "${CI_COMMIT_SHA}" "${CI_APPLICATION_TAG}" "${DOCKERBUILD_ADDITIONAL_FLAGS}"
+  - cleanup_docker_context "${CI_PROJECT_ID}"
+
+.docker-deploy:
+  extends: .docker-base
+
+  script:
+  - !reference [.container-base, script]
+  - source /usr/local/lib/docker_helpers.sh
+  - docker_login "${CI_APPLICATION_REPOSITORY_USER}" "${CI_APPLICATION_REPOSITORY_PASSWORD}" "${CI_APPLICATION_REPOSITORY_REGISTRY}"
+  - |
+    if [[ -z "${CI_COMMIT_TAG}" ]]; then
+      docker_retag_image "${CI_APPLICATION_REPOSITORY}:${push_tag}" "${CI_APPLICATION_REPOSITORY}:${CI_APPLICATION_TAG}"
+    else
+      syft version
+      cosign version
+      docker_create_sbom_and_sign_image "${CI_APPLICATION_REPOSITORY}:${CI_APPLICATION_TAG}"
+    fi
+
+  artifacts:
+    paths:
+    - "**.spdx.json"

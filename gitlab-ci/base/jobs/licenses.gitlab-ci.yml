@@ -1,0 +1,38 @@
+variables:
+  SYFT_IMAGE_TAG: 1
+
+syft-dependency_scanning:
+  extends: .ds-analyzer
+  image: ${CONTAINER_PATH}/base-pipeline:${SYFT_IMAGE_TAG}
+
+  variables:
+    LICENSES_BLOCKLIST: ""
+
+  script:
+  - syft version
+  - syft "${CI_PROJECT_DIR}" -o spdx-json=gl-sbom-report.spdx.json -o cyclonedx-json=gl-sbom-report.cdx.json
+  - if [ -z "${LICENSES_BLOCKLIST}" ]; then exit 0; fi;
+  - 'echo -e "Blocked Licenses: ${LICENSES_BLOCKLIST}"'
+  - licenses_json=$(echo "${LICENSES_BLOCKLIST}" | sed 's/,/","/g' | awk '{print "[\"" $0 "\"]"}')
+  - blocked_licenses=$(jq -r --argjson licenses "${licenses_json}" '.packages[] | select(.licenseDeclared as $ld | any($licenses[]; . == $ld)) | [.name, .licenseDeclared] | join(" ")' gl-sbom-report.spdx.json | column --table)
+  - if [ -z "${blocked_licenses}" ]; then exit 0; fi;
+  - echo "${blocked_licenses}"
+  - exit 1
+
+  rules:
+  - if: $DEPENDENCY_SCANNING_DISABLED == 'true' || $DEPENDENCY_SCANNING_DISABLED == '1'
+    when: never
+  - if: $DS_EXCLUDED_ANALYZERS =~ /syft/
+    when: never
+  - if: $CI_MERGE_REQUEST_IID
+  - if: $CI_OPEN_MERGE_REQUESTS
+    when: never
+  - if: $CI_COMMIT_BRANCH
+
+  artifacts:
+    paths:
+    - "**/gl-sbom-*.spdx.json"
+    - "**/gl-sbom-*.cdx.json"
+    reports:
+      cyclonedx: "**/gl-sbom-*.cdx.json"
+      dependency_scanning: null

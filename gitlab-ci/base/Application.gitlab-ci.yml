@@ -1,0 +1,15 @@
+# This file is used as meta include, and will only contains includes and user overridable variables
+include:
+- local: jobs/npm.gitlab-ci.yml
+- local: jobs/yarn.gitlab-ci.yml
+- local: jobs/golang.gitlab-ci.yml
+- local: jobs/docker.gitlab-ci.yml
+- local: Governance.gitlab-ci.yml
+  rules:
+  - if: $GITLAB_FEATURES !~ /\bcompliance_pipeline_configuration\b/
+
+variables:
+  CONTAINER_PATH: ghcr.io/mia-platform # Default container path for purpose build containers.
+
+default:
+  image: ${CONTAINER_PATH}/base-pipeline:1 # Sets default image if one is not specified
