@@ -20,9 +20,9 @@ jobs:
       image_name: node-pipeline
       image_tag: "18"
       build_args: |
-        NODE_VERSION=v18.18.2
-        NODE_CHECKSUM=75aba25ae76999309fc6c598efe56ce53fbfc221381a44a840864276264ab8ac
-        NODE_CHECKSUM_ARM=2e630e18548627f61eaf573233da7949dc0a1df5eef3f486fa9820c5f6c121aa
+        NODE_VERSION=v18.19.0
+        NODE_CHECKSUM=61632bb78ee828d6e8f42adc0bc2238a6b8200007093988d3927176a372281e8
+        NODE_CHECKSUM_ARM=cf94ab72e45b855257545fec1c017bdf30a9e23611561382eaf64576b999e72d
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}

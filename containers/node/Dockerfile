@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
-FROM docker.io/curlimages/curl:8.4.0@sha256:4a3396ae573c44932d06ba33f8696db4429c419da87cbdc82965ee96a37dd0af AS download
+FROM docker.io/curlimages/curl:8.5.0@sha256:4bfa3e2c0164fb103fb9bfd4dc956facce32b6c5d47cc09fcec883ce9535d5ac AS download
 
 ARG TARGETARCH
 
 # https://nodejs.org/download/release
-ARG NODE_VERSION=v20.9.0
-ARG NODE_CHECKSUM=9033989810bf86220ae46b1381bdcdc6c83a0294869ba2ad39e1061f1e69217a
-ARG NODE_CHECKSUM_ARM=ced3ecece4b7c3a664bca3d9e34a0e3b9a31078525283a6fdb7ea2de8ca5683b
+ARG NODE_VERSION=v20.10.0
+ARG NODE_CHECKSUM=3fe4ec5d70c8b4ffc1461dec83ab23fc70124e137c4cbbe1ccc9d6ae6ec04a7d
+ARG NODE_CHECKSUM_ARM=21f19d1f9d2345c5a4ed416c21d89cec20fe4b0715255d49463a4d37e283b4c6
 
 USER root
 

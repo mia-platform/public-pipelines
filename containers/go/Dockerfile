@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
-FROM docker.io/curlimages/curl:8.4.0@sha256:4a3396ae573c44932d06ba33f8696db4429c419da87cbdc82965ee96a37dd0af AS download
+FROM docker.io/curlimages/curl:8.5.0@sha256:4bfa3e2c0164fb103fb9bfd4dc956facce32b6c5d47cc09fcec883ce9535d5ac AS download
 
 ARG TARGETARCH
 
 # https://go.dev/dl
-ARG GO_VERSION=1.21.4
-ARG GO_CHECKSUM=73cac0215254d0c7d1241fa40837851f3b9a8a742d0b54714cbdfb3feaf8f0af
-ARG GO_CHECKSUM_ARM=ce1983a7289856c3a918e1fd26d41e072cc39f928adfb11ba1896440849b95da
+ARG GO_VERSION=1.21.5
+ARG GO_CHECKSUM=a2e1d5743e896e5fe1e7d96479c0a769254aed18cf216cf8f4c3a2300a9b3923
+ARG GO_CHECKSUM_ARM=841cced7ecda9b2014f139f5bab5ae31785f35399f236b8b3e75dff2a2978d96
 
 # https://github.com/golangci/golangci-lint/releases
 ARG GOLANGCI_VERSION=1.55.2
