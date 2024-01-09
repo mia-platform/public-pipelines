@@ -14,7 +14,7 @@ easy to use, and meet regulatory compliance for your company.
 You can contribute to this repository in adding support for new languages or improve the default steps for the
 exsisting ones, improve the documentation, improve the Docker images and so on. We welcome everybody!
 
-You can find more reading the [documentation](./docs/10_starting-guide.md).
+You can find more reading the [documentation](./docs/10-starting-guide.md).
 
 [Gitlab CI/CD Supported]: https://img.shields.io/badge/GitLab-CI%2FCD-orange?logo=gitlab&style=for-the-badge
 [Node.js with NPM Supported]: https://img.shields.io/badge/18%2C20-black?style=for-the-badge&logo=npm&label=NPM%20Node.js&color=3C873A
