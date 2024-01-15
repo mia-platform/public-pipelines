@@ -1,2 +1,4 @@
 # All files
 * @mia-platform/sig-pipelines
+# Actions must also be checked by security
+.github/actions @mia-platform/sig-pipelines @mia-platform/sig-security
