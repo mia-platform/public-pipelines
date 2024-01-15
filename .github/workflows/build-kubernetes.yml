@@ -20,9 +20,9 @@ jobs:
       image_name: kubernetes-pipeline
       image_tag: "1.26"
       build_args: |
-        KUBECTL_VERSION=v1.26.11
-        KUBECTL_CHECKSUM=27c34a0870230d9dd723e1e01114634e396cd2a3d25ced263b769a4bd53e4edd
-        KUBECTL_CHECKSUM_ARM=4a6d2b7204af3cf84cd0e2c670fbb211501050c9a288de49de3c6363d4e0a63e
+        KUBECTL_VERSION=v1.26.12
+        KUBECTL_CHECKSUM=8e6af8d68e7b9d2a1eb43255c0da793276e549a34a2b9c3c87a9c26438e7fd71
+        KUBECTL_CHECKSUM_ARM=b9cfdb6c9a53146330d5694e711c48febb7ec022aea8d16a51b5e12d761580cc
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
@@ -36,9 +36,9 @@ jobs:
       image_name: kubernetes-pipeline
       image_tag: "1.27"
       build_args: |
-        KUBECTL_VERSION=v1.27.8
-        KUBECTL_CHECKSUM=027b3161e99fa0a7fa529e8f17f73ee2c0807c81c721ca7cf307f6b41c17bc57
-        KUBECTL_CHECKSUM_ARM=97ed6739e2803e63fd2d9de78be22d5ba6205bb63179a16ec773063526525a8e
+        KUBECTL_VERSION=v1.27.9
+        KUBECTL_CHECKSUM=d0caae91072297b2915dd65f6ef3055d27646dce821ec67d18da35ba9a8dc85b
+        KUBECTL_CHECKSUM_ARM=bda475539fdeda9d8a85a84b967af361af264d0826c121b23b0b62ee9b00cd2d
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
@@ -52,9 +52,9 @@ jobs:
       image_name: kubernetes-pipeline
       image_tag: "1.28"
       build_args: |
-        KUBECTL_VERSION=v1.28.4
-        KUBECTL_CHECKSUM=893c92053adea6edbbd4e959c871f5c21edce416988f968bec565d115383f7b8
-        KUBECTL_CHECKSUM_ARM=edf1e17b41891ec15d59dd3cc62bcd2cdce4b0fd9c2ee058b0967b17534457d7
+        KUBECTL_VERSION=v1.28.5
+        KUBECTL_CHECKSUM=2a44c0841b794d85b7819b505da2ff3acd5950bd1bcd956863714acc80653574
+        KUBECTL_CHECKSUM_ARM=f87fe017ae3ccfd93df03bf17edd4089672528107f230563b8c9966909661ef2
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}

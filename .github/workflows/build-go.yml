@@ -33,9 +33,9 @@ jobs:
       image_name: golang-pipeline
       image_tag: "1.20"
       build_args: |
-        GO_VERSION=1.20.12
-        GO_CHECKSUM=9c5d48c54dd8b0a3b2ef91b0f92a1190aa01f11d26e98033efa64c46a30bba7b
-        GO_CHECKSUM_ARM=8afe8e3fb6972eaa2179ef0a71678c67f26509fab4f0f67c4b00f4cdfa92dc87
+        GO_VERSION=1.20.13
+        GO_CHECKSUM=9a9d3dcae2b6a638b1f2e9bd4db08ffb39c10e55d9696914002742d90f0047b5
+        GO_CHECKSUM_ARM=a2d811cef3c4fc77c01195622e637af0c2cf8b3814a95a0920cf2f83b6061d38
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
