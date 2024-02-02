@@ -1,144 +1,121 @@
 name: Image Building
 
 on:
-  push:
-    branches:
-    - "main"
-    paths:
-    - "containers/**"
-    - ".github/workflows/**"
+  workflow_dispatch:
   schedule:
   - cron: "0 0 1,15 * *"
 
 jobs:
-  generate-matrix:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-    - name: Calculate file differences
-      if: github.event.push
-      id: diff
-      uses: tj-actions/changed-files@90a06d6ba9543371ab4df8eeca0be07ca6054959 # v42.0.2
-      with:
-        files_yaml: |
-          containers:
-          - containers/**
-          workflows:
-          - ./.github/workflows/**
-    - name: Generate Matrix
-      if: github.event.push
-      id: matrix
-      run: |
-        base_changed=false
-        docker_changed=false
-        go_changed=false
-        node_changed=false
-        sysdig_changed=false
-        kubernetes_changed=false
-        for path in ${{steps.diff.outputs.workflows_all_changed_and_modified_files}}; do
-          filename=$(basename "${path}")
-          case ${filename%.*} in
-            build-base)
-              base_changed=true
-            ;;
-            build-docker)
-              docker_changed=true
-            ;;
-            build-go)
-              go_changed=true
-            ;;
-            build-kubernetes)
-              kubernetes_changed=true
-            ;;
-            build-node)
-              node_changed=true
-            ;;
-            build-sysdig)
-              sysdig_changed=true
-            ;;
-          esac
-        done
-        for path in ${{steps.diff.outputs.containers_all_changed_and_modified_files}}; do
-          foldername=$(echo $path | cut -d / -f 2)
-          case ${foldername%.*} in
-            base)
-              base_changed=true
-            ;;
-            docker)
-              docker_changed=true
-            ;;
-            go)
-              go_changed=true
-            ;;
-            kubernetes)
-              kubernetes_changed=true
-            ;;
-            node)
-              node_changed=true
-            ;;
-            sysdig)
-              sysdig_changed=true
-            ;;
-          esac
-        done
-        echo "base_changed=${base_changed}" >> $GITHUB_OUTPUT
-        echo "docker_changed=${docker_changed}" >> $GITHUB_OUTPUT
-        echo "go_changed=${go_changed}" >> $GITHUB_OUTPUT
-        echo "kubernetes_changed=${kubernetes_changed}" >> $GITHUB_OUTPUT
-        echo "node_changed=${node_changed}" >> $GITHUB_OUTPUT
-        echo "sysdig_changed=${sysdig_changed}" >> $GITHUB_OUTPUT
-    - name: Matrix for Cron
-      if: github.event.schedule
-      id: matrix
-      run: |
-        echo "base_changed=true" >> $GITHUB_OUTPUT
-        echo "docker_changed=false" >> $GITHUB_OUTPUT
-        echo "go_changed=false" >> $GITHUB_OUTPUT
-        echo "kubernetes_changed=false" >> $GITHUB_OUTPUT
-        echo "node_changed=false" >> $GITHUB_OUTPUT
-        echo "sysdig_changed=false" >> $GITHUB_OUTPUT
-    outputs:
-      base_changed: ${{ steps.matrix.outputs.base_changed }}
-      docker_changed: ${{ steps.matrix.outputs.docker_changed }}
-      go_changed: ${{ steps.matrix.outputs.go_changed }}
-      kubernetes_changed: ${{ steps.matrix.outputs.kubernetes_changed }}
-      node_changed: ${{ steps.matrix.outputs.node_changed }}
-      sysdig_changed: ${{ steps.matrix.outputs.sysdig_changed }}
-
   rebuild-base:
-    needs: generate-matrix
-    if: needs.generate-matrix.outputs.base_changed == 'true'
-    uses: ./.github/workflows/build-base.yml
+    uses: ./.github/workflows/build-image.yml
+    strategy:
+      matrix:
+        params:
+        - tag: "1"
+          build_args: ""
+    with:
+      image_path: containers/base
+      image_name: base-pipeline
+      image_tag: ${{ matrix.tag }}
+      build_args: ${{ matrix.build_args }}
     secrets: inherit
 
   rebuild-docker:
-    needs: generate-matrix
-    if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.docker_changed == 'true'
-    uses: ./.github/workflows/build-docker.yml
+    needs: rebuild-base
+    uses: ./.github/workflows/build-image.yml
+    strategy:
+      matrix:
+        params:
+        - tag: "1"
+          build_args: ""
+    with:
+      image_path: containers/docker
+      image_name: docker-pipeline
+      image_tag: ${{ matrix.tag }}
+      build_args: ${{ matrix.build_args }}
     secrets: inherit
 
   rebuild-go:
-    needs: generate-matrix
-    if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.go_changed == 'true'
-    uses: ./.github/workflows/build-go.yml
+    needs: rebuild-base
+    uses: ./.github/workflows/build-image.yml
+    strategy:
+      matrix:
+        params:
+        - tag: "1.20"
+          build_args: |
+            GO_VERSION=1.20.13
+            GO_CHECKSUM=9a9d3dcae2b6a638b1f2e9bd4db08ffb39c10e55d9696914002742d90f0047b5
+            GO_CHECKSUM_ARM=a2d811cef3c4fc77c01195622e637af0c2cf8b3814a95a0920cf2f83b6061d38
+        - tag: "1.21"
+          build_args: ""
+    with:
+      image_path: containers/go
+      image_name: golang-pipeline
+      image_tag: ${{ matrix.tag }}
+      build_args: ${{ matrix.build_args }}
     secrets: inherit
 
   rebuild-kubernetes:
-    needs: generate-matrix
-    if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.kubernetes_changed == 'true'
-    uses: ./.github/workflows/build-kubernetes.yml
+    needs: rebuild-base
+    uses: ./.github/workflows/build-image.yml
+    strategy:
+      matrix:
+        params:
+        - tag: "1.26"
+          build_args: |
+            KUBECTL_VERSION=v1.26.13
+            KUBECTL_CHECKSUM=e4bad4273431f9f5f05f27f5c2054cbbad6d9ee00b85e0810cb4ef0489b02571
+            KUBECTL_CHECKSUM_ARM=4abebc34c114111b81bbf5222f0810e6899937d04bc453d9ccd77046643bbcda
+        - tag: "1.27"
+          build_args: |
+            KUBECTL_VERSION=v1.27.10
+            KUBECTL_CHECKSUM=bfb219643c28d9842fceae51590776f06987835d93fc3cb9b0149c9111c741ac
+            KUBECTL_CHECKSUM_ARM=2e1996379d5a8b132e0606fcd3df3c8689e11882630b75cca3b7135126847871
+        - tag: "1.28"
+          build_args: |
+            KUBECTL_VERSION=v1.28.6
+            KUBECTL_CHECKSUM=c8351fe0611119fd36634dd3f53eb94ec1a2d43ef9e78b92b4846df5cc7aa7e3
+            KUBECTL_CHECKSUM_ARM=0de705659a80c3fef01df43cc0926610fe31482f728b0f992818abd9bdcd2cb9
+        - tag: "1.29"
+          build_args: ""
+    with:
+      image_path: containers/kubernetes
+      image_name: kubernetes-pipeline
+      image_tag: ${{ matrix.tag }}
+      build_args: ${{ matrix.build_args }}
     secrets: inherit
 
   rebuild-node:
-    needs: generate-matrix
-    if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.node_changed == 'true'
-    uses: ./.github/workflows/build-node.yml
+    needs: rebuild-base
+    uses: ./.github/workflows/build-image.yml
+    strategy:
+      matrix:
+        params:
+        - tag: "18"
+          build_args: |
+            NODE_VERSION=v18.18.2
+            NODE_CHECKSUM=75aba25ae76999309fc6c598efe56ce53fbfc221381a44a840864276264ab8ac
+            NODE_CHECKSUM_ARM=2e630e18548627f61eaf573233da7949dc0a1df5eef3f486fa9820c5f6c121aa
+        - tag: "20"
+          build_args: ""
+    with:
+      image_path: containers/node
+      image_name: node-pipeline
+      image_tag: ${{ matrix.tag }}
+      build_args: ${{ matrix.build_args }}
     secrets: inherit
 
   rebuild-sysdig:
-    needs: generate-matrix
-    if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.sysdig_changed == 'true'
-    uses: ./.github/workflows/build-sysdig.yml
+    needs: rebuild-base
+    uses: ./.github/workflows/build-image.yml
+    strategy:
+      matrix:
+        params:
+        - tag: "1"
+          build_args: ""
+    with:
+      image_path: containers/sysdig
+      image_name: sysdig-pipeline
+      image_tag: ${{ matrix.tag }}
+      build_args: ${{ matrix.build_args }}
     secrets: inherit
