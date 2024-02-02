@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM docker.io/curlimages/curl:8.5.0@sha256:4bfa3e2c0164fb103fb9bfd4dc956facce32b6c5d47cc09fcec883ce9535d5ac AS download
+FROM docker.io/curlimages/curl:8.6.0@sha256:c3b8bee303c6c6beed656cfc921218c529d65aa61114eb9e27c62047a1271b9b AS download
 
 ARG TARGETARCH
 

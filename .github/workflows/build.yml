@@ -32,6 +32,7 @@ jobs:
         go_changed=false
         node_changed=false
         sysdig_changed=false
+        kubernetes_changed=false
         for path in ${{steps.diff.outputs.workflows_all_changed_and_modified_files}}; do
           filename=$(basename "${path}")
           case ${filename%.*} in
@@ -43,6 +44,9 @@ jobs:
             ;;
             build-go)
               go_changed=true
+            ;;
+            build-kubernetes)
+              kubernetes_changed=true
             ;;
             build-node)
               node_changed=true
@@ -64,6 +68,9 @@ jobs:
             go)
               go_changed=true
             ;;
+            kubernetes)
+              kubernetes_changed=true
+            ;;
             node)
               node_changed=true
             ;;
@@ -75,12 +82,14 @@ jobs:
         echo "base_changed=${base_changed}" >> $GITHUB_OUTPUT
         echo "docker_changed=${docker_changed}" >> $GITHUB_OUTPUT
         echo "go_changed=${go_changed}" >> $GITHUB_OUTPUT
+        echo "kubernetes_changed=${kubernetes_changed}" >> $GITHUB_OUTPUT
         echo "node_changed=${node_changed}" >> $GITHUB_OUTPUT
         echo "sysdig_changed=${sysdig_changed}" >> $GITHUB_OUTPUT
     outputs:
       base_changed: ${{ steps.matrix.outputs.base_changed }}
       docker_changed: ${{ steps.matrix.outputs.docker_changed }}
       go_changed: ${{ steps.matrix.outputs.go_changed }}
+      kubernetes_changed: ${{ steps.matrix.outputs.kubernetes_changed }}
       node_changed: ${{ steps.matrix.outputs.node_changed }}
       sysdig_changed: ${{ steps.matrix.outputs.sysdig_changed }}
 
@@ -104,6 +113,16 @@ jobs:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.go_changed == 'true'
     uses: ./.github/workflows/build-go.yml
+    secrets:
+      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
+      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
+      BOT_USER: ${{ secrets.BOT_USER }}
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+  rebuild-kubernetes:
+    needs: generate-matrix
+    if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.kubernetes_changed == 'true'
+    uses: ./.github/workflows/build-kubernetes.yml
     secrets:
       BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
