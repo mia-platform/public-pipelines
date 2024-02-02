@@ -7,6 +7,8 @@ on:
     paths:
     - "containers/**"
     - ".github/workflows/**"
+  schedule:
+  - cron: "0 0 1,15 * *"
 
 jobs:
   generate-matrix:
@@ -16,6 +18,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: Calculate file differences
+      if: github.event.push
       id: diff
       uses: tj-actions/changed-files@90a06d6ba9543371ab4df8eeca0be07ca6054959 # v42.0.2
       with:
@@ -25,6 +28,7 @@ jobs:
           workflows:
           - ./.github/workflows/**
     - name: Generate Matrix
+      if: github.event.push
       id: matrix
       run: |
         base_changed=false
@@ -85,6 +89,16 @@ jobs:
         echo "kubernetes_changed=${kubernetes_changed}" >> $GITHUB_OUTPUT
         echo "node_changed=${node_changed}" >> $GITHUB_OUTPUT
         echo "sysdig_changed=${sysdig_changed}" >> $GITHUB_OUTPUT
+    - name: Matrix for Cron
+      if: github.event.schedule
+      id: matrix
+      run: |
+        echo "base_changed=true" >> $GITHUB_OUTPUT
+        echo "docker_changed=false" >> $GITHUB_OUTPUT
+        echo "go_changed=false" >> $GITHUB_OUTPUT
+        echo "kubernetes_changed=false" >> $GITHUB_OUTPUT
+        echo "node_changed=false" >> $GITHUB_OUTPUT
+        echo "sysdig_changed=false" >> $GITHUB_OUTPUT
     outputs:
       base_changed: ${{ steps.matrix.outputs.base_changed }}
       docker_changed: ${{ steps.matrix.outputs.docker_changed }}
@@ -103,48 +117,28 @@ jobs:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.docker_changed == 'true'
     uses: ./.github/workflows/build-docker.yml
-    secrets:
-      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
-      BOT_USER: ${{ secrets.BOT_USER }}
-      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+    secrets: inherit
 
   rebuild-go:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.go_changed == 'true'
     uses: ./.github/workflows/build-go.yml
-    secrets:
-      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
-      BOT_USER: ${{ secrets.BOT_USER }}
-      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+    secrets: inherit
 
   rebuild-kubernetes:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.kubernetes_changed == 'true'
     uses: ./.github/workflows/build-kubernetes.yml
-    secrets:
-      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
-      BOT_USER: ${{ secrets.BOT_USER }}
-      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+    secrets: inherit
 
   rebuild-node:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.node_changed == 'true'
     uses: ./.github/workflows/build-node.yml
-    secrets:
-      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
-      BOT_USER: ${{ secrets.BOT_USER }}
-      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+    secrets: inherit
 
   rebuild-sysdig:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.base_changed == 'false' && needs.generate-matrix.outputs.sysdig_changed == 'true'
     uses: ./.github/workflows/build-sysdig.yml
-    secrets:
-      BOT_DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
-      BOT_DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
-      BOT_USER: ${{ secrets.BOT_USER }}
-      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+    secrets: inherit
