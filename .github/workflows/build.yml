@@ -16,8 +16,8 @@ jobs:
     with:
       image_path: containers/base
       image_name: base-pipeline
-      image_tag: ${{ matrix.tag }}
-      build_args: ${{ matrix.build_args }}
+      image_tag: ${{ matrix.params.tag }}
+      build_args: ${{ matrix.params.build_args }}
     secrets: inherit
 
   rebuild-docker:
@@ -31,8 +31,8 @@ jobs:
     with:
       image_path: containers/docker
       image_name: docker-pipeline
-      image_tag: ${{ matrix.tag }}
-      build_args: ${{ matrix.build_args }}
+      image_tag: ${{ matrix.params.tag }}
+      build_args: ${{ matrix.params.build_args }}
     secrets: inherit
 
   rebuild-go:
@@ -51,8 +51,8 @@ jobs:
     with:
       image_path: containers/go
       image_name: golang-pipeline
-      image_tag: ${{ matrix.tag }}
-      build_args: ${{ matrix.build_args }}
+      image_tag: ${{ matrix.params.tag }}
+      build_args: ${{ matrix.params.build_args }}
     secrets: inherit
 
   rebuild-kubernetes:
@@ -81,8 +81,8 @@ jobs:
     with:
       image_path: containers/kubernetes
       image_name: kubernetes-pipeline
-      image_tag: ${{ matrix.tag }}
-      build_args: ${{ matrix.build_args }}
+      image_tag: ${{ matrix.params.tag }}
+      build_args: ${{ matrix.params.build_args }}
     secrets: inherit
 
   rebuild-node:
@@ -101,8 +101,8 @@ jobs:
     with:
       image_path: containers/node
       image_name: node-pipeline
-      image_tag: ${{ matrix.tag }}
-      build_args: ${{ matrix.build_args }}
+      image_tag: ${{ matrix.params.tag }}
+      build_args: ${{ matrix.params.build_args }}
     secrets: inherit
 
   rebuild-sysdig:
@@ -116,6 +116,6 @@ jobs:
     with:
       image_path: containers/sysdig
       image_name: sysdig-pipeline
-      image_tag: ${{ matrix.tag }}
-      build_args: ${{ matrix.build_args }}
+      image_tag: ${{ matrix.params.tag }}
+      build_args: ${{ matrix.params.build_args }}
     secrets: inherit
