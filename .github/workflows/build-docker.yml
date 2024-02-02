@@ -13,12 +13,18 @@ on:
         required: true
 
 jobs:
-  build-docker-image:
+  build-docker-images:
     uses: ./.github/workflows/build-image.yml
+    strategy:
+      matrix:
+        params:
+        - tag: "1"
+          build_args: ""
     with:
       image_path: containers/docker
       image_name: docker-pipeline
-      image_tag: "1"
+      image_tag: ${{ matrix.tag }}
+      build_args: ${{ matrix.build_args }}
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}

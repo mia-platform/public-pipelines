@@ -13,12 +13,18 @@ on:
         required: true
 
 jobs:
-  build-sysdig-image:
+  build-sysdig-images:
     uses: ./.github/workflows/build-image.yml
+    strategy:
+      matrix:
+        params:
+        - tag: "1"
+          build_args: ""
     with:
       image_path: containers/sysdig
       image_name: sysdig-pipeline
-      image_tag: "1"
+      image_tag: ${{ matrix.tag }}
+      build_args: ${{ matrix.build_args }}
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}

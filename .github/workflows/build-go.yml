@@ -13,7 +13,7 @@ on:
         required: true
 
 jobs:
-  build-go-image:
+  build-go-images:
     uses: ./.github/workflows/build-image.yml
     strategy:
       matrix:
@@ -30,7 +30,6 @@ jobs:
       image_name: golang-pipeline
       image_tag: ${{ matrix.tag }}
       build_args: ${{ matrix.build_args }}
-
     secrets:
       DOCKER_USERNAME: ${{ secrets.BOT_DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.BOT_DOCKER_TOKEN }}
