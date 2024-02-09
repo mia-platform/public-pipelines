@@ -50,7 +50,7 @@ variables:
     DOCKER_DRIVER: overlay2
 
   services:
-  - name: docker:24-dind
+  - name: docker:25-dind
 
   dependencies: []
 

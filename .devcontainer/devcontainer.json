@@ -9,7 +9,8 @@
 	"customizations": {
 		"vscode": {
 			"settings": {
-				"files.insertFinalNewline": false,
+				"files.eol": "\n",
+				"files.insertFinalNewline": true,
 				"files.trimFinalNewlines": true,
 				"files.trimTrailingWhitespace": false
 			},
