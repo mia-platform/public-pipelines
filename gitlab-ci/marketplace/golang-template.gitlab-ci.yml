@@ -5,7 +5,7 @@ include:
 - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
 
 variables:
-  GOLANG_IMAGE_TAG: "1.21"
+  GOLANG_IMAGE_TAG: "1.22"
   IMAGE_NAME: mia_template_image_name_placeholder
 
 build:
