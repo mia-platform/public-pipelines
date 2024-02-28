@@ -41,12 +41,12 @@ jobs:
     strategy:
       matrix:
         params:
-        - tag: "1.20"
-          build_args: |
-            GO_VERSION=1.20.14
-            GO_CHECKSUM=ff445e48af27f93f66bd949ae060d97991c83e11289009d311f25426258f9c44
-            GO_CHECKSUM_ARM=2096507509a98782850d1f0669786c09727053e9fe3c92b03c0d96f48700282b
         - tag: "1.21"
+          build_args: |
+            GO_VERSION=1.21.7
+            GO_CHECKSUM=13b76a9b2a26823e53062fa841b07087d48ae2ef2936445dc34c4ae03293702c
+            GO_CHECKSUM_ARM=a9bc1ccedbfde059f25b3a2ad81ae4cdf21192ae207dfd3ccbbfe99c3749e233
+        - tag: "1.22"
           build_args: ""
     with:
       image_path: containers/go
@@ -63,19 +63,19 @@ jobs:
         params:
         - tag: "1.26"
           build_args: |
-            KUBECTL_VERSION=v1.26.13
-            KUBECTL_CHECKSUM=e4bad4273431f9f5f05f27f5c2054cbbad6d9ee00b85e0810cb4ef0489b02571
-            KUBECTL_CHECKSUM_ARM=4abebc34c114111b81bbf5222f0810e6899937d04bc453d9ccd77046643bbcda
+            KUBECTL_VERSION=v1.26.14
+            KUBECTL_CHECKSUM=afd9be91832a0400d8d9cc3da1cf2a395aa9f13b8ab245883869788786166ec3
+            KUBECTL_CHECKSUM_ARM=64b21431e5ff18a4999699d53815236ccb06a16d76c00cb812461110a5bd6318
         - tag: "1.27"
           build_args: |
-            KUBECTL_VERSION=v1.27.10
-            KUBECTL_CHECKSUM=bfb219643c28d9842fceae51590776f06987835d93fc3cb9b0149c9111c741ac
-            KUBECTL_CHECKSUM_ARM=2e1996379d5a8b132e0606fcd3df3c8689e11882630b75cca3b7135126847871
+            KUBECTL_VERSION=v1.27.11
+            KUBECTL_CHECKSUM=7ae327978a1edb43700070c86f5fd77215792c6b58a7ea70192647e0da848e29
+            KUBECTL_CHECKSUM_ARM=d30e1aa873e78eb376ddee3c785aa78c44eddc56ce2ef901dac1ce0c2c4f50b0
         - tag: "1.28"
           build_args: |
-            KUBECTL_VERSION=v1.28.6
-            KUBECTL_CHECKSUM=c8351fe0611119fd36634dd3f53eb94ec1a2d43ef9e78b92b4846df5cc7aa7e3
-            KUBECTL_CHECKSUM_ARM=0de705659a80c3fef01df43cc0926610fe31482f728b0f992818abd9bdcd2cb9
+            KUBECTL_VERSION=v1.28.7
+            KUBECTL_CHECKSUM=aff42d3167685e4d8e86fda0ad9c6ce6ec6c047bc24d608041d54717a18192ba
+            KUBECTL_CHECKSUM_ARM=13d547495bdea49b223fe06bffb6d2bef96436634847f759107655aa80fc990e
         - tag: "1.29"
           build_args: ""
     with:
