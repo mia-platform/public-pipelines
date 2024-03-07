@@ -4,12 +4,12 @@ FROM docker.io/curlimages/curl:8.6.0@sha256:c3b8bee303c6c6beed656cfc921218c529d6
 ARG TARGETARCH
 
 # https://download.docker.com/linux/static/stable/
-ARG DOCKER_VERSION=25.0.3
+ARG DOCKER_VERSION=25.0.4
 
 # https://github.com/docker/buildx/releases
-ARG BUILDX_VERSION=v0.12.1
-ARG BUILDX_CHECKSUM=716321df8ca9c82ffe96f37e9f4aa1199d4969795836dbd57ef72d12e3ac5085
-ARG BUILDX_CHECKSUM_ARM=fb72d627f2ee080bba70375c367f4292867821e29ca9a8cf485622f6ede8f436
+ARG BUILDX_VERSION=v0.13.0
+ARG BUILDX_CHECKSUM=ddd69ee2ca3dd61760e771dcd2f3453dc677dfeb42c9484cc2321b96bc1b7c57
+ARG BUILDX_CHECKSUM_ARM=fa36eb4deab2fac6ddf5fdeddcf16999bc9d5fb1d632e0ba7e572b519df8a656
 
 # https://github.com/oras-project/oras/releases
 ARG ORAS_VERSION=1.1.0
