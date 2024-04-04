@@ -1,15 +1,15 @@
 # syntax=docker/dockerfile:1
-FROM docker.io/curlimages/curl:8.6.0@sha256:c3b8bee303c6c6beed656cfc921218c529d65aa61114eb9e27c62047a1271b9b AS download
+FROM docker.io/curlimages/curl:8.7.1@sha256:25d29daeb9b14b89e2fa8cc17c70e4b188bca1466086907c2d9a4b56b59d8e21 AS download
 
 ARG TARGETARCH
 
 # https://download.docker.com/linux/static/stable/
-ARG DOCKER_VERSION=25.0.4
+ARG DOCKER_VERSION=26.0.0
 
 # https://github.com/docker/buildx/releases
-ARG BUILDX_VERSION=v0.13.0
-ARG BUILDX_CHECKSUM=ddd69ee2ca3dd61760e771dcd2f3453dc677dfeb42c9484cc2321b96bc1b7c57
-ARG BUILDX_CHECKSUM_ARM=fa36eb4deab2fac6ddf5fdeddcf16999bc9d5fb1d632e0ba7e572b519df8a656
+ARG BUILDX_VERSION=v0.13.1
+ARG BUILDX_CHECKSUM=3e2bc8ed25a9125d6aeec07df4e0211edea6288e075b524160ef3fd305d3d74c
+ARG BUILDX_CHECKSUM_ARM=3ba35a5d38361a64b62aeb9d20acc835ff6862a711cb438e610026b29c0ac489
 
 # https://github.com/oras-project/oras/releases
 ARG ORAS_VERSION=1.1.0
