@@ -10,7 +10,7 @@ syft-dependency_scanning:
 
   script:
   - syft version
-  - syft "${CI_PROJECT_DIR}" -o spdx-json=gl-sbom-report.spdx.json -o cyclonedx-json=gl-sbom-report.cdx.json
+  - syft scan "${CI_PROJECT_DIR}" -o spdx-json=gl-sbom-report.spdx.json -o cyclonedx-json=gl-sbom-report.cdx.json
   - if [ -z "${LICENSES_BLOCKLIST}" ]; then exit 0; fi;
   - 'echo -e "Blocked Licenses: ${LICENSES_BLOCKLIST}"'
   - licenses_json=$(echo "${LICENSES_BLOCKLIST}" | sed 's/,/","/g' | awk '{print "[\"" $0 "\"]"}')
