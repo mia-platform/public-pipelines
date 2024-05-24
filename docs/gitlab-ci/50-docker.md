@@ -38,7 +38,14 @@ docker container to it. It will build the image for the platforms indicated insi
 The job will run the commands using the values inside `CI_APPLICATION_REPOSITORY_USER`,
 `CI_APPLICATION_REPOSITORY_PASSWORD`, `CI_APPLICATION_REPOSITORY_REGISTRY`, `CI_APPLICATION_REPOSITORY` and
 `CI_APPLICATION_TAG` variables. Additionally you can set the `DOCKERBUILD_ADDITIONAL_FLAGS` variable for add
-additional flags to the command.
+additional flags to the command; if you need to add more than one flag you must use a multiline string and set
+one flag per line, for example:
+
+```yaml
+DOCKERBUILD_ADDITIONAL_FLAGS: |-
+  --build-arg=DESCRIPTION=a custom description to use inside the well-known containers label
+  --build-arg=CUSTOM_VALUE=value
+```
 
 The `CI_COMMIT_SHA` and `CI_APPLICATION_TAG` variables will be passed respectively as the `COMMIT_SHA` and `VERSION`
 build variables automatically.
