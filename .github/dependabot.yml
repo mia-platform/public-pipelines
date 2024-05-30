@@ -9,7 +9,13 @@ updates:
 
 # keep up to date the base docker image
 - package-ecosystem: docker
-  directory: /
+  directories:
+  - containers/base
+  - containers/docker
+  - containers/go
+  - containers/kubernetes
+  - containers/node
+  - containers/sysdig
   schedule:
     interval: daily
 
