@@ -63,19 +63,19 @@ jobs:
         params:
         - tag: "1.27"
           build_args: |
-            KUBECTL_VERSION=v1.27.15
-            KUBECTL_CHECKSUM=c12cf17ec30fb162f8f5fb168e67d4e5b7d6826e08c7648a5f1c6b4e9ba23f39
-            KUBECTL_CHECKSUM_ARM=6bd6bd3092c0a8e536e8e5a56b22aaab87ab1e54a4556ce4d1bff2493180fb8c
+            KUBECTL_VERSION=v1.27.16
+            KUBECTL_CHECKSUM=97ea7cd771d0c6e3332614668a40d2c5996f0053ff11b44b198ea84dba0818cb
+            KUBECTL_CHECKSUM_ARM=2f50cb29d73f696ffb57437d3e2c95b22c54f019de1dba19e2b834e0b4501eb9
         - tag: "1.28"
           build_args: |
-            KUBECTL_VERSION=v1.28.11
-            KUBECTL_CHECKSUM=1dba63e1a5c9520fc516c6e817924d927b9b83b8e08254c8fe2a2edb65da7a9c
-            KUBECTL_CHECKSUM_ARM=7984a98d52365d190b6f56caa962339a7228b6f432e58ba5f1b1e60dbedac275
+            KUBECTL_VERSION=v1.28.12
+            KUBECTL_CHECKSUM=e8aee7c9206c00062ced394418a17994b58f279a93a1be1143b08afe1758a3a2
+            KUBECTL_CHECKSUM_ARM=f7e01dfffebb1d5811c37d558f28eefd80cbfadc0b9783b0b0ebf37c40c5c891
         - tag: "1.29"
           build_args: |
-            KUBECTL_VERSION=v1.29.6
-            KUBECTL_CHECKSUM=339553c919874ebe3b719e9e1fcd68b55bc8875f9b5a005cf4c028738d54d309
-            KUBECTL_CHECKSUM_ARM=21816488cf3af4cf2b956ee58f7afc5b4964c29488f63756f5ddcf09b0df5be9
+            KUBECTL_VERSION=v1.29.7
+            KUBECTL_CHECKSUM=e3df008ef60ea50286ea93c3c40a020e178a338cea64a185b4e21792d88c75d6
+            KUBECTL_CHECKSUM_ARM=7b6649aaa298be728c5fb7ccb65f98738a4e8bda0741afbd5a9ed9e488c0e725
         - tag: "1.30"
           build_args: ""
     with:
