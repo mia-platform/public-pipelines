@@ -97,6 +97,11 @@ jobs:
             NODE_CHECKSUM=75aba25ae76999309fc6c598efe56ce53fbfc221381a44a840864276264ab8ac
             NODE_CHECKSUM_ARM=2e630e18548627f61eaf573233da7949dc0a1df5eef3f486fa9820c5f6c121aa
         - tag: "20"
+          build_args: |
+            NODE_VERSION=v20.16.0
+            NODE_CHECKSUM=c30af7dfea46de7d8b9b370fa33b8b15440bc93f0a686af8601bbb48b82f16c0
+            NODE_CHECKSUM_ARM=1d9929e72f692179f884cd676b2dfabd879cb77defa7869dc8cfc802619277fb
+        - tag: "22"
           build_args: ""
     with:
       image_path: containers/node
