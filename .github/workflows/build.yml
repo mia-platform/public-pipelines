@@ -43,10 +43,15 @@ jobs:
         params:
         - tag: "1.21"
           build_args: |
-            GO_VERSION=1.21.12
-            GO_CHECKSUM=121ab58632787e18ae0caa8ae285b581f9470d0f6b3defde9e1600e211f583c5
-            GO_CHECKSUM_ARM=94cb3ec4a1e08a00da55c33e63f725be91f10ba743907b5615ef34e54675ba2e
+            GO_VERSION=1.21.13
+            GO_CHECKSUM=502fc16d5910562461e6a6631fb6377de2322aad7304bf2bcd23500ba9dab4a7
+            GO_CHECKSUM_ARM=2ca2d70dc9c84feef959eb31f2a5aac33eefd8c97fe48f1548886d737bffabd4
         - tag: "1.22"
+          build_args: |
+            GO_VERSION=1.22.7
+            GO_CHECKSUM=fc5d49b7a5035f1f1b265c17aa86e9819e6dc9af8260ad61430ee7fbe27881bb
+            GO_CHECKSUM_ARM=ed695684438facbd7e0f286c30b7bc2411cfc605516d8127dc25c62fe5b03885
+        - tag: "1.23"
           build_args: ""
     with:
       image_path: containers/go
@@ -61,22 +66,22 @@ jobs:
     strategy:
       matrix:
         params:
-        - tag: "1.27"
-          build_args: |
-            KUBECTL_VERSION=v1.27.16
-            KUBECTL_CHECKSUM=97ea7cd771d0c6e3332614668a40d2c5996f0053ff11b44b198ea84dba0818cb
-            KUBECTL_CHECKSUM_ARM=2f50cb29d73f696ffb57437d3e2c95b22c54f019de1dba19e2b834e0b4501eb9
         - tag: "1.28"
           build_args: |
-            KUBECTL_VERSION=v1.28.12
-            KUBECTL_CHECKSUM=e8aee7c9206c00062ced394418a17994b58f279a93a1be1143b08afe1758a3a2
-            KUBECTL_CHECKSUM_ARM=f7e01dfffebb1d5811c37d558f28eefd80cbfadc0b9783b0b0ebf37c40c5c891
+            KUBECTL_VERSION=v1.28.14
+            KUBECTL_CHECKSUM=e1e8c08f7fc0b47e5d89422e573c3a2e658d95f1ee0c7ea6c8cb38f37140e607
+            KUBECTL_CHECKSUM_ARM=42b813cdde7d5e04593c219a11a07f0866dd2492b7447a700870af1461ce2d8d
         - tag: "1.29"
           build_args: |
-            KUBECTL_VERSION=v1.29.7
-            KUBECTL_CHECKSUM=e3df008ef60ea50286ea93c3c40a020e178a338cea64a185b4e21792d88c75d6
-            KUBECTL_CHECKSUM_ARM=7b6649aaa298be728c5fb7ccb65f98738a4e8bda0741afbd5a9ed9e488c0e725
+            KUBECTL_VERSION=v1.29.9
+            KUBECTL_CHECKSUM=7b0de2466458cc3c12cf8742dc800c77d4fa72e831aa522df65e510d33b329e2
+            KUBECTL_CHECKSUM_ARM=0fc73b3e4bf5395e0182ae62df24a96d5870baa44fabcc50b5eb2d8dcf22dd78
         - tag: "1.30"
+          build_args:  |
+            KUBECTL_VERSION=v1.30.5
+            KUBECTL_CHECKSUM=b8aa921a580c3d8ba473236815de5ce5173d6fbfa2ccff453fa5eef46cc5ee7a
+            KUBECTL_CHECKSUM_ARM=efc594857f9255fc33bcda9409b8862a3b47ce5f4e09d51c3427b85dd769b9b9
+        - tag: "1.31"
           build_args: ""
     with:
       image_path: containers/kubernetes
