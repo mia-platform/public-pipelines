@@ -15,7 +15,7 @@ ARG SYFT_CHECKSUM_ARM=31edc23ef0bcf0b879838cec5976677b05a75913387b35bef411c34128
 
 USER root
 
-RUN mkdir -p "/tmp/local/bin"
+RUN mkdir -p "/tmp/local/bin" "/tmp/local/lib"
 
 RUN case "${TARGETARCH}" in \
 		'amd64') \
@@ -43,6 +43,8 @@ RUN case "${TARGETARCH}" in \
 	&& echo "${syft_checksum} /tmp/syft.tar.gz" | sha256sum -c \
 	&& tar -xvf "/tmp/syft.tar.gz" --no-same-permissions --no-same-owner -C "/tmp" \
 	&& install -o "root" -g "root" -m "0755" "/tmp/syft" "/tmp/local/bin/syft"
+
+COPY ./base_helpers.sh /tmp/local/lib
 
 FROM docker.io/library/debian:bookworm-slim
 
