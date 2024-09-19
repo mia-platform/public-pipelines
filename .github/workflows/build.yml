@@ -41,11 +41,6 @@ jobs:
     strategy:
       matrix:
         params:
-        - tag: "1.21"
-          build_args: |
-            GO_VERSION=1.21.13
-            GO_CHECKSUM=502fc16d5910562461e6a6631fb6377de2322aad7304bf2bcd23500ba9dab4a7
-            GO_CHECKSUM_ARM=2ca2d70dc9c84feef959eb31f2a5aac33eefd8c97fe48f1548886d737bffabd4
         - tag: "1.22"
           build_args: |
             GO_VERSION=1.22.7
@@ -98,9 +93,9 @@ jobs:
         params:
         - tag: "18"
           build_args: |
-            NODE_VERSION=v18.18.2
-            NODE_CHECKSUM=75aba25ae76999309fc6c598efe56ce53fbfc221381a44a840864276264ab8ac
-            NODE_CHECKSUM_ARM=2e630e18548627f61eaf573233da7949dc0a1df5eef3f486fa9820c5f6c121aa
+            NODE_VERSION=v18.20.4
+            NODE_CHECKSUM=592eb35c352c7c0c8c4b2ecf9c19d615e78de68c20b660eb74bd85f8c8395063
+            NODE_CHECKSUM_ARM=1cb5053bd4109aec41a8104ea3e9f48b95b1adef4d23bb4fc64f8c2d90c65ae3
         - tag: "20"
           build_args: |
             NODE_VERSION=v20.17.0
