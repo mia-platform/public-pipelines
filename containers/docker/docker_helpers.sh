@@ -36,15 +36,15 @@ docker_retag_image() {
 
 docker_create_sbom_and_sign_image() {
 	local image="${1}"
-
-	syft packages "${image}" -o spdx-json > docker-image-sbom.spdx.json
-	cosign attach sbom --sbom docker-image-sbom.spdx.json "${image}"
+	syft scan "${image}" -o spdx-json > docker-image-sbom.spdx.json
 	image_digest=$(oras manifest fetch --descriptor "${image}" --pretty | jq -r '.digest')
 
 	if [[ -n "${COSIGN_PRIVATE_KEY}" ]]; then
-		cosign sign --key "${COSIGN_PRIVATE_KEY}" --recursive --yes "${image}"@"${image_digest}"
+		cosign sign --recursive --yes --key "${COSIGN_PRIVATE_KEY}" "${image}"@"${image_digest}"
+		cosign attest --recursive --yes --predicate "docker-image-sbom.spdx.json" --type="spdxjson" --key "${COSIGN_PRIVATE_KEY}" "${image}"@"${image_digest}"
 	elif [[ -n "${SIGSTORE_ID_TOKEN}" ]]; then
 		cosign sign --recursive --yes "${image}"@"${image_digest}"
+		cosign attest --recursive --yes --predicate "docker-image-sbom.spdx.json" --type="spdxjson" "${image}"@"${image_digest}"
 	else
 		echo "no key found: skipping image signing"
 	fi
