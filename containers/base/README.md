@@ -26,37 +26,35 @@ versions available. But because part of the pipeline will use them we will evalu
 This image contains also the file `/usr/local/lib/base_helpers.sh` that can be sources to enable new functions:
 
 - `setup_gcp_access_token`: this function can be used for creating a GOOGLE_APPLICATION_CREDENTIALS file using the
-	gitlab `id_tokens` functionality to allow the login via the official google cloud cli and supported libraries.
-	This function expect these parameters in the following order:
-	1. the path where the relevant id_token has been saved
-	1. the path contained inside the GOOGLE_APPLICATION_CREDENTIALS env
-	1. the google project id where the workload identity pool is localted
-	1. the workload identity pool id
-	1. the workload identity provider id
-	1. the gcp service account email that will be impersonated
+  gitlab `id_tokens` functionality to allow the login via the official google cloud cli and supported libraries.
+  This function expect these parameters in the following order:
 
-Here an example of a gitlab-ci section that use the function:
+  1. the gitlab jwt token created with `id_tokens` directive
+  1. the workload identity federation provider url
+  1. the gcp service account email that will be impersonated
+  1. the output directory path where the script will save the generated files
 
-```yaml
+  It will return the path where the GOOGLE_APPLICATION_CREDENTIALS has been saved, you can set it to the correct
+  environment variables and export it to use it inside other functions.  
+  Here an example of a gitlab-ci section that use the function:
 
-job:
-  variables:
-    PROJECT_NUMBER: "000000000000"
-    POOL_ID: pool_id
-    PROVIDER_ID: provider_id
-    GOOGLE_APPLICATION_CREDENTIALS: ${CI_BUILDS_DIR}/.workload_identity.wlconfig
-    JWT_PATH: ${CI_BUILDS_DIR}/.workload_identity.jwt
-    GCP_SERVICE_ACCOUNT_EMAIL: useraccount@project.iam.gserviceaccount.com
-  id_tokens:
-    WORKLOAD_IDENTITY_TOKEN:
-      aud: https://iam.googleapis.com/projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/${POOL_ID}/providers/${PROVIDER_ID}
+  ```yaml
+  job:
+    variables:
+      GCP_AUDIENCE: //iam.googleapis.com/projects/000000000000/locations/global/workloadIdentityPools/pool_id/providers/provider_id
+      GCP_SERVICE_ACCOUNT_EMAIL: useraccount@project.iam.gserviceaccount.com
+      CREDENTIALS_PATH: ${CI_BUILDS_DIR}/.google_config
+    id_tokens:
+      WORKLOAD_IDENTITY_TOKEN:
+        aud: https://example.com/your/audience
 
-  script:
-  - |-
-    source /usr/local/lib/base_helpers.sh
-    if [[ -z ${COSIGN_PRIVATE_KEY} ]]; then
-      printf "%s" "${WORKLOAD_IDENTITY_TOKEN}" > "${JWT_PATH}"
-      setup_gcp_access_token "${JWT_PATH}" "${GOOGLE_APPLICATION_CREDENTIALS}" "${PROJECT_NUMBER}" "${POOL_ID}" "${PROVIDER_ID}" "${GCP_SERVICE_ACCOUNT_EMAIL}"
-    fi
-    do_somenthing_via_gcp_apis
-```
+    script:
+    - source /usr/local/lib/base_helpers.sh
+    - mkdir -p "${CREDENTIALS_PATH}"
+    - GOOGLE_APPLICATION_CREDENTIALS="$(setup_gcp_access_token "${WORKLOAD_IDENTITY_TOKEN}" "${GCP_AUDIENCE}" "${GCP_SERVICE_ACCOUNT_EMAIL}" "{CREDENTIALS_PATH}")"
+  	- export GOOGLE_APPLICATION_CREDENTIALS
+    - do_somenthing_via_gcp_apis
+
+    after_script:
+      rm -fr "${CREDENTIALS_PATH}"
+  ```
