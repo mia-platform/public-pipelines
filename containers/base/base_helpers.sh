@@ -24,5 +24,5 @@ setup_gcp_access_token() {
 }
 EOL
 
-	return "${credentials_path}"
+	echo "${credentials_path}"
 }
