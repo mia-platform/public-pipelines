@@ -4,7 +4,7 @@ FROM docker.io/curlimages/curl:8.10.1@sha256:d9b4541e214bcd85196d6e92e2753ac6d0e
 ARG TARGETARCH
 
 # https://download.docker.com/linux/static/stable/
-ARG DOCKER_VERSION=27.2.1
+ARG DOCKER_VERSION=27.3.1
 
 # https://github.com/docker/buildx/releases
 ARG BUILDX_VERSION=v0.17.1

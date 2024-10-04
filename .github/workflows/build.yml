@@ -43,9 +43,9 @@ jobs:
         params:
         - tag: "1.22"
           build_args: |
-            GO_VERSION=1.22.7
-            GO_CHECKSUM=fc5d49b7a5035f1f1b265c17aa86e9819e6dc9af8260ad61430ee7fbe27881bb
-            GO_CHECKSUM_ARM=ed695684438facbd7e0f286c30b7bc2411cfc605516d8127dc25c62fe5b03885
+            GO_VERSION=1.22.8
+            GO_CHECKSUM=5f467d29fc67c7ae6468cb6ad5b047a274bae8180cac5e0b7ddbfeba3e47e18f
+            GO_CHECKSUM_ARM=5c616b32dab04bb8c4c8700478381daea0174dc70083e4026321163879278a4a
         - tag: "1.23"
           build_args: ""
     with:
@@ -98,9 +98,9 @@ jobs:
             NODE_CHECKSUM_ARM=1cb5053bd4109aec41a8104ea3e9f48b95b1adef4d23bb4fc64f8c2d90c65ae3
         - tag: "20"
           build_args: |
-            NODE_VERSION=v20.17.0
-            NODE_CHECKSUM=a24db3dcd151a52e75965dba04cf1b3cd579ff30d6e0af9da1aede4d0f17486b
-            NODE_CHECKSUM_ARM=7ebbb636c23f89dbf66648e227fbd0998ce33db4c588520256425102d97dd1a4
+            NODE_VERSION=v20.18.0
+            NODE_CHECKSUM=4543670b589593f8fa5f106111fd5139081da42bb165a9239f05195e405f240a
+            NODE_CHECKSUM_ARM=a9ce85675ba33f00527f6234d90000946c0936fb4fca605f1891bb5f4fe6fb0a
         - tag: "22"
           build_args: ""
     with:
