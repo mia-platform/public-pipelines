@@ -113,6 +113,21 @@ jobs:
       build_args: ${{ matrix.params.build_args }}
     secrets: inherit
 
+  rebuild-rust:
+    needs: rebuild-base
+    uses: ./.github/workflows/build-image.yml
+    strategy:
+      matrix:
+        params:
+        - tag: "1"
+          build_args: ""
+    with:
+      image_path: containers/rust
+      image_name: rust-pipeline
+      image_tag: ${{ matrix.params.tag }}
+      build_args: ${{ matrix.params.build_args }}
+    secrets: inherit
+
   rebuild-sysdig:
     needs: rebuild-base
     uses: ./.github/workflows/build-image.yml
