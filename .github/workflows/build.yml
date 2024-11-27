@@ -68,14 +68,14 @@ jobs:
             KUBECTL_CHECKSUM_ARM=7d45d9620e67095be41403ed80765fe47fcfbf4b4ed0bf0d1c8fe80345bda7d3
         - tag: "1.29"
           build_args: |
-            KUBECTL_VERSION=v1.29.10
-            KUBECTL_CHECKSUM=24f2f09a635d36b2ce36eaebf191326e2b25097eec541a3e47fee6726ef06cef
-            KUBECTL_CHECKSUM_ARM=4cfa950fbd354bdc655cc425494aa77fe81710bc8f7d3f95285338aac223cc82
+            KUBECTL_VERSION=v1.29.11
+            KUBECTL_CHECKSUM=14d7ea4ada60ff15ef3b7734a83c4d05cff164d4843b6f4c081a50b86547c17d%
+            KUBECTL_CHECKSUM_ARM=d0fcb8ead20f45ffab2d680b84a93c8e459b2c7c1d6dadf566769cf59f04c506%
         - tag: "1.30"
           build_args:  |
-            KUBECTL_VERSION=v1.30.6
-            KUBECTL_CHECKSUM=7a3adf80ca74b1b2afdfc7f4570f0005ca03c2812367ffb6ee2f731d66e45e61
-            KUBECTL_CHECKSUM_ARM=0b448581f05f46d80219d1a73bd1966de09066c313f64e67e7b75b35e07191cd
+            KUBECTL_VERSION=v1.30.7
+            KUBECTL_CHECKSUM=3950ec7b81b9aa5a3856dd6155e42e1ad12a2fa8b050502f5a9652050f94a8ee%
+            KUBECTL_CHECKSUM_ARM=5e856defeac209ff82dd473ce46f91a3118df82b863de0d2ed59bdf3558cffca%
         - tag: "1.31"
           build_args: ""
     with:
@@ -93,14 +93,14 @@ jobs:
         params:
         - tag: "18"
           build_args: |
-            NODE_VERSION=v18.20.4
-            NODE_CHECKSUM=592eb35c352c7c0c8c4b2ecf9c19d615e78de68c20b660eb74bd85f8c8395063
-            NODE_CHECKSUM_ARM=1cb5053bd4109aec41a8104ea3e9f48b95b1adef4d23bb4fc64f8c2d90c65ae3
+            NODE_VERSION=v18.20.5
+            NODE_CHECKSUM=e4a3a21e5ac7e074ed50d2533dd0087d8460647ab567464867141a2b643f3fb3
+            NODE_CHECKSUM_ARM=a77db6ab34267f3bc80e02ed68abf51b7065eb5c82fcd69adc4b40e390d9b116
         - tag: "20"
           build_args: |
-            NODE_VERSION=v20.18.0
-            NODE_CHECKSUM=4543670b589593f8fa5f106111fd5139081da42bb165a9239f05195e405f240a
-            NODE_CHECKSUM_ARM=a9ce85675ba33f00527f6234d90000946c0936fb4fca605f1891bb5f4fe6fb0a
+            NODE_VERSION=v20.18.1
+            NODE_CHECKSUM=c6fa75c841cbffac851678a472f2a5bd612fff8308ef39236190e1f8dbb0e567
+            NODE_CHECKSUM_ARM=44d1ffc5905c005ace4515ca6f8c090c4c7cfce3a9a67df0dba35c727590b8f6
         - tag: "22"
           build_args: ""
     with:
