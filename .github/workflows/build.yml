@@ -69,13 +69,13 @@ jobs:
         - tag: "1.29"
           build_args: |
             KUBECTL_VERSION=v1.29.11
-            KUBECTL_CHECKSUM=14d7ea4ada60ff15ef3b7734a83c4d05cff164d4843b6f4c081a50b86547c17d%
-            KUBECTL_CHECKSUM_ARM=d0fcb8ead20f45ffab2d680b84a93c8e459b2c7c1d6dadf566769cf59f04c506%
+            KUBECTL_CHECKSUM=14d7ea4ada60ff15ef3b7734a83c4d05cff164d4843b6f4c081a50b86547c17d
+            KUBECTL_CHECKSUM_ARM=d0fcb8ead20f45ffab2d680b84a93c8e459b2c7c1d6dadf566769cf59f04c506
         - tag: "1.30"
           build_args:  |
             KUBECTL_VERSION=v1.30.7
-            KUBECTL_CHECKSUM=3950ec7b81b9aa5a3856dd6155e42e1ad12a2fa8b050502f5a9652050f94a8ee%
-            KUBECTL_CHECKSUM_ARM=5e856defeac209ff82dd473ce46f91a3118df82b863de0d2ed59bdf3558cffca%
+            KUBECTL_CHECKSUM=3950ec7b81b9aa5a3856dd6155e42e1ad12a2fa8b050502f5a9652050f94a8ee
+            KUBECTL_CHECKSUM_ARM=5e856defeac209ff82dd473ce46f91a3118df82b863de0d2ed59bdf3558cffca
         - tag: "1.31"
           build_args: ""
     with:
