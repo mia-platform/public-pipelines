@@ -10,7 +10,7 @@ workflow:
   - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 variables:
-  NODE_IMAGE_TAG: "20"
+  NODE_IMAGE_TAG: "22"
   IMAGE_NAME: mia_template_image_name_placeholder
 
 build:

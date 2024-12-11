@@ -10,7 +10,7 @@ workflow:
   - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 variables:
-  GOLANG_IMAGE_TAG: "1.22"
+  GOLANG_IMAGE_TAG: "1.23"
   IMAGE_NAME: mia_template_image_name_placeholder
 
 build:
