@@ -23,7 +23,7 @@ RUN case "${TARGETARCH}" in \
 		;; \
 		*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
 	esac; \
-	curl -fsSL "https://nodejs.org/download/release/${NODE_VERSION}/node-${NODE_VERSION}-linux-${arch}.tar.xz" -o "/tmp/node.tar.xz" \
+	curl -fsSL --proto '=https' --tlsv1.2 "https://nodejs.org/download/release/${NODE_VERSION}/node-${NODE_VERSION}-linux-${arch}.tar.xz" -o "/tmp/node.tar.xz" \
 	&& echo "${checksum} /tmp/node.tar.xz" | sha256sum -c - \
 	&& tar -xvf "/tmp/node.tar.xz" --strip-components 1 --no-same-permissions --no-same-owner -C "/tmp/local" \
 	&& rm -fr /tmp/local/*.md
