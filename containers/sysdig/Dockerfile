@@ -4,12 +4,12 @@ FROM docker.io/curlimages/curl:8.11.1@sha256:c1fe1679c34d9784c1b0d1e5f62ac0a79fc
 ARG TARGETARCH
 
 # https://download.docker.com/linux/static/stable/
-ARG DOCKER_VERSION=27.4.0
+ARG DOCKER_VERSION=27.4.1
 
 # https://github.com/oras-project/oras/releases
-ARG ORAS_VERSION=1.2.1
-ARG ORAS_CHECKSUM=4180b940409ab801ada54cdb793dd7372be2a5cb25b6522490409d5d4b0e3dde
-ARG ORAS_CHECKSUM_ARM=65f9197e9eacda769b1f2f447e2c4004a8f3f772855c2c987d5111e8302cbbed
+ARG ORAS_VERSION=1.2.2
+ARG ORAS_CHECKSUM=bff970346470e5ef888e9f2c0bf7f8ee47283f5a45207d6e7a037da1fb0eae0d
+ARG ORAS_CHECKSUM_ARM=edd7195cbb8ba56c29ede413eefa10c8026201d63326017cd315841b4063aa56
 
 # https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-vulnerability-cli-scanner/
 ARG SYSDIG_SCANNER_VERSION=1.18.0
