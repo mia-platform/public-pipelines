@@ -6,8 +6,8 @@ ARG TARGETARCH
 # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 # https://github.com/kubernetes/kubernetes/releases
 ARG KUBECTL_VERSION=v1.32.1
-ARG KUBECTL_CHECKSUM=e16c80f1a9f94db31063477eb9e61a2e24c1a4eee09ba776b029048f5369db0c%
-ARG KUBECTL_CHECKSUM_ARM=98206fd83a4fd17f013f8c61c33d0ae8ec3a7c53ec59ef3d6a0a9400862dc5b2%
+ARG KUBECTL_CHECKSUM=e16c80f1a9f94db31063477eb9e61a2e24c1a4eee09ba776b029048f5369db0c
+ARG KUBECTL_CHECKSUM_ARM=98206fd83a4fd17f013f8c61c33d0ae8ec3a7c53ec59ef3d6a0a9400862dc5b2
 
 # https://github.com/mia-platform/mlp/releases
 ARG MLP_VERSION=v1.2.3
