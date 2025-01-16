@@ -63,19 +63,19 @@ jobs:
         params:
         - tag: "1.29"
           build_args: |
-            KUBECTL_VERSION=v1.29.12
-            KUBECTL_CHECKSUM=35fc028853e6f5299a53f22ab58273ea2d882c0f261ead0a2eed5b844b12dbfb
-            KUBECTL_CHECKSUM_ARM=1cf2c00bb4f5ee6df69678e95af8ba9a4d4b1050ddefb0ae9d84b5c6f6c0e817
+            KUBECTL_VERSION=v1.29.13
+            KUBECTL_CHECKSUM=9f4cba9b3e12a3fd7fa99dee651d7293281333469852a8e755a1210d5b128b8d%
+            KUBECTL_CHECKSUM_ARM=92a08a9e74efd81be46c9138fce597ab8827e18479fe5cc9c4065659d6464cf1%
         - tag: "1.30"
           build_args:  |
-            KUBECTL_VERSION=v1.30.8
-            KUBECTL_CHECKSUM=7f39bdcf768ce4b8c1428894c70c49c8b4d2eee52f3606eb02f5f7d10f66d692
-            KUBECTL_CHECKSUM_ARM=e51d6a76fade0871a9143b64dc62a5ff44f369aa6cb4b04967d93798bf39d15b
+            KUBECTL_VERSION=v1.30.9
+            KUBECTL_CHECKSUM=d77041f285d9237c4aa451370c3ec6e5c042007dbb55c894f0a179b1d149bf32%
+            KUBECTL_CHECKSUM_ARM=bab82f333f6347507a4c725bc726fefd3d862eb64a36a4fb8b99bfe9e10813d0%
         - tag: "1.31"
           build_args: |
-            KUBECTL_VERSION=v1.31.4
-            KUBECTL_CHECKSUM=298e19e9c6c17199011404278f0ff8168a7eca4217edad9097af577023a5620f
-            KUBECTL_CHECKSUM_ARM=b97e93c20e3be4b8c8fa1235a41b4d77d4f2022ed3d899230dbbbbd43d26f872
+            KUBECTL_VERSION=v1.31.5
+            KUBECTL_CHECKSUM=fbecbfd375b3686002c2e81d51c390172f5ffba3d6b47920d55342cb03f557af%
+            KUBECTL_CHECKSUM_ARM=697c8b4239f9e53cba46296e114bcc02c726b5c7a45e1c464804aad56e5c7a86%
     with:
       image_path: containers/kubernetes
       image_name: kubernetes-pipeline
