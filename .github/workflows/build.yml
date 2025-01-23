@@ -43,9 +43,9 @@ jobs:
         params:
         - tag: "1.22"
           build_args: |
-            GO_VERSION=1.22.10
-            GO_CHECKSUM=736ce492a19d756a92719a6121226087ccd91b652ed5caec40ad6dbfb2252092
-            GO_CHECKSUM_ARM=5213c5e32fde3bd7da65516467b7ffbfe40d2bb5a5f58105e387eef450583eec
+            GO_VERSION=1.22.11
+            GO_CHECKSUM=0fc88d966d33896384fbde56e9a8d80a305dc17a9f48f1832e061724b1719991
+            GO_CHECKSUM_ARM=9ebfcab26801fa4cf0627c6439db7a4da4d3c6766142a3dd83508240e4f21031
         - tag: "1.23"
           build_args: ""
     with:
@@ -93,14 +93,14 @@ jobs:
         params:
         - tag: "18"
           build_args: |
-            NODE_VERSION=v18.20.5
-            NODE_CHECKSUM=e4a3a21e5ac7e074ed50d2533dd0087d8460647ab567464867141a2b643f3fb3
-            NODE_CHECKSUM_ARM=a77db6ab34267f3bc80e02ed68abf51b7065eb5c82fcd69adc4b40e390d9b116
+            NODE_VERSION=v18.20.6
+            NODE_CHECKSUM=abf47264a9a13b2233743ce8a966945388a1a10a56f841310a6d4dd12e18ca9a
+            NODE_CHECKSUM_ARM=169d317cc39ba5513c9588f7aded1bdff7f807b82c4dacb40ca03fd427d288b0
         - tag: "20"
           build_args: |
-            NODE_VERSION=v20.18.1
-            NODE_CHECKSUM=c6fa75c841cbffac851678a472f2a5bd612fff8308ef39236190e1f8dbb0e567
-            NODE_CHECKSUM_ARM=44d1ffc5905c005ace4515ca6f8c090c4c7cfce3a9a67df0dba35c727590b8f6
+            NODE_VERSION=v20.18.2
+            NODE_CHECKSUM=4e50f727ae09bdafecf2322c72faf7cd82bf3b8851a16b8bb63974e0d8d6eceb
+            NODE_CHECKSUM_ARM=5c1437aa16e7e6a2e0687a42c4d3f0a8f8a2039cda8880cb3be8cd983aeefb44
         - tag: "22"
           build_args: ""
     with:
