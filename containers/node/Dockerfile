@@ -35,6 +35,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 COPY --from=download /tmp/local /usr/local
 
 RUN apt-get update \
+	&& npm install -g corepack@latest \
 	&& corepack enable \
 	&& corepack prepare yarn@stable --activate \
 	&& corepack prepare pnpm@latest --activate \
