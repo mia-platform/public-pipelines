@@ -4,7 +4,7 @@ FROM docker.io/curlimages/curl:8.12.1@sha256:94e9e444bcba979c2ea12e27ae39bee4cd1
 ARG TARGETARCH
 
 # https://download.docker.com/linux/static/stable/
-ARG DOCKER_VERSION=27.5.1
+ARG DOCKER_VERSION=28.0.0
 
 # https://github.com/oras-project/oras/releases
 ARG ORAS_VERSION=1.2.2
