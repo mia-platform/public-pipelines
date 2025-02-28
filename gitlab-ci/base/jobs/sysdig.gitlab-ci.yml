@@ -31,19 +31,18 @@ sysdig:
   script:
   - !reference [.container-base, script]
   - if [ -z "${SYSDIG_SECURE_BACKEND_ENDPOINT}" ]; then echo "SYSDIG_SECURE_BACKEND_ENDPOINT is not set."; exit 1; fi;
-  - echo "${CI_APPLICATION_REPOSITORY}:${push_tag}" > registry_image.txt
-
-  after_script:
-  - if [ ! -f "registry_image.txt" ]; then exit 0; fi;
-  - registry_image=$(cat registry_image.txt)
+  - sysdig-cli-scanner --version
+  - REGISTRY_USER="${CI_APPLICATION_REPOSITORY_USER}" REGISTRY_PASSWORD="${CI_APPLICATION_REPOSITORY_PASSWORD}" sysdig-cli-scanner --console-log --apiurl "${SYSDIG_SECURE_BACKEND_ENDPOINT}" "${CI_APPLICATION_REPOSITORY}:${push_tag}" --output=json-file="${CI_PROJECT_DIR}/container-scanning-report.json" || exit_code=$?
+  - if [ ${exit_code:=0} -ne 1 ]; then exit ${exit_code}; fi;
   - echo "${CI_APPLICATION_REPOSITORY_PASSWORD}" | oras login --username "${CI_APPLICATION_REPOSITORY_USER}" --password-stdin "${CI_APPLICATION_REPOSITORY_REGISTRY}"
   - |
-      oras manifest fetch ${registry_image} | jq -n -r -c '.manifests[].digest' | \
+      oras manifest fetch "${CI_APPLICATION_REPOSITORY}:${push_tag}" | jq -r -c '.manifests[].digest' | \
       while read digest; do
-        full_image_name="${registry_image}@${digest}"
+        full_image_name="${CI_APPLICATION_REPOSITORY}:${push_tag}@${digest}"
         oras manifest delete --force "${full_image_name}"
       done
-  - oras manifest delete --force "${registry_image}"
+  - oras manifest delete --force "${CI_APPLICATION_REPOSITORY}:${push_tag}"
+  - exit 1
 
 sysdig-container_scanning:
   extends: .sysdig-scan
@@ -51,57 +50,18 @@ sysdig-container_scanning:
   variables:
     SECURE_API_TOKEN: "${SYSDIG_SECURE_TOKEN}"
 
-  script:
-  - !reference [.sysdig-scan, script]
-  - sysdig-cli-scanner --version
-  - REGISTRY_USER="${CI_APPLICATION_REPOSITORY_USER}" REGISTRY_PASSWORD="${CI_APPLICATION_REPOSITORY_PASSWORD}" sysdig-cli-scanner --console-log --apiurl "${SYSDIG_SECURE_BACKEND_ENDPOINT}" "${CI_APPLICATION_REPOSITORY}:${push_tag}" --json-scan-result="${CI_PROJECT_DIR}/container-scanning-report.json"
-  - rm registry_image.txt
-
   rules:
   - if: $CONTAINER_SCANNING_DISABLED == 'true' || $CONTAINER_SCANNING_DISABLED == '1'
     when: never
-  - if: $SYSDIG_LEGACY_SCAN == 'true' || $SYSDIG_LEGACY_SCAN == '1'
-    when: never
-  - if: $CI_COMMIT_BRANCH &&
-        $SYSDIG_SECURE_TOKEN
+  - if: $CI_COMMIT_BRANCH && $SYSDIG_SECURE_TOKEN
 
 sysdig-legacy-container_scanning:
   extends: .sysdig-scan
 
-  variables:
-    SYSDIG_INLINE_IMAGE: "quay.io/sysdig/secure-inline-scan:2"
-    # These are usually specified by the entrypoint, however the
-    # Kubernetes executor doesn't run entrypoints
-    # https://gitlab.com/gitlab-org/gitlab-runner/-/issues/4125
-    DOCKER_HOST: tcp://docker:2376
-    DOCKER_TLS_CERTDIR: "/certs"
-    DOCKER_TLS_VERIFY: 1
-    DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
-    DOCKER_DRIVER: overlay2
-
-  services:
-  - name: docker:28-dind
-
   script:
-  - !reference [.sysdig-scan, script]
-  - docker pull ${SYSDIG_INLINE_IMAGE}
-  - docker inspect ${SYSDIG_INLINE_IMAGE}
-  - |
-    docker run --rm -v ${CI_PROJECT_DIR}:/scan \
-    ${SYSDIG_INLINE_IMAGE} \
-    "${CI_APPLICATION_REPOSITORY}:${push_tag}" \
-    --sysdig-url "${SYSDIG_SECURE_BACKEND_ENDPOINT}" \
-    --sysdig-token "${SYSDIG_SECURE_TOKEN}" \
-    --registry-auth-basic "${CI_APPLICATION_REPOSITORY_USER}:${CI_APPLICATION_REPOSITORY_PASSWORD}" \
-    --write-json "/scan/container-scanning-report.json"
-  - rm registry_image.txt
+  - echo "This job is deprecated and will be removed in the future."
+  - echo "For custom configuration, please use the 'sysdig' job."
+  - exit 1
 
   rules:
-  - if: $CONTAINER_SCANNING_DISABLED == 'true' || $CONTAINER_SCANNING_DISABLED == '1'
-    when: never
-  - if: $SYSDIG_LEGACY_SCAN == 'false' || $SYSDIG_LEGACY_SCAN == '0'
-    when: never
-  # Enable job if we want the legacy scanner, the token is set and the pipeline is for a branch or tag
-  - if: $CI_COMMIT_BRANCH &&
-        $SYSDIG_LEGACY_SCAN &&
-        $SYSDIG_SECURE_TOKEN
+  - when: never

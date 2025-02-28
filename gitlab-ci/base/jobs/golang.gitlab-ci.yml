@@ -1,7 +1,7 @@
 variables:
   GO_MAIN_MODULE_PATH: $CI_PROJECT_DIR
   GOPATH: $CI_PROJECT_DIR/.cache
-  GOLANG_IMAGE_TAG: "1.22"
+  GOLANG_IMAGE_TAG: "1.24"
 
 .golang:
   image: ${CONTAINER_PATH}/golang-pipeline:${GOLANG_IMAGE_TAG}
