@@ -11,18 +11,21 @@ setup_gcp_access_token() {
 
 	printf "%s" "${jwt}" > "${jwt_path}"
 
-	cat > "${credentials_path}" << EOL
-{
-	"type": "external_account",
-	"audience": "${audience}",
-	"subject_token_type": "urn:ietf:params:oauth:token-type:jwt",
-	"token_url": "https://sts.googleapis.com/v1/token",
-	"credential_source": {
-		"file": "${jwt_path}"
+	jq -nS --arg audience "${audience}" --arg jwtPath "${jwt_path}" '{
+	type: "external_account",
+	audience: $audience,
+	subject_token_type: "urn:ietf:params:oauth:token-type:jwt",
+	token_url: "https://sts.googleapis.com/v1/token",
+	credential_source: {
+		file: $jwtPath
 	},
-	"service_account_impersonation_url": "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/${service_account}:generateAccessToken"
-}
-EOL
+	}' | jq -S --arg serviceaccount "${service_account}" \
+	'if $serviceaccount != "" then
+		.service_account_impersonation_url="https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/\($serviceaccount):generateAccessToken"
+	else
+		.
+	end
+	' > "${credentials_path}"
 
 	echo "${credentials_path}"
 }
