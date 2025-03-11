@@ -14,5 +14,5 @@ This image is based on the base-pipeline image and add this components:
 
 - docker
 - buildx
-- oras
+- docker-compose
 - a series of helper functions available on `/usr/local/lib/docker_heleprs.sh`

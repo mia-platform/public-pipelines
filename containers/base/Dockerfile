@@ -13,6 +13,11 @@ ARG SYFT_VERSION=1.20.0
 ARG SYFT_CHECKSUM=689e12c5cbf67521ce61b9c126068f9eaabe1223e77971b2fede50033ff6b5cc
 ARG SYFT_CHECKSUM_ARM=53f76737ddbf425c89240d5b0be0990b1a71e66890b44f19743221b17e6ee635
 
+# https://github.com/oras-project/oras/releases
+ARG ORAS_VERSION=1.2.2
+ARG ORAS_CHECKSUM=bff970346470e5ef888e9f2c0bf7f8ee47283f5a45207d6e7a037da1fb0eae0d
+ARG ORAS_CHECKSUM_ARM=edd7195cbb8ba56c29ede413eefa10c8026201d63326017cd315841b4063aa56
+
 USER root
 
 RUN mkdir -p "/tmp/local/bin" "/tmp/local/lib"
@@ -43,6 +48,20 @@ RUN case "${TARGETARCH}" in \
 	&& echo "${syft_checksum} /tmp/syft.tar.gz" | sha256sum -c \
 	&& tar -xvf "/tmp/syft.tar.gz" --no-same-permissions --no-same-owner -C "/tmp" \
 	&& install -o "root" -g "root" -m "0755" "/tmp/syft" "/tmp/local/bin/syft"
+
+RUN case "${TARGETARCH}" in \
+	'amd64') \
+		checksum="${ORAS_CHECKSUM}"; \
+	;; \
+	'arm64') \
+		checksum="${ORAS_CHECKSUM_ARM}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
+esac; \
+curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/oras-project/oras/releases/download/v${ORAS_VERSION}/oras_${ORAS_VERSION}_linux_${TARGETARCH}.tar.gz" -o "/tmp/oras.tar.gz" \
+&& echo "${checksum} /tmp/oras.tar.gz" | sha256sum -c \
+&& tar -xvf "/tmp/oras.tar.gz" --no-same-permissions --no-same-owner -C "/tmp" \
+&& install -o "root" -g "root" -m "0755" "/tmp/oras" "/tmp/local/bin/oras"
 
 COPY ./base_helpers.sh /tmp/local/lib
 

@@ -6,12 +6,10 @@ for security purposes.
 ## Description
 
 This Docker image is designed for use it inside the `sysdig` steps of the pipelines, and it install `sysdig-cli-scanner`
-and docker for working with its legacy inline scanner
+to find vulnerability inside container images.
 
 ## Contents
 
 This image is based on the base-pipeline image and add this components:
 
-- docker
-- oras
 - sysdig-cli-scanner

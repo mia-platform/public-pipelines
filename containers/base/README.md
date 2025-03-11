@@ -16,6 +16,7 @@ This image is based on Debian OS and include the following packages:
 - git-lfs
 - gnupg
 - jq
+- oras
 - syft
 - wget
 
