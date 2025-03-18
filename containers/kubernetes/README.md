@@ -12,5 +12,7 @@ a series of tool that can be used for deploying a series of yaml files to a Kube
 This image is based on the base-pipeline image and add this components:
 
 - kubectl
-- mlp
+- kustomize
 - helm
+- mlp
+- vab
