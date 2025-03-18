@@ -63,19 +63,19 @@ jobs:
         params:
         - tag: "1.29"
           build_args: |
-            KUBECTL_VERSION=v1.29.14
-            KUBECTL_CHECKSUM=a4902c8a454a3678d589b51d95d810ec84791c03ed6b5779969df559c9c0357e
-            KUBECTL_CHECKSUM_ARM=03c95785fc0325896eb8540b9a1447ccc89b1f1721b7594012e4f32a719d8e0a
+            KUBECTL_VERSION=v1.29.15
+            KUBECTL_CHECKSUM=3473e14c7b024a6e5403c6401b273b3faff8e5b1fed022d633815eb3168e4516
+            KUBECTL_CHECKSUM_ARM=a41984dc0ff34ee05f1283ebd9b3121c003b3469b97214738246faa5b6788f7c
         - tag: "1.30"
           build_args:  |
-            KUBECTL_VERSION=v1.30.10
-            KUBECTL_CHECKSUM=bc74dbeefd4b9d53f03016f6778f3ffc9a72ef4ca7b7c80fd5dc1a41d52dcab7
-            KUBECTL_CHECKSUM_ARM=9d65d54f02b0b305d9f3f89d19a60d3e130e09f5407df99f6d48f8c10f31e2ae
+            KUBECTL_VERSION=v1.30.11
+            KUBECTL_CHECKSUM=228a8b2679f84de9192a1ac5ad527c9ab73b0f76c452ed74f11da812bbcfaa42
+            KUBECTL_CHECKSUM_ARM=11f86b29416f344b090c2581df4bc8a98ed7cc14a2bb28e46a6d4aa708af19f4
         - tag: "1.31"
           build_args: |
-            KUBECTL_VERSION=v1.31.6
-            KUBECTL_CHECKSUM=c46b2f5b0027e919299d1eca073ebf13a4c5c0528dd854fc71a5b93396c9fa9d
-            KUBECTL_CHECKSUM_ARM=fc40a8bbdba41f022aced2dec729a1b9e937ad99872b430b6c2489f1f36a61f5
+            KUBECTL_VERSION=v1.31.7
+            KUBECTL_CHECKSUM=80a3c83f00241cd402bc8688464e5e3eedd52a461ee41d882f19cf04ad6d0379
+            KUBECTL_CHECKSUM_ARM=d95454093057af230f09e7b73ee9ae0714cf9e5197fbcb7b902881ca47b7e249
         - tag: "1.32"
           build_args: ""
     with:
@@ -98,9 +98,9 @@ jobs:
             NODE_CHECKSUM_ARM=c788ad58ded0426a7fca9f3a7e005f57c14a348ebdb3a2977e19ef7b0c143439
         - tag: "20"
           build_args: |
-            NODE_VERSION=v20.18.3
-            NODE_CHECKSUM=595bcc9a28e6d1ee5fc7277b5c3cb029275b98ec0524e162a0c566c992a7ee5c
-            NODE_CHECKSUM_ARM=c03412ab9c0ed30468e4d03e56d2e35c5ae761a98deb16727c7af2fe5be34700
+            NODE_VERSION=v20.19.0
+            NODE_CHECKSUM=b4e336584d62abefad31baecff7af167268be9bb7dd11f1297112e6eed3ca0d5
+            NODE_CHECKSUM_ARM=dbe339e55eb393955a213e6b872066880bb9feceaa494f4d44c7aac205ec2ab9
         - tag: "22"
           build_args: ""
     with:
