@@ -43,9 +43,9 @@ jobs:
         params:
         - tag: "1.23"
           build_args: |
-            GO_VERSION=1.23.7
-            GO_CHECKSUM=4741525e69841f2e22f9992af25df0c1112b07501f61f741c12c6389fcb119f3
-            GO_CHECKSUM_ARM=597acbd0505250d4d98c4c83adf201562a8c812cbcd7b341689a07087a87a541
+            GO_VERSION=1.23.8
+            GO_CHECKSUM=45b87381172a58d62c977f27c4683c8681ef36580abecd14fd124d24ca306d3f
+            GO_CHECKSUM_ARM=9d6d938422724a954832d6f806d397cf85ccfde8c581c201673e50e634fdc992
         - tag: "1.24"
           build_args: ""
     with:
