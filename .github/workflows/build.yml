@@ -68,14 +68,14 @@ jobs:
             KUBECTL_CHECKSUM_ARM=a41984dc0ff34ee05f1283ebd9b3121c003b3469b97214738246faa5b6788f7c
         - tag: "1.30"
           build_args:  |
-            KUBECTL_VERSION=v1.30.11
-            KUBECTL_CHECKSUM=228a8b2679f84de9192a1ac5ad527c9ab73b0f76c452ed74f11da812bbcfaa42
-            KUBECTL_CHECKSUM_ARM=11f86b29416f344b090c2581df4bc8a98ed7cc14a2bb28e46a6d4aa708af19f4
+            KUBECTL_VERSION=v1.30.12
+            KUBECTL_CHECKSUM=261a3c4eb12e09207b9e08f0b43d547220569317ed8d7a22638572100ace5b80
+            KUBECTL_CHECKSUM_ARM=1af7e16a143c283a29821a09f5a006aacf0fe8368bc18adbd40588ba395e0352
         - tag: "1.31"
           build_args: |
-            KUBECTL_VERSION=v1.31.7
-            KUBECTL_CHECKSUM=80a3c83f00241cd402bc8688464e5e3eedd52a461ee41d882f19cf04ad6d0379
-            KUBECTL_CHECKSUM_ARM=d95454093057af230f09e7b73ee9ae0714cf9e5197fbcb7b902881ca47b7e249
+            KUBECTL_VERSION=v1.31.8
+            KUBECTL_CHECKSUM=be0aa44a50a9aada4e9402e361ffb0d5bb1fd4f6950751399fcaf3b8b936a746
+            KUBECTL_CHECKSUM_ARM=bd76445943b22d976bdbd1d0709e4bcb5f0081cc02c10139f4b3e5e209dc3019
         - tag: "1.32"
           build_args: ""
     with:
@@ -98,9 +98,9 @@ jobs:
             NODE_CHECKSUM_ARM=224e569dbe7b0ea4628ce383d9d482494b57ee040566583f1c54072c86d1116b
         - tag: "20"
           build_args: |
-            NODE_VERSION=v20.19.0
-            NODE_CHECKSUM=b4e336584d62abefad31baecff7af167268be9bb7dd11f1297112e6eed3ca0d5
-            NODE_CHECKSUM_ARM=dbe339e55eb393955a213e6b872066880bb9feceaa494f4d44c7aac205ec2ab9
+            NODE_VERSION=v20.19.1
+            NODE_CHECKSUM=b6c4cedfc81fc544b9993bc8a3628b5c0aa7a169fbaa293460abc0418d0fabb6
+            NODE_CHECKSUM_ARM=0f6a0aaca9181de98c0a11d97b8873aa5ddd87e0f48385fc89697e25c3675a18
         - tag: "22"
           build_args: ""
     with:
