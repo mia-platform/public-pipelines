@@ -42,12 +42,19 @@ jobs:
       matrix:
         params:
         - tag: "1.23"
+          # fix GOLANGCI version to 1x until 1.25 to avoid breaking changes in current pipelines
           build_args: |
-            GO_VERSION=1.23.8
-            GO_CHECKSUM=45b87381172a58d62c977f27c4683c8681ef36580abecd14fd124d24ca306d3f
-            GO_CHECKSUM_ARM=9d6d938422724a954832d6f806d397cf85ccfde8c581c201673e50e634fdc992
+            GO_VERSION=1.23.9
+            GO_CHECKSUM=de03e45d7a076c06baaa9618d42b3b6a0561125b87f6041c6397680a71e5bb26
+            GO_CHECKSUM_ARM=3dc4dd64bdb0275e3ec65a55ecfc2597009c7c46a1b256eefab2f2172a53a602
+            GOLANGCI_VERSION=1.64.8
+            LINT_CHECKSUM=b6270687afb143d019f387c791cd2a6f1cb383be9b3124d241ca11bd3ce2e54e
+            LINT_CHECKSUM_ARM=a6ab58ebcb1c48572622146cdaec2956f56871038a54ed1149f1386e287789a5
         - tag: "1.24"
-          build_args: ""
+          build_args: |
+            GOLANGCI_VERSION=1.64.8
+            LINT_CHECKSUM=b6270687afb143d019f387c791cd2a6f1cb383be9b3124d241ca11bd3ce2e54e
+            LINT_CHECKSUM_ARM=a6ab58ebcb1c48572622146cdaec2956f56871038a54ed1149f1386e287789a5
     with:
       image_path: containers/go
       image_name: golang-pipeline
