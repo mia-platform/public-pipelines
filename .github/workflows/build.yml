@@ -68,11 +68,6 @@ jobs:
     strategy:
       matrix:
         params:
-        - tag: "1.29"
-          build_args: |
-            KUBECTL_VERSION=v1.29.15
-            KUBECTL_CHECKSUM=3473e14c7b024a6e5403c6401b273b3faff8e5b1fed022d633815eb3168e4516
-            KUBECTL_CHECKSUM_ARM=a41984dc0ff34ee05f1283ebd9b3121c003b3469b97214738246faa5b6788f7c
         - tag: "1.30"
           build_args:  |
             KUBECTL_VERSION=v1.30.13
