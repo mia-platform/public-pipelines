@@ -41,10 +41,10 @@ docker_create_sbom_and_sign_image() {
 
 	if [[ -n "${COSIGN_PRIVATE_KEY}" ]]; then
 		cosign sign --recursive --yes --key "${COSIGN_PRIVATE_KEY}" "${image}"@"${image_digest}"
-		cosign attest --recursive --yes --predicate "docker-image-sbom.spdx.json" --type="spdxjson" --key "${COSIGN_PRIVATE_KEY}" "${image}"@"${image_digest}"
+		cosign attest --yes --predicate "docker-image-sbom.spdx.json" --type="spdxjson" --key "${COSIGN_PRIVATE_KEY}" "${image}"@"${image_digest}"
 	elif [[ -n "${SIGSTORE_ID_TOKEN}" ]]; then
 		cosign sign --recursive --yes "${image}"@"${image_digest}"
-		cosign attest --recursive --yes --predicate "docker-image-sbom.spdx.json" --type="spdxjson" "${image}"@"${image_digest}"
+		cosign attest --yes --predicate "docker-image-sbom.spdx.json" --type="spdxjson" "${image}"@"${image_digest}"
 	else
 		echo "no key found: skipping image signing"
 	fi
