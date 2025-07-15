@@ -17,7 +17,7 @@ exsisting ones, improve the documentation, improve the Docker images and so on. 
 You can find more reading the [documentation](./docs/10-starting-guide.md).
 
 [Gitlab CI/CD Supported]: https://img.shields.io/badge/GitLab-CI%2FCD-orange?logo=gitlab&style=for-the-badge
-[Node.js with NPM Supported]: https://img.shields.io/badge/18%2C20%2C22-black?style=for-the-badge&logo=npm&label=NPM%20Node.js&color=3C873A
-[Node.js with Yarn Supported]: https://img.shields.io/badge/18%2C20%2C22-black?style=for-the-badge&logo=yarn&label=Yarn%20Node.js&color=3C873A
-[Kubernetes Supported]: https://img.shields.io/badge/1.29%2C1.30%2C1.31%2C1.32-black?style=for-the-badge&logo=kubernetes&label=Kubernetes&color=326CE5
+[Node.js with NPM Supported]: https://img.shields.io/badge/20%2C22-black?style=for-the-badge&logo=npm&label=NPM%20Node.js&color=3C873A
+[Node.js with Yarn Supported]: https://img.shields.io/badge/20%2C22-black?style=for-the-badge&logo=yarn&label=Yarn%20Node.js&color=3C873A
+[Kubernetes Supported]: https://img.shields.io/badge/1.30%2C1.31%2C1.32%2C1.33-black?style=for-the-badge&logo=kubernetes&label=Kubernetes&color=326CE5
 [Go Supported]: https://img.shields.io/badge/1.23%2C1.24-black?style=for-the-badge&logo=go&label=Go&color=007E9A
