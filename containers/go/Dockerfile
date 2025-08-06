@@ -10,9 +10,9 @@ ARG GO_CHECKSUM_ARM=0df02e6aeb3d3c06c95ff201d575907c736d6c62cfa4b6934c11203f1d60
 
 # the 2.x version will be available only from the 1.25 release
 # https://github.com/golangci/golangci-lint/releases
-ARG GOLANGCI_VERSION=2.3.0
-ARG LINT_CHECKSUM=b15f994fe7b9885e3862d394e159025fc2ca808d0dccf2ce3d6a242896c2be0c
-ARG LINT_CHECKSUM_ARM=e29bfa8b9d507548b43e10bfc4a87916d5d8e7ccea484df58d28a11bb61e4e37
+ARG GOLANGCI_VERSION=2.3.1
+ARG LINT_CHECKSUM=57c3a4c56b8363f7f1f695ac957b0bb474aca00c490bc5e949669a6c2ba5c432
+ARG LINT_CHECKSUM_ARM=41f391f6cdefb48ffc2ff61c27ee10fd2085e9945a8e49cf1556210f8ae27888
 
 # https://github.com/goreleaser/goreleaser/releases
 ARG GORELEASER_VERSION=v2.11.1
