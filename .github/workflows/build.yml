@@ -44,17 +44,22 @@ jobs:
         - tag: "1.23"
           # fix GOLANGCI version to 1x until 1.25 to avoid breaking changes in current pipelines
           build_args: |
-            GO_VERSION=1.23.11
-            GO_CHECKSUM=80899df77459e0b551d2eb8800ad6eb47023b99cccbf8129e7b5786770b948c5
-            GO_CHECKSUM_ARM=1085c6ff805ec1f4893fa92013d16e58f74aeac830b1b9919b6908f3ed1a85c5
+            GO_VERSION=1.23.12
+            GO_CHECKSUM=d3847fef834e9db11bf64e3fb34db9c04db14e068eeb064f49af747010454f90
+            GO_CHECKSUM_ARM=52ce172f96e21da53b1ae9079808560d49b02ac86cecfa457217597f9bc28ab3
             GOLANGCI_VERSION=1.64.8
             LINT_CHECKSUM=b6270687afb143d019f387c791cd2a6f1cb383be9b3124d241ca11bd3ce2e54e
             LINT_CHECKSUM_ARM=a6ab58ebcb1c48572622146cdaec2956f56871038a54ed1149f1386e287789a5
         - tag: "1.24"
           build_args: |
+            GO_VERSION=1.24.6
+            GO_CHECKSUM=bbca37cc395c974ffa4893ee35819ad23ebb27426df87af92e93a9ec66ef8712
+            GO_CHECKSUM_ARM=124ea6033a8bf98aa9fbab53e58d134905262d45a022af3a90b73320f3c3afd5
             GOLANGCI_VERSION=1.64.8
             LINT_CHECKSUM=b6270687afb143d019f387c791cd2a6f1cb383be9b3124d241ca11bd3ce2e54e
             LINT_CHECKSUM_ARM=a6ab58ebcb1c48572622146cdaec2956f56871038a54ed1149f1386e287789a5
+        - tag: "1.25"
+          build_args: ""
     with:
       image_path: containers/go
       image_name: golang-pipeline
@@ -75,14 +80,16 @@ jobs:
             KUBECTL_CHECKSUM_ARM=a32e46ae15fe41292dc6a7cd76beba7104282a5a3fa9e3686319000a537f4f5d
         - tag: "1.31"
           build_args: |
-            KUBECTL_VERSION=v1.31.11
-            KUBECTL_CHECKSUM=449674ed53789d63c94c147c689be986f4c135848ec91e1a64796ed896934b45
-            KUBECTL_CHECKSUM_ARM=ff740a89ad12cd12c572fd031e48ef36ff9683e9c182118197e4ce749e7b7ce6
+            KUBECTL_VERSION=v1.31.12
+            KUBECTL_CHECKSUM=cf609add577be9c898c52027e800a008331d6b2a202ecc61413e847f7a12ccd0
+            KUBECTL_CHECKSUM_ARM=1c2cc071a6522682f645c5987c0601be92c14848c5123473904e5ede0721039b
         - tag: "1.32"
           build_args: |
-            KUBECTL_VERSION=v1.32.7
-            KUBECTL_CHECKSUM=b8f24d467a8963354b028796a85904824d636132bef00988394cadacffe959c9
-            KUBECTL_CHECKSUM_ARM=232f6e517633fbb4696c9eb7a0431ee14b3fccbb47360b4843d451e0d8c9a3a2
+            KUBECTL_VERSION=v1.32.8
+            KUBECTL_CHECKSUM=0fc709a8262be523293a18965771fedfba7466eda7ab4337feaa5c028aa46b1b
+            KUBECTL_CHECKSUM_ARM=8a7371e54187249389a9aa222b150d61a4a745c121ab24dbcbb56d1ac2d0b912
+        - tag: "1.33"
+          build_args: ""
     with:
       image_path: containers/kubernetes
       image_name: kubernetes-pipeline

@@ -20,4 +20,4 @@ You can find more reading the [documentation](./docs/10-starting-guide.md).
 [Node.js with NPM Supported]: https://img.shields.io/badge/20%2C22-black?style=for-the-badge&logo=npm&label=NPM%20Node.js&color=3C873A
 [Node.js with Yarn Supported]: https://img.shields.io/badge/20%2C22-black?style=for-the-badge&logo=yarn&label=Yarn%20Node.js&color=3C873A
 [Kubernetes Supported]: https://img.shields.io/badge/1.30%2C1.31%2C1.32%2C1.33-black?style=for-the-badge&logo=kubernetes&label=Kubernetes&color=326CE5
-[Go Supported]: https://img.shields.io/badge/1.23%2C1.24-black?style=for-the-badge&logo=go&label=Go&color=007E9A
+[Go Supported]: https://img.shields.io/badge/1.23%2C1.24%2C1.25-black?style=for-the-badge&logo=go&label=Go&color=007E9A
