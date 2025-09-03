@@ -5,9 +5,9 @@ ARG TARGETARCH
 
 # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 # https://github.com/kubernetes/kubernetes/releases
-ARG KUBECTL_VERSION=v1.33.4
-ARG KUBECTL_CHECKSUM=c2ba72c115d524b72aaee9aab8df8b876e1596889d2f3f27d68405262ce86ca1
-ARG KUBECTL_CHECKSUM_ARM=76cd7a2aa59571519b68c3943521404cbce55dafb7d8866f8d0ea2995b396eef
+ARG KUBECTL_VERSION=v1.34.0
+ARG KUBECTL_CHECKSUM=cfda68cba5848bc3b6c6135ae2f20ba2c78de20059f68789c090166d6abc3e2c
+ARG KUBECTL_CHECKSUM_ARM=00b182d103a8a73da7a4d11e7526d0543dcf352f06cc63a1fde25ce9243f49a0
 
 # https://github.com/kubernetes-sigs/kustomize/releases
 ARG KUSTOMIZE_VERSION=v5.7.1
