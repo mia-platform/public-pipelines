@@ -50,10 +50,9 @@ sysdig-container_scanning:
   rules:
   - if: $CONTAINER_SCANNING_DISABLED == 'true' || $CONTAINER_SCANNING_DISABLED == '1'
     when: never
-  - if: $SYSDIG_SECURE_TOKEN
+  - if: $CI_COMMIT_BRANCH && $SYSDIG_SECURE_TOKEN
     variables:
       SECURE_API_TOKEN: "${SYSDIG_SECURE_TOKEN}"
-  - if: $CI_COMMIT_BRANCH && $SYSDIG_SECURE_TOKEN
   - if: $CI_COMMIT_BRANCH && $SECURE_API_TOKEN
 
 sysdig-legacy-container_scanning:
