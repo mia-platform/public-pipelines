@@ -18,6 +18,11 @@ ARG ORAS_VERSION=1.3.0
 ARG ORAS_CHECKSUM=6cdc692f929100feb08aa8de584d02f7bcc30ec7d88bc2adc2054d782db57c64
 ARG ORAS_CHECKSUM_ARM=7649738b48fde10542bcc8b0e9b460ba83936c75fb5be01ee6d4443764a14352
 
+# https://github.com/mikefarah/yq/releases
+ARG YQ_VERSION=v4.47.2
+ARG YQ_CHECKSUM=1bb99e1019e23de33c7e6afc23e93dad72aad6cf2cb03c797f068ea79814ddb0
+ARG YQ_CHECKSUM_ARM=05df1f6aed334f223bb3e6a967db259f7185e33650c3b6447625e16fea0ed31f
+
 USER root
 
 RUN mkdir -p "/tmp/local/bin" "/tmp/local/lib"
@@ -63,6 +68,19 @@ curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/oras-project/oras/rele
 && tar -xvf "/tmp/oras.tar.gz" --no-same-permissions --no-same-owner -C "/tmp" \
 && install -o "root" -g "root" -m "0755" "/tmp/oras" "/tmp/local/bin/oras"
 
+RUN case "${TARGETARCH}" in \
+	'amd64') \
+		checksum="${YQ_CHECKSUM}"; \
+	;; \
+	'arm64') \
+		checksum="${YQ_CHECKSUM_ARM}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
+esac; \
+curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${TARGETARCH}" -o "/tmp/yq" \
+&& echo "${checksum} /tmp/yq" | sha256sum -c \
+&& install -o "root" -g "root" -m "0755" "/tmp/yq" "/tmp/local/bin/yq"
+
 COPY ./base_helpers.sh /tmp/local/lib
 
 FROM docker.io/library/debian:bookworm-slim
@@ -77,6 +95,7 @@ RUN apt-get update && apt-get upgrade --assume-yes && apt-get install --assume-y
 	gnupg \
 	jq \
 	tar \
+	tzdata \
 	wget \
 	&& apt-get autoremove --assume-yes \
 	&& rm -rf /var/lib/apt/lists/*

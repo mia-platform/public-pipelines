@@ -19,6 +19,7 @@ This image is based on Debian OS and include the following packages:
 - oras
 - syft
 - wget
+- yq
 
 Except for cosing and syft all the packages installed are the latest versions available during the image build,
 for cosign and syft we pin the versions to download, but we will strive to keep them updated to the latests
