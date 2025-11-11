@@ -37,6 +37,7 @@ variables:
   - "echo Running on ref ${CI_COMMIT_REF_NAME}: tag = ${CI_APPLICATION_TAG}"
 
 .docker-base:
+  extends: .container-base
   image:
     name: ${CONTAINER_PATH}/docker-pipeline:${DOCKER_IMAGE_TAG}
 
@@ -64,7 +65,7 @@ variables:
     DOCKERBUILD_OUTPUT: "type=image,push=true"
 
   script:
-  - !reference [.container-base, script]
+  - !reference [.docker-base, script]
   - docker info
   - docker buildx version
   - oras version
@@ -78,7 +79,7 @@ variables:
   extends: .docker-base
 
   script:
-  - !reference [.container-base, script]
+  - !reference [.docker-base, script]
   - source /usr/local/lib/docker_helpers.sh
   - docker_login "${CI_APPLICATION_REPOSITORY_USER}" "${CI_APPLICATION_REPOSITORY_PASSWORD}" "${CI_APPLICATION_REPOSITORY_REGISTRY}"
   - |
