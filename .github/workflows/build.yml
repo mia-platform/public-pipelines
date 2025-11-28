@@ -96,9 +96,9 @@ jobs:
         params:
         - tag: "20"
           build_args: |
-            NODE_VERSION=v20.19.5
-            NODE_CHECKSUM=315046739a513a70e03a4a55a8afda8cf979f30852e576075c340084e3f8ac0f
-            NODE_CHECKSUM_ARM=d462267863ae8ee556039ebdf559055a8ec562c633889ef1403f3adb449ba1dd
+            NODE_VERSION=v20.19.6
+            NODE_CHECKSUM=c514127107ebf6e3885f793b06674574d71fe22e3df91a78c52c5a6f84b3b5b0
+            NODE_CHECKSUM_ARM=e24741779ae4c2f3c79b362fa5c0c8bbcdca1a6240eb5906c58dc762dcb62e0e
         - tag: "22"
           build_args: |
             NODE_VERSION=v22.21.1
