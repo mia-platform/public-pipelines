@@ -43,9 +43,9 @@ jobs:
         params:
         - tag: "1.24"
           build_args: |
-            GO_VERSION=1.24.10
-            GO_CHECKSUM=dd52b974e3d9c5a7bbfb222c685806def6be5d6f7efd10f9caa9ca1fa2f47955
-            GO_CHECKSUM_ARM=94a99dae43dab8a3fe337485bbb89214b524285ec53ea02040514b0c2a9c3f94
+            GO_VERSION=1.24.11
+            GO_CHECKSUM=bceca00afaac856bc48b4cc33db7cd9eb383c81811379faed3bdbc80edb0af65
+            GO_CHECKSUM_ARM=beaf0f51cbe0bd71b8289b2b6fa96c0b11cd86aa58672691ef2f1de88eb621de
             GOLANGCI_VERSION=1.64.8
             LINT_CHECKSUM=b6270687afb143d019f387c791cd2a6f1cb383be9b3124d241ca11bd3ce2e54e
             LINT_CHECKSUM_ARM=a6ab58ebcb1c48572622146cdaec2956f56871038a54ed1149f1386e287789a5
@@ -76,9 +76,9 @@ jobs:
             KUBECTL_CHECKSUM_ARM=1f4229526e16bf9f5b854fbf3bdb9c7040404a29c1d1e4193258b8a73de06e92
         - tag: "1.33"
           build_args: |
-            KUBECTL_VERSION=v1.33.6
-            KUBECTL_CHECKSUM=d25d9b63335c038333bed785e9c6c4b0e41d791a09cac5f3e8df9862c684afbe
-            KUBECTL_CHECKSUM_ARM=3ab32d945a67a6000ba332bf16382fc3646271da6b7d751608b320819e5b8f38
+            KUBECTL_VERSION=v1.33.7
+            KUBECTL_CHECKSUM=471d94e208a89be62eb776700fc8206cbef11116a8de2dc06fc0086b0015375b
+            KUBECTL_CHECKSUM_ARM=fa7ee98fdb6fba92ae05b5e0cde0abd5972b2d9a4a084f7052a1fd0dce6bc1de
         - tag: "1.34"
           build_args: ""
     with:
