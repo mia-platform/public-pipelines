@@ -96,14 +96,14 @@ jobs:
         params:
         - tag: "20"
           build_args: |
-            NODE_VERSION=v20.19.6
-            NODE_CHECKSUM=c514127107ebf6e3885f793b06674574d71fe22e3df91a78c52c5a6f84b3b5b0
-            NODE_CHECKSUM_ARM=e24741779ae4c2f3c79b362fa5c0c8bbcdca1a6240eb5906c58dc762dcb62e0e
+            NODE_VERSION=v20.20.0
+            NODE_CHECKSUM=4f48b52acf42130844a3a75e94da0e9629009d09e4101b2304895c24f3fbe609
+            NODE_CHECKSUM_ARM=752113754a7dddf0622b3740a2b2bec3dbaf1792a18711b55871d76444d8892a
         - tag: "22"
           build_args: |
-            NODE_VERSION=v22.21.1
-            NODE_CHECKSUM=680d3f30b24a7ff24b98db5e96f294c0070f8f9078df658da1bce1b9c9873c88
-            NODE_CHECKSUM_ARM=e660365729b434af422bcd2e8e14228637ecf24a1de2cd7c916ad48f2a0521e1
+            NODE_VERSION=v22.22.0
+            NODE_CHECKSUM=9aa8e9d2298ab68c600bd6fb86a6c13bce11a4eca1ba9b39d79fa021755d7c37
+            NODE_CHECKSUM_ARM=1bf1eb9ee63ffc4e5d324c0b9b62cf4a289f44332dfef9607cea1a0d9596ba6f
         - tag: "24"
           build_args: ""
     with:
