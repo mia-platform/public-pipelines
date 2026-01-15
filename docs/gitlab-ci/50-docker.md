@@ -21,14 +21,14 @@ process, these variables will start with the `CI_APPLICATION` prefix and are the
 
 This file will import the following env variables in the global space.
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | REGISTRY | $CI_REGISTRY | the remote registry where to evenutally upload the image |
 | IMAGE_NAME | "" | the image name to use if the remote registry is not the GitLab one |
 | REGISTRY_USER | $CI_REGISTRY_USER | username of the user that will upload the image to the registry |
 | REGISTRY_PASSWORD | $CI_REGISTRY_PASSWORD | password of the user that will upload the image to the registry |
 | DOCKER_IMAGE_TAG | "1" | the golang version of the image where to run the scripts, we will always use the latest docker version available |
-| IMAGE_PLATFORMS | linux/amd64,linux/arm64 | defualt platforms to build the image |
+| IMAGE_PLATFORMS | linux/amd64,linux/arm64 | default platforms to build the image |
 | ENABLE_SEMVER_TAG_WITHOUT_VERSION_PREFIX | "" | setting this variable to "1" or "true" will remove the `v` prefix from the docker tag if it is a valid semver |
 
 ## .docker-build
@@ -71,7 +71,7 @@ docker:image:
 
 #### Jobs variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | DOCKERBUILD_DIR | $CI_PROJECT_DIR | the path to pass as a context to the build command |
 | DOCKERFILE_PATH | $CI_PROJECT_DIR/Dockerfile | the path of the dockerfile to use |
@@ -83,8 +83,8 @@ The job will use the `${CONTAINER_PATH}/docker-pipeline:${DOCKER_IMAGE_TAG}` ima
 
 ## .docker-deploy
 
-This job can be used to retag images from the `CI_COMMIT_SHORT_SHA` tag to `CI_APPLICATION_TAG` if no `CI_COMMIT_TAG`
-is detected or it will generate the SBOM for the current `CI_COMMIT_TAG` tag and will try to perfrom a cryptografic
+This job can be used to re-tag images from the `CI_COMMIT_SHORT_SHA` tag to `CI_APPLICATION_TAG` if no `CI_COMMIT_TAG`
+is detected or it will generate the SBOM for the current `CI_COMMIT_TAG` tag and will try to perfrom a cryptographic
 signing of the image if a `COSIGN_PRIVATE_KEY_PATH` or a `SIGSTORE_ID_TOKEN` variable is found.
 
 ### Usage
@@ -101,9 +101,9 @@ docker:deploy:
 
 #### Job variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
-| COSIGN_PRIVATE_KEY_PATH | "" | path to a private key for usign with cosing |
+| COSIGN_PRIVATE_KEY_PATH | "" | path to a private key for using with cosign |
 | SIGSTORE_ID_TOKEN | "" | if you are on GitLab SaaS environment, you can follow the [official guide] to setup keyless signing |
 
 #### Image

@@ -13,11 +13,11 @@ and it will be set for every other job.
 
 This file will set the following env variables in the global space.
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | NPM_CONFIG_USERCONFIG | "" | custom path to the npm user configuration, if left empty is $HOME/.npm |
-| NPM_CONFIG_CACHE | $CI_PROJECT_DIR/.npm | custom path for the npm cache, if you change it you must override the `.npm-build` job cache configurations to point to the new path, we higly discourage that |
-| NODE_IMAGE_TAG | "20" | the node major version to use in the pipeline, our image will support the tls version that you can find at this [link] |
+| NPM_CONFIG_CACHE | $CI_PROJECT_DIR/.npm | custom path for the npm cache, if you change it you must override the `.npm-build` job cache configurations to point to the new path, we highly discourage that |
+| NODE_IMAGE_TAG | "24" | the node major version to use in the pipeline, our image will support the [currently supported tls versions] |
 
 ## .npm-build
 
@@ -51,7 +51,7 @@ install-app:
 
 ### Jobs variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | NPM_INSTALL_CLI_OPTS | "" | the `ci` command of npm support different options than the other comands you can set them here |
 | NPM_CONFIG_PREFER_OFFLINE | true | control if the installation for the module will always attempt to download them from the repository or use the version in the cache if available |
@@ -88,7 +88,7 @@ lint-app:
 
 ### Job variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | NPM_CLI_OPTS | "" | the `run lint` command will use this variable for additional options |
 
@@ -118,7 +118,7 @@ test-app:
 
 ### Job variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | NPM_CLI_OPTS | "" | the `run coverage` command will use this variable for additional options |
 
@@ -150,7 +150,7 @@ publish-package:
 
 ### Job variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | NPM_CLI_OPTS | "" | the `publish` command will use this variable for additional options |
 
@@ -158,4 +158,4 @@ publish-package:
 
 The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image to run its scripts.
 
-[link]: https://github.com/nodejs/release#release-schedule (Node.js LTS release schedule)
+[currently supported tls versions]: https://github.com/nodejs/release#release-schedule (Node.js LTS release schedule)

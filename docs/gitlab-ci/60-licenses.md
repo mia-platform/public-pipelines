@@ -3,7 +3,7 @@
 The `licenses` file contains an additional SAST job that introduce a dependency scanner based on syft that can be
 used as an alternative to the one implementend in the Ultimate offering of GitLab.
 This job will not integrate with the GitLab flow for managing and reviewing dependencies inside the GitLab UI, but
-you can use the `LICENSES_BLOCKLIST` env variable for explicity block licences that your project cannot import.
+you can use the `LICENSES_BLOCKLIST` env variable for explicitly block licences that your project cannot import.
 
 We reccomend to turn off this scanner if you are paying for the Ultimate subscription, for its better integration
 with the GitLab UI and flow.
@@ -26,9 +26,9 @@ You don't have to do anything for setting up the job in your pipeline, if you wa
 
 ### Jobs variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
-| LICENSES_BLOCKLIST | "" | a list of valid SPDX idendifiers separated by `,` do not add any blank space in the list |
+| LICENSES_BLOCKLIST | "" | a list of valid SPDX identifiers separated by `,` do not add any blank space in the list |
 | SYFT_IMAGE_TAG | "1" | the tag of the image where to run the scripts |
 
 ### Image

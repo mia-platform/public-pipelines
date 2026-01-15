@@ -4,15 +4,15 @@
 ![Node.js with NPM Supported] ![Node.js with Yarn Supported] ![Kubernetes Supported] ![Go Supported]
 
 The goals of this repository is to provide to user reusable pipelines for different languages for building libraries
-and Docker images to use in their projects and follow the best practicies for setting up comprehensive pipelines
+and Docker images to use in their projects and follow the best practices for setting up comprehensive pipelines
 for building a project, assessing its security, and keep track of its dependencies. You can see this as a starting
-step for your Platform Engeneering team for setting up a comprehensive suite of tools for their pipelines that can be
+step for your Platform Engineering team for setting up a comprehensive suite of tools for their pipelines that can be
 easy to use, and meet regulatory compliance for your company.
 
 ## How to Contribute
 
 You can contribute to this repository in adding support for new languages or improve the default steps for the
-exsisting ones, improve the documentation, improve the Docker images and so on. We welcome everybody!
+existing ones, improve the documentation, improve the Docker images and so on. We welcome everybody!
 
 You can find more reading the [documentation](./docs/10-starting-guide.md).
 

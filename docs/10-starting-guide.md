@@ -1,14 +1,14 @@
 # Mia-Platform Pipelines
 
 In case you don‘t have a unified pipeline strategy for building libraries and Docker images, you can start with
-our pipelines. They are a starting step for quickly setting them up following best practictes and trying to
+our pipelines. They are a starting step for quickly setting them up following best practices and trying to
 add useful steps that can match regulatory compliance for your company.
 
-## Supported Tecnologies
+## Supported Technologies
 
 Here you can find all the languages and CI/CD systems currently supported:
 
-| Language  | [GitLab CI/CD]
+| Language | [GitLab CI/CD] |
 | --- | --- |
 | [Node.js] with [NPM] | Yes |
 | [Node.js] with [Yarn] | Yes |

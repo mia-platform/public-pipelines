@@ -17,11 +17,11 @@ If you have to add more paths, or prefer to use the pnp linker, you cna override
 
 This file will set the following env variables in the global space.
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | NPM_CONFIG_USERCONFIG | "" | custom path to the npm user configuration, if left empty is $HOME/.npm, it can be used with yarn classic compatibility mode |
-| YARN_CACHE_FOLDER | $CI_PROJECT_DIR/.yarn/cache | custom path for the yarn cache, if you change it you must override the `.yarn-build` job cache configurations to point to the new path, we higly discourage that |
-| NODE_IMAGE_TAG | "20" | the node major version to use in the pipeline, our image will support the tls version that you can find at this [link] |
+| YARN_CACHE_FOLDER | $CI_PROJECT_DIR/.yarn/cache | custom path for the yarn cache, if you change it you must override the `.yarn-build` job cache configurations to point to the new path, we highly discourage that |
+| NODE_IMAGE_TAG | "24" | the node major version to use in the pipeline, our image will support the [currently supported tls versions] |
 
 ## .yarn-build
 
@@ -50,7 +50,7 @@ install-app:
 
 ### Jobs variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | YARNPKG_INSTALL_CLI_OPTS | "" | the `install` command of yarn support different options than the other comands you can set them here |
 | YARNPKG_CLI_OPTS | "" | the `run build` command will use this variable for additional options |
@@ -86,7 +86,7 @@ lint-app:
 
 ### Job variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | YARNPKG_CLI_OPTS | "" | the `run lint` command will use this variable for additional options |
 
@@ -116,7 +116,7 @@ test-app:
 
 ### Job variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | YARNPKG_CLI_OPTS | "" | the `run coverage` command will use this variable for additional options |
 
@@ -126,7 +126,7 @@ The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image t
 
 ## .yarn-publish
 
-The last job we provide is `.yarn-publish` and its variant if you still use yarn v1 `.yarn-classi-publish` and as
+The last job we provide is `.yarn-publish` and its variant if you still use yarn v1 `.yarn-classic-publish` and as
 its name suggest, is a job you can use for publishing your package to a remote index, like npm.js or an internal
 one used by your organization like JFrog Artifactory.
 
@@ -149,7 +149,7 @@ publish-package:
 
 ### Job variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | YARNPKG_CLI_OPTS | "" | the `npm publish` command will use this variable for additional options |
 
@@ -157,4 +157,4 @@ publish-package:
 
 The job will use the `${CONTAINER_PATH}/node-pipeline:${NODE_IMAGE_TAG}` image to run its scripts.
 
-[link]: https://github.com/nodejs/release#release-schedule (Node.js LTS release schedule)
+[currently supported tls versions]: https://github.com/nodejs/release#release-schedule (Node.js LTS release schedule)

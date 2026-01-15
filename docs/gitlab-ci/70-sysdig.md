@@ -8,7 +8,7 @@ to **1** or **true**.
 
 This file will import the following env variables in the global space.
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | SYSDIG_IMAGE_TAG | "1" | the tag for the sysdig image where the scripts will run |
 
@@ -24,7 +24,7 @@ and you have set the `SYSDIG_SECURE_TOKEN` or the new `SECURE_API_TOKEN` variabl
 
 ### Job variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | SYSDIG_SECURE_TOKEN | "" | the secure token from sysdig for calling their APIs if this is set the `SECURE_API_TOKEN` variables will be overridden with this value |
 | SECURE_API_TOKEN | "" | the new default variable that contains the secure token from sysdig for calling their APIs |

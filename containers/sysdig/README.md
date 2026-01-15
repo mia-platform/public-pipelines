@@ -1,4 +1,4 @@
-# Sydig Image for Pipelines
+# Sysdig Image for Pipelines
 
 This is a Docker image that will be used on `sysdig` pipelines jobs that pertain to scanning available docker images
 for security purposes.

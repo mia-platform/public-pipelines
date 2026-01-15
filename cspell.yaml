@@ -1,0 +1,22 @@
+version: "0.2"
+language: en,en-GB,en-US
+useGitignore: true
+allowCompoundWords: true
+words:
+- buildx
+- ghrc
+- golangci
+- gopath
+- oras
+- retag
+- retagged
+- syft
+- sysdig
+- tzdata
+ignoreWords:
+- esac
+- tlsv
+files:
+- '**/*.sh'
+- '**/Dockerfile'
+- '**/*.md'

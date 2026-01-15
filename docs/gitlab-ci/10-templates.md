@@ -28,7 +28,7 @@ teams. This file will invoke the `.gitlab-ci.yml`` file in a team's repository; 
 of jobs or variables. However, what's defined in this file will take precedent over anything defined in the
 individual projects.
 
-In this file will also explicited the standard stages for the pipelines:
+In this file will also explicit the standard stages for the pipelines:
 
 - `build`
 - `sast`

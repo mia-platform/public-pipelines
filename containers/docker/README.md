@@ -15,4 +15,4 @@ This image is based on the base-pipeline image and add this components:
 - docker
 - buildx
 - docker-compose
-- a series of helper functions available on `/usr/local/lib/docker_heleprs.sh`
+- a series of helper functions available on `/usr/local/lib/docker_helpers.sh`

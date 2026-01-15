@@ -5,18 +5,18 @@ The file will add a series of hidden jobs that can be extended inside the `.gitl
 project on GitLab.
 
 The templates will also try to setup useful default for the project caches and reports that can be visualized inside
-GitLab. The cache is configured via the `cahce.paths` property of the `.golang` job, it is configured to be equals to
+GitLab. The cache is configured via the `cache.paths` property of the `.golang` job, it is configured to be equals to
 the `GOPATH` property, but is not referenced directly, if you change the value of the variable you have to override
 the cache configuration. The cache for go are crated inside the `.go-build` job using `go get` and then is downloaded
 in all other job for later reuse.
 
 This file will import the following env variables in the global space.
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | GO_MAIN_MODULE_PATH | $CI_PROJECT_DIR | the path where the main module is found |
 | GOPATH | $CI_PROJECT_DIR/.cache | the golang packages cache directory, if you change this path you must override the job cache configuration |
-| GOLANG_IMAGE_TAG | 1.20 | the golang version of the image where to run the scripts, we support the latest two minor version that you can find on [go.dev site] |
+| GOLANG_IMAGE_TAG | 1.25 | the golang version of the image where to run the scripts, we support the latest two minor version that you can find on [go.dev site] |
 
 ## .go-build
 
@@ -37,7 +37,7 @@ build-app:
 
 ### Jobs variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | GO_CLI_OPTS | "" | optional env for passign custom configuration to the `get` and `build` command |
 
@@ -67,7 +67,7 @@ lint-app:
 
 ### Jobs variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | GOLANG_LINT_CI_CONFIG | "$CI_PROJECT_DIR/.golangci.yaml" | path of the `golangci-lint` configuration file |
 
@@ -93,7 +93,7 @@ test:
 
 ### Jobs variables
 
-| Key | Default Value | Description  |
+| Key | Default Value | Description |
 | --- | --- | --- |
 | GO_CLI_OPTS | "" | optional env for passign custom configuration to the test command |
 | GO_TEST_PATH | "$GO_MAIN_MODULE_PATH" | you can use this variable to set a different path where to run tests |

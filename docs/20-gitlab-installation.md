@@ -44,7 +44,7 @@ For an explanation of the various keys and possible values reference the followi
 	git clone https://github.com/mia-platform/public-pipelines.git
 	```
 
-1. edit the default values of the confiugration file with your favorite editor
+1. edit the default values of the configuration file with your favorite editor
 
 	```sh
 	${EDITOR} ./public-pipelines/bin/gitlab/config.json
