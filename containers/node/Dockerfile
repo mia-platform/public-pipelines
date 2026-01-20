@@ -13,15 +13,15 @@ USER root
 RUN mkdir -p "/tmp/local/bin"
 
 RUN case "${TARGETARCH}" in \
-		'amd64') \
-			checksum="${NODE_CHECKSUM}"; \
-			arch="x64"; \
-		;; \
-		'arm64') \
-			checksum="${NODE_CHECKSUM_ARM}"; \
-			arch="${TARGETARCH}"; \
-		;; \
-		*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
+	'amd64') \
+	checksum="${NODE_CHECKSUM}"; \
+	arch="x64"; \
+	;; \
+	'arm64') \
+	checksum="${NODE_CHECKSUM_ARM}"; \
+	arch="${TARGETARCH}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
 	esac; \
 	curl -fsSL --proto '=https' --tlsv1.2 "https://nodejs.org/download/release/${NODE_VERSION}/node-${NODE_VERSION}-linux-${arch}.tar.xz" -o "/tmp/node.tar.xz" \
 	&& echo "${checksum} /tmp/node.tar.xz" | sha256sum -c - \

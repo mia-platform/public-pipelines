@@ -13,13 +13,13 @@ USER root
 RUN mkdir -p "/tmp/local/bin"
 
 RUN case "${TARGETARCH}" in \
-		'amd64') \
-			checksum="${SYSDIG_SCANNER_CHECKSUM}"; \
-		;; \
-		'arm64') \
-			checksum="${SYSDIG_SCANNER_CHECKSUM_ARM}"; \
-		;; \
-		*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1 ;; \
+	'amd64') \
+	checksum="${SYSDIG_SCANNER_CHECKSUM}"; \
+	;; \
+	'arm64') \
+	checksum="${SYSDIG_SCANNER_CHECKSUM_ARM}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1 ;; \
 	esac; \
 	curl -fsSL --proto '=https' --tlsv1.2 "https://download.sysdig.com/scanning/bin/sysdig-cli-scanner/${SYSDIG_SCANNER_VERSION}/linux/${TARGETARCH}/sysdig-cli-scanner" -o "/tmp/sysdig-cli-scanner" \
 	&& echo "${checksum} /tmp/sysdig-cli-scanner" | sha256sum -c \

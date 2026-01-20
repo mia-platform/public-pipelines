@@ -34,26 +34,26 @@ USER root
 RUN mkdir -p "/tmp/local/bin"
 
 RUN case "${TARGETARCH}" in \
-		'amd64') \
-			kubectl_checksum="${KUBECTL_CHECKSUM}"; \
-		;; \
-		'arm64') \
-			kubectl_checksum="${KUBECTL_CHECKSUM_ARM}"; \
+	'amd64') \
+	kubectl_checksum="${KUBECTL_CHECKSUM}"; \
 	;; \
-		*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
+	'arm64') \
+	kubectl_checksum="${KUBECTL_CHECKSUM_ARM}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
 	esac; \
 	curl -fsSL --proto '=https' --tlsv1.2 "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl" -o "/tmp/kubectl" \
 	&& echo "${kubectl_checksum} /tmp/kubectl" | sha256sum -c \
 	&& install -o "root" -g "root" -m "0755" "/tmp/kubectl" "/tmp/local/bin/kubectl"
 
 RUN case "${TARGETARCH}" in \
-		'amd64') \
-			kustomize_checksum="${KUSTOMIZE_CHECKSUM}"; \
-		;; \
-		'arm64') \
-			kustomize_checksum="${KUSTOMIZE_CHECKSUM_ARM}"; \
+	'amd64') \
+	kustomize_checksum="${KUSTOMIZE_CHECKSUM}"; \
 	;; \
-		*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
+	'arm64') \
+	kustomize_checksum="${KUSTOMIZE_CHECKSUM_ARM}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
 	esac; \
 	curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_linux_${TARGETARCH}.tar.gz" -o "/tmp/kustomize.tar.gz" \
 	&& echo "${kustomize_checksum} /tmp/kustomize.tar.gz" | sha256sum -c \
@@ -61,13 +61,13 @@ RUN case "${TARGETARCH}" in \
 	&& install -o "root" -g "root" -m "0755" "/tmp/kustomize" "/tmp/local/bin/kustomize"
 
 RUN case "${TARGETARCH}" in \
-		'amd64') \
-			helm_checksum="${HELM_CHECKSUM}"; \
-		;; \
-		'arm64') \
-			helm_checksum="${HELM_CHECKSUM_ARM}"; \
+	'amd64') \
+	helm_checksum="${HELM_CHECKSUM}"; \
 	;; \
-		*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
+	'arm64') \
+	helm_checksum="${HELM_CHECKSUM_ARM}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
 	esac; \
 	curl -fsSL --proto '=https' --tlsv1.2 "https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz" -o "/tmp/helm.tar.gz" \
 	&& echo "${helm_checksum} /tmp/helm.tar.gz" | sha256sum -c \
@@ -75,26 +75,26 @@ RUN case "${TARGETARCH}" in \
 	&& install -o "root" -g "root" -m "0755" "/tmp/linux-${TARGETARCH}/helm" "/tmp/local/bin/helm"
 
 RUN case "${TARGETARCH}" in \
-		'amd64') \
-			mlp_checksum="${MLP_CHECKSUM}"; \
-		;; \
-		'arm64') \
-			mlp_checksum="${MLP_CHECKSUM_ARM}"; \
+	'amd64') \
+	mlp_checksum="${MLP_CHECKSUM}"; \
 	;; \
-		*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
+	'arm64') \
+	mlp_checksum="${MLP_CHECKSUM_ARM}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
 	esac; \
 	curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/mia-platform/mlp/releases/download/${MLP_VERSION}/mlp-linux-${TARGETARCH}" -o "/tmp/mlp" \
 	&& echo "${mlp_checksum} /tmp/mlp" | sha256sum -c \
 	&& install -o "root" -g "root" -m "0755" "/tmp/mlp" "/tmp/local/bin/mlp"
 
 RUN case "${TARGETARCH}" in \
-		'amd64') \
-			vab_checksum="${VAB_CHECKSUM}"; \
-		;; \
-		'arm64') \
-			vab_checksum="${VAB_CHECKSUM_ARM}"; \
+	'amd64') \
+	vab_checksum="${VAB_CHECKSUM}"; \
 	;; \
-		*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
+	'arm64') \
+	vab_checksum="${VAB_CHECKSUM_ARM}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
 	esac; \
 	curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/mia-platform/vab/releases/download/${VAB_VERSION}/vab-linux-${TARGETARCH}" -o "/tmp/vab" \
 	&& echo "${vab_checksum} /tmp/vab" | sha256sum -c \

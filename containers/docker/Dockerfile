@@ -4,7 +4,7 @@ FROM docker.io/curlimages/curl:8.18.0@sha256:d94d07ba9e7d6de898b6d96c1a072f6f826
 ARG TARGETARCH
 
 # https://download.docker.com/linux/static/stable/
-ARG DOCKER_VERSION=29.1.4
+ARG DOCKER_VERSION=29.1.5
 
 # https://github.com/docker/buildx/releases
 ARG BUILDX_VERSION=v0.30.1
@@ -26,33 +26,33 @@ RUN arch="$(uname -m)"; \
 	&& install -o "root" -g "root" -m "0755" "/tmp/docker/docker" "/tmp/local/bin/docker"
 
 RUN case "${TARGETARCH}" in \
-		'amd64') \
-			buildx_checksum="${BUILDX_CHECKSUM}"; \
-		;; \
-		'arm64') \
-			buildx_checksum="${BUILDX_CHECKSUM_ARM}"; \
-		;; \
-		*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
+	'amd64') \
+	buildx_checksum="${BUILDX_CHECKSUM}"; \
+	;; \
+	'arm64') \
+	buildx_checksum="${BUILDX_CHECKSUM_ARM}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
 	esac; \
 	curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-${TARGETARCH}" -o "/tmp/docker-buildx" \
 	&& echo "${buildx_checksum} /tmp/docker-buildx" | sha256sum -c \
 	&& install -o "root" -g "root" -m "0755" "/tmp/docker-buildx" "/tmp/local/lib/docker/cli-plugins/docker-buildx"
 
-	RUN case "${TARGETARCH}" in \
+RUN case "${TARGETARCH}" in \
 	'amd64') \
-		compose_checksum="${DOCKER_COMPOSE_CHECKSUM}"; \
-		arch="x86_64"; \
+	compose_checksum="${DOCKER_COMPOSE_CHECKSUM}"; \
+	arch="x86_64"; \
 	;; \
 	'arm64') \
-		compose_checksum="${DOCKER_COMPOSE_CHECKSUM_ARM}"; \
-		arch="aarch64"; \
+	compose_checksum="${DOCKER_COMPOSE_CHECKSUM_ARM}"; \
+	arch="aarch64"; \
 	;; \
 	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
-esac; \
-curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-${arch}" -o "/tmp/docker-compose" \
-&& echo "${compose_checksum} /tmp/docker-compose" | sha256sum -c \
-&& install -o "root" -g "root" -m "0755" "/tmp/docker-compose" "/tmp/local/lib/docker/cli-plugins/docker-compose" \
-&& install -o "root" -g "root" -m "0755" "/tmp/docker-compose" "/tmp/local/bin/docker-compose"
+	esac; \
+	curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-${arch}" -o "/tmp/docker-compose" \
+	&& echo "${compose_checksum} /tmp/docker-compose" | sha256sum -c \
+	&& install -o "root" -g "root" -m "0755" "/tmp/docker-compose" "/tmp/local/lib/docker/cli-plugins/docker-compose" \
+	&& install -o "root" -g "root" -m "0755" "/tmp/docker-compose" "/tmp/local/bin/docker-compose"
 
 COPY ./docker_helpers.sh /tmp/local/lib
 

@@ -9,9 +9,9 @@ ARG COSIGN_CHECKSUM=10dab2fd2170b5aa0d5c0673a9a2793304960220b314f6a873bf39c2f082
 ARG COSIGN_CHECKSUM_ARM=c12fc6150195758ec0b1aeb1aade3381a1d3a299584982b66543f22bab04535b
 
 # https://github.com/anchore/syft/releases
-ARG SYFT_VERSION=1.40.0
-ARG SYFT_CHECKSUM=f551cd16da3a5456f5245bb8045b98594263a678a9d2a07b462a05be0357b795
-ARG SYFT_CHECKSUM_ARM=1d62e6c40d23c319e113514dae3cf84375f4aa93520a46cb01b6ad4e8183f9dd
+ARG SYFT_VERSION=1.40.1
+ARG SYFT_CHECKSUM=c229137c919f22aa926c1c015388db5ec64e99c078e0baac053808e8f36e2e00
+ARG SYFT_CHECKSUM_ARM=13c03a712ad496083d164bdd009c458fda854fb4c8456441fc9c286bbb500e07
 
 # https://github.com/oras-project/oras/releases
 ARG ORAS_VERSION=1.3.0
@@ -28,26 +28,26 @@ USER root
 RUN mkdir -p "/tmp/local/bin" "/tmp/local/lib"
 
 RUN case "${TARGETARCH}" in \
-		'amd64') \
-			cosign_checksum="${COSIGN_CHECKSUM}"; \
-		;; \
-		'arm64') \
-			cosign_checksum="${COSIGN_CHECKSUM_ARM}"; \
-		;; \
-		*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
+	'amd64') \
+	cosign_checksum="${COSIGN_CHECKSUM}"; \
+	;; \
+	'arm64') \
+	cosign_checksum="${COSIGN_CHECKSUM_ARM}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
 	esac; \
 	curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/sigstore/cosign/releases/download/${COSIGN_VERSION}/cosign-linux-${TARGETARCH}" -o "/tmp/cosign" \
 	&& echo "${cosign_checksum} /tmp/cosign" | sha256sum -c \
 	&& install -o "root" -g "root" -m "0755" "/tmp/cosign" "/tmp/local/bin/cosign"
 
 RUN case "${TARGETARCH}" in \
-		'amd64') \
-			syft_checksum="${SYFT_CHECKSUM}"; \
-		;; \
-		'arm64') \
-			syft_checksum="${SYFT_CHECKSUM_ARM}"; \
-		;; \
-		*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
+	'amd64') \
+	syft_checksum="${SYFT_CHECKSUM}"; \
+	;; \
+	'arm64') \
+	syft_checksum="${SYFT_CHECKSUM_ARM}"; \
+	;; \
+	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
 	esac; \
 	curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/anchore/syft/releases/download/v${SYFT_VERSION}/syft_${SYFT_VERSION}_linux_${TARGETARCH}.tar.gz" -o "/tmp/syft.tar.gz" \
 	&& echo "${syft_checksum} /tmp/syft.tar.gz" | sha256sum -c \
@@ -56,30 +56,30 @@ RUN case "${TARGETARCH}" in \
 
 RUN case "${TARGETARCH}" in \
 	'amd64') \
-		checksum="${ORAS_CHECKSUM}"; \
+	checksum="${ORAS_CHECKSUM}"; \
 	;; \
 	'arm64') \
-		checksum="${ORAS_CHECKSUM_ARM}"; \
+	checksum="${ORAS_CHECKSUM_ARM}"; \
 	;; \
 	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
-esac; \
-curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/oras-project/oras/releases/download/v${ORAS_VERSION}/oras_${ORAS_VERSION}_linux_${TARGETARCH}.tar.gz" -o "/tmp/oras.tar.gz" \
-&& echo "${checksum} /tmp/oras.tar.gz" | sha256sum -c \
-&& tar -xvf "/tmp/oras.tar.gz" --no-same-permissions --no-same-owner -C "/tmp" \
-&& install -o "root" -g "root" -m "0755" "/tmp/oras" "/tmp/local/bin/oras"
+	esac; \
+	curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/oras-project/oras/releases/download/v${ORAS_VERSION}/oras_${ORAS_VERSION}_linux_${TARGETARCH}.tar.gz" -o "/tmp/oras.tar.gz" \
+	&& echo "${checksum} /tmp/oras.tar.gz" | sha256sum -c \
+	&& tar -xvf "/tmp/oras.tar.gz" --no-same-permissions --no-same-owner -C "/tmp" \
+	&& install -o "root" -g "root" -m "0755" "/tmp/oras" "/tmp/local/bin/oras"
 
 RUN case "${TARGETARCH}" in \
 	'amd64') \
-		checksum="${YQ_CHECKSUM}"; \
+	checksum="${YQ_CHECKSUM}"; \
 	;; \
 	'arm64') \
-		checksum="${YQ_CHECKSUM_ARM}"; \
+	checksum="${YQ_CHECKSUM_ARM}"; \
 	;; \
 	*) echo >&2 "error: unsupported architecture ($TARGETARCH)"; exit 1; ;; \
-esac; \
-curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${TARGETARCH}" -o "/tmp/yq" \
-&& echo "${checksum} /tmp/yq" | sha256sum -c \
-&& install -o "root" -g "root" -m "0755" "/tmp/yq" "/tmp/local/bin/yq"
+	esac; \
+	curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${TARGETARCH}" -o "/tmp/yq" \
+	&& echo "${checksum} /tmp/yq" | sha256sum -c \
+	&& install -o "root" -g "root" -m "0755" "/tmp/yq" "/tmp/local/bin/yq"
 
 COPY ./base_helpers.sh /tmp/local/lib
 
