@@ -43,9 +43,9 @@ jobs:
         params:
         - tag: "1.24"
           build_args: |
-            GO_VERSION=1.24.12
-            GO_CHECKSUM=bddf8e653c82429aea7aec2520774e79925d4bb929fe20e67ecc00dd5af44c50
-            GO_CHECKSUM_ARM=4e02e2979e53b40f3666bba9f7e5ea0b99ea5156e0824b343fd054742c25498d
+            GO_VERSION=1.24.13
+            GO_CHECKSUM=1fc94b57134d51669c72173ad5d49fd62afb0f1db9bf3f798fd98ee423f8d730
+            GO_CHECKSUM_ARM=74d97be1cc3a474129590c67ebf748a96e72d9f3a2b6fef3ed3275de591d49b3
             GOLANGCI_VERSION=1.64.8
             LINT_CHECKSUM=b6270687afb143d019f387c791cd2a6f1cb383be9b3124d241ca11bd3ce2e54e
             LINT_CHECKSUM_ARM=a6ab58ebcb1c48572622146cdaec2956f56871038a54ed1149f1386e287789a5

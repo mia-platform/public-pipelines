@@ -4,9 +4,9 @@ FROM docker.io/curlimages/curl:8.18.0@sha256:d94d07ba9e7d6de898b6d96c1a072f6f826
 ARG TARGETARCH
 
 # https://go.dev/dl
-ARG GO_VERSION=1.25.6
-ARG GO_CHECKSUM=f022b6aad78e362bcba9b0b94d09ad58c5a70c6ba3b7582905fababf5fe0181a
-ARG GO_CHECKSUM_ARM=738ef87d79c34272424ccdf83302b7b0300b8b096ed443896089306117943dd5
+ARG GO_VERSION=1.25.7
+ARG GO_CHECKSUM=12e6d6a191091ae27dc31f6efc630e3a3b8ba409baf3573d955b196fdf086005
+ARG GO_CHECKSUM_ARM=ba611a53534135a81067240eff9508cd7e256c560edd5d8c2fef54f083c07129
 
 # the 2.x version will be available only from the 1.25 release
 # https://github.com/golangci/golangci-lint/releases
