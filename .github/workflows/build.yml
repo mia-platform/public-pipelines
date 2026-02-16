@@ -41,15 +41,12 @@ jobs:
     strategy:
       matrix:
         params:
-        - tag: "1.24"
-          build_args: |
-            GO_VERSION=1.24.13
-            GO_CHECKSUM=1fc94b57134d51669c72173ad5d49fd62afb0f1db9bf3f798fd98ee423f8d730
-            GO_CHECKSUM_ARM=74d97be1cc3a474129590c67ebf748a96e72d9f3a2b6fef3ed3275de591d49b3
-            GOLANGCI_VERSION=1.64.8
-            LINT_CHECKSUM=b6270687afb143d019f387c791cd2a6f1cb383be9b3124d241ca11bd3ce2e54e
-            LINT_CHECKSUM_ARM=a6ab58ebcb1c48572622146cdaec2956f56871038a54ed1149f1386e287789a5
         - tag: "1.25"
+          build_args: |
+            GO_VERSION=1.25.7
+            GO_CHECKSUM=12e6d6a191091ae27dc31f6efc630e3a3b8ba409baf3573d955b196fdf086005
+            GO_CHECKSUM_ARM=ba611a53534135a81067240eff9508cd7e256c560edd5d8c2fef54f083c07129
+        - tag: "1.26"
           build_args: ""
     with:
       image_path: containers/go
@@ -64,22 +61,31 @@ jobs:
     strategy:
       matrix:
         params:
-        - tag: "1.31"
-          build_args: |
-            KUBECTL_VERSION=v1.31.14
-            KUBECTL_CHECKSUM=8791ec7c8966b61420d55103a5fb948de9f0ca3d7306d789734975ad9704bdb0
-            KUBECTL_CHECKSUM_ARM=3abb0c2d7121e1833831f56fd857a93de386e76d14b64baf86220d0afe495209
         - tag: "1.32"
           build_args: |
-            KUBECTL_VERSION=v1.32.11
-            KUBECTL_CHECKSUM=48581d0e808bd8b7d3c3fc014e86b170e25a987df04c8a879b982b28a5180815
-            KUBECTL_CHECKSUM_ARM=b1c91c106ec20e61c5dff869e9a39e6af4fb96572bddaac9cce307dfa3ed2348
+            KUBECTL_VERSION=v1.32.12
+            KUBECTL_CHECKSUM=adac5674d19f47ed3f0620bfeb1932d3d5f4557d49f311f6f65b6b75e0721ee1
+            KUBECTL_CHECKSUM_ARM=86fa465134c54de6202d89d41eb89504810236cc968e1402a31f3674f66ffdbd
+            HELM_VERSION=v3.20.0
+            HELM_CHECKSUM=dbb4c8fc8e19d159d1a63dda8db655f9ffa4aac1b9a6b188b34a40957119b286
+            HELM_CHECKSUM_ARM=bfb14953295d5324d47ab55f3dfba6da28d46c848978c8fbf412d4271bdc29f1
         - tag: "1.33"
           build_args: |
-            KUBECTL_VERSION=v1.33.7
-            KUBECTL_CHECKSUM=471d94e208a89be62eb776700fc8206cbef11116a8de2dc06fc0086b0015375b
-            KUBECTL_CHECKSUM_ARM=fa7ee98fdb6fba92ae05b5e0cde0abd5972b2d9a4a084f7052a1fd0dce6bc1de
+            KUBECTL_VERSION=v1.33.8
+            KUBECTL_CHECKSUM=7f9c3faab7c9f9cc3f318d49eb88efc60eb3b3a7ce9eee5feb39b1280e108a29
+            KUBECTL_CHECKSUM_ARM=76e284669f1f6343bd9fe2a011757809c8c01cf51da9f85ee6ef4eb93c8393a8
+            HELM_VERSION=v3.20.0
+            HELM_CHECKSUM=dbb4c8fc8e19d159d1a63dda8db655f9ffa4aac1b9a6b188b34a40957119b286
+            HELM_CHECKSUM_ARM=bfb14953295d5324d47ab55f3dfba6da28d46c848978c8fbf412d4271bdc29f1
         - tag: "1.34"
+          build_args: |
+            KUBECTL_VERSION=v1.34.4
+            KUBECTL_CHECKSUM=d50c359d95e0841eaad08ddc27c7be37cba8fdccfba5c8e2ded65e121ff112db
+            KUBECTL_CHECKSUM_ARM=5b982c0644ab1e27780246b9085a5886651b4a7ed86243acbb2bacc1bea01dda
+            HELM_VERSION=v3.20.0
+            HELM_CHECKSUM=dbb4c8fc8e19d159d1a63dda8db655f9ffa4aac1b9a6b188b34a40957119b286
+            HELM_CHECKSUM_ARM=bfb14953295d5324d47ab55f3dfba6da28d46c848978c8fbf412d4271bdc29f1
+        - tag: "1.35"
           build_args: ""
     with:
       image_path: containers/kubernetes
