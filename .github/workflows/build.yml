@@ -43,20 +43,20 @@ jobs:
         params:
         - tag: "1.26"
           build_args: |
-            GO_VERSION=1.26.9
-            GO_CHECKSUM=42d158b4d8f7b61ac0a830567c940a86098fb7aac52e467a5ebec03ef5cc2f8d
-            GO_CHECKSUM_ARM=4a97373d49fcacdcf3694fea368a500b00ee3e963974f3e7514132717632f052
+            GO_VERSION=1.26.10
+            GO_CHECKSUM=ccfe7ae822d2c2f41f4fe7c956199967a4dac22d0ee0d2b2bfdb440aab3b20c5
+            GO_CHECKSUM_ARM=3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797
             GOLANGCI_VERSION=2.12.2
             LINT_CHECKSUM=8df580d2670fed8fa984aac0507099af8df275e665215f5c7a2ae3943893a553
             LINT_CHECKSUM_ARM=44cd40a8c76c86755375adfeea52cfd3533cb43d7bd647771e0ae065e166df3a
         - tag: "1.27"
           build_args: |
-            GO_VERSION=1.27.2
-            GO_CHECKSUM=ecbadb99091a3f46e31f5f934b068b1864eafa7995211b39eaddf76996045fe5
-            GO_CHECKSUM_ARM=94f3e30b8e374bc285e7dadc11e0865726b9bc6e85b841ccceaabc0214c6b7c8
-            GOLANGCI_VERSION=2.14.0
-            LINT_CHECKSUM=ab90aeb7b066f92a33415b638a50fe5344bbb75a0d32ad30cc248d88f81032ab
-            LINT_CHECKSUM_ARM=ee7ec5f3453d15ddf106fae5a4d6c71737712348a979d1fe9cd52ec7ea299bae
+            GO_VERSION=1.27.3
+            GO_CHECKSUM=65efbc80fdc1fa2cd2631cad5b481777a68e8725f34e89f50fc6ac714e379b40
+            GO_CHECKSUM_ARM=a06e99309dbcbdca1a8ccd2282c3ee146e55930886e26b4f1193269587165f49
+            GOLANGCI_VERSION=2.15.0
+            LINT_CHECKSUM=9b7fe6a6bf6334b98decf8d86b11415ea7889afdabdd1959fdce23af2a9ebcea
+            LINT_CHECKSUM_ARM=b4d8f17068b35ee6060cc2f69a16fb48740d706fbba81661c318649c114a6998
     with:
       image_path: containers/go
       image_name: golang-pipeline
